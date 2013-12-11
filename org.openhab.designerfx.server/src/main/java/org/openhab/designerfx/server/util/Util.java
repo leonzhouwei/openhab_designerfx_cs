@@ -1,4 +1,4 @@
-package org.openhab.designerfx.server.internal.util;
+package org.openhab.designerfx.server.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -44,7 +44,6 @@ public class Util {
 			while ((s = br.readLine()) != null) {
 				s = s.trim();
 				if (!s.isEmpty()) {
-					System.out.println(s);
 					list.add(s);
 				}
 			}

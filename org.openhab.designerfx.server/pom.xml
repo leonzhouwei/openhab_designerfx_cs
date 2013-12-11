@@ -86,6 +86,13 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>15.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -122,8 +129,8 @@
 										<include>run.sh</include>
 									</includes>
 									<includes>
-                                        <include>server.properties</include>
-                                    </includes>
+										<include>server.properties</include>
+									</includes>
 								</resource>
 							</resources>
 						</configuration>
