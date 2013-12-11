@@ -8,6 +8,6 @@ public interface ItemQueryService {
 	
 	public List<String> listResourcesNames();
 	
-	public List<Item> getItems(String resourceName) ;
+	public List<Item> getItems(String resourceName);
 	
 }

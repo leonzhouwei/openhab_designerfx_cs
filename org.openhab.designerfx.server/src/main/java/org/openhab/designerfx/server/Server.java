@@ -15,7 +15,8 @@ public class Server {
 	public static void main(String[] args) {
 		final ApplicationContext context = new ClassPathXmlApplicationContext(
 				"/beans.xml");
-		System.out.println(context.getBean(ItemQueryService.class));
+		ItemQueryService iqs = context.getBean(ItemQueryService.class);
+		System.out.println(iqs.listResourcesNames().get(0));
 	}
 
 }

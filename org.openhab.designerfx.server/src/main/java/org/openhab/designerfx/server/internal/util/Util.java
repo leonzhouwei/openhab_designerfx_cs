@@ -5,16 +5,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openhab.designerfx.server.internal.common.Constants;
+
+import com.google.common.collect.Lists;
 
 public class Util {
 
 	public static List<File> listRegularFileNames(File directory, String fileExtension) {
 		File[] array = directory.listFiles();
-		List<File> files = new ArrayList<File>();
+		List<File> files = Lists.newArrayList();
 		for (File file : array) {
 			if (file.getName().endsWith(fileExtension)) {
 				files.add(file);
@@ -24,7 +25,7 @@ public class Util {
 	}
 	
 	public static List<String> baseNames(List<File> files, String fileExtension) {
-		List<String> baseNames = new ArrayList<String>();
+		List<String> baseNames = Lists.newArrayList();
 		for (File file : files) {
 			String name = file.getName();
 			int index = name.indexOf(fileExtension);
@@ -36,7 +37,7 @@ public class Util {
 	
 	public static List<String> readAll(File file) throws IOException {
 		BufferedReader br = null;
-		List<String> list = new ArrayList<String>();
+		List<String> list = Lists.newArrayList();
 		try {
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(file), Constants.CHARSET_NAME_UTF_8));
 			String s = null;
