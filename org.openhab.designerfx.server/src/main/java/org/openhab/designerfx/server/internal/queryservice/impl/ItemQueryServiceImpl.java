@@ -1,4 +1,4 @@
-package org.openhab.designerfx.server.queryservice.impl;
+package org.openhab.designerfx.server.internal.queryservice.impl;
 
 import java.util.List;
 
