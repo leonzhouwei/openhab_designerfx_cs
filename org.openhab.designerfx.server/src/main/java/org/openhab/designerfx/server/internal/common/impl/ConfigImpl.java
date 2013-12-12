@@ -1,4 +1,4 @@
-package org.openhab.designerfx.server.internal.common;
+package org.openhab.designerfx.server.internal.common.impl;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

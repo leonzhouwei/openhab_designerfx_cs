@@ -1,4 +1,4 @@
-package org.openhab.designerfx.server.internal.context.impl;
+package org.openhab.designerfx.server.internal.common.impl;
 
 import java.io.File;
 
