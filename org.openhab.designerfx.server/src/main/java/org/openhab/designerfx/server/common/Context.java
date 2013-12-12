@@ -1,4 +1,4 @@
-package org.openhab.designerfx.server.context;
+package org.openhab.designerfx.server.common;
 
 public interface Context {
 

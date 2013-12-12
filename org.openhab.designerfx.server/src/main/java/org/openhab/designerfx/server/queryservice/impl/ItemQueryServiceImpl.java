@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.openhab.designerfx.server.context.Context;
+import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.querymodel.Item;
 import org.openhab.designerfx.server.queryservice.ItemQueryService;
 import org.springframework.stereotype.Component;

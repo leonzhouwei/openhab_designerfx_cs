@@ -2,7 +2,7 @@ package org.openhab.designerfx.server.internal.context.impl;
 
 import java.io.File;
 
-import org.openhab.designerfx.server.context.Context;
+import org.openhab.designerfx.server.common.Context;
 import org.springframework.stereotype.Component;
 
 @Component
