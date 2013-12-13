@@ -55,4 +55,8 @@ public class Util {
 		return list;
 	}
 	
+	public static void printSeparateLine() {
+		System.out.println("--------------------------------------------------------------------------------");
+	}
+	
 }

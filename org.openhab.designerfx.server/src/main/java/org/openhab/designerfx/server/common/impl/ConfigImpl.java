@@ -9,6 +9,8 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Config;
+import org.openhab.designerfx.server.common.Constants;
+import org.openhab.designerfx.server.util.Util;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Maps;
@@ -20,6 +22,8 @@ public class ConfigImpl implements Config {
 	
 	@Override
 	public void load(InputStreamReader inputStreamReader) throws IOException {
+		Util.printSeparateLine();
+		System.out.println("Loading the configuration file...");
 		map = Maps.newHashMap();
 		Properties props = new Properties();
 		props.load(inputStreamReader);
@@ -30,6 +34,7 @@ public class ConfigImpl implements Config {
 			String name = (String) entry.getKey();
 			String value = (String) entry.getValue();
 			map.put(name, value);
+			System.out.println(name + " : " + value);
 		}
 	}
 	
