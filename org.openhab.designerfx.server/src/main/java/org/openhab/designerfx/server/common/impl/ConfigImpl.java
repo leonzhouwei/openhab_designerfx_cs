@@ -9,7 +9,6 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Config;
-import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.util.Util;
 import org.springframework.stereotype.Component;
 

@@ -35,7 +35,7 @@ public class Util {
 		return baseNames;
 	}
 	
-	public static List<String> readAll(File file) throws IOException {
+	public static List<String> readAllTrimEmptyLines(File file) throws IOException {
 		BufferedReader br = null;
 		List<String> list = Lists.newArrayList();
 		try {
