@@ -130,7 +130,11 @@
 									</includes>
 									<includes>
 										<include>server.properties</include>
+										 <filtering>true</filtering>
 									</includes>
+								</resource>
+								<resource>
+								    <directory>${basedir}/test</directory>
 								</resource>
 							</resources>
 						</configuration>
