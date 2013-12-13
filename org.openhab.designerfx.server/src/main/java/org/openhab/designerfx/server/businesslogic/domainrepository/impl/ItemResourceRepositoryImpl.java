@@ -41,7 +41,6 @@ public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 	public void load() {
 		ItemResourcePersistence persist = appContext.getBean(ItemResourcePersistence.class);
 		List<String> names = persist.listNames();
-		System.out.println("oops: " + names.size());
 		for (String name : names) {
 			ItemResource ir = appContext.getBean(ItemResource.class);
 			ir.setName(name);
