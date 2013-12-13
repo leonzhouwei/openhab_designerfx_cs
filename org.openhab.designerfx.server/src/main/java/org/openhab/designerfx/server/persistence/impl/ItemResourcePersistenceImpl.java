@@ -10,9 +10,11 @@ import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
 import org.openhab.designerfx.server.util.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class ItemResourcePersistenceImpl implements ItemResourcePersistence {
 	
 	@Resource

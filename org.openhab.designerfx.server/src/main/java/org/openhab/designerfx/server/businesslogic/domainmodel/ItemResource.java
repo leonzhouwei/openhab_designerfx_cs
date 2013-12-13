@@ -3,61 +3,31 @@ package org.openhab.designerfx.server.businesslogic.domainmodel;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.openhab.designerfx.server.businesslogic.domainmodel.internal.Item;
+import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-public class ItemResource {
+//@Component
+//@Scope("prototype")
+public class ItemResource implements Loadable {
 	
-	public class ItemNameInUseException extends RuntimeException {
-		private static final long serialVersionUID = -470568796749401836L;
-		
-		public ItemNameInUseException(String itemName) {
-			super("Item name '" + itemName + "' has already been used.");
-		}
-	}
+//	@Resource
+	private ItemResourcePersistence persist;
 	
-	public static class Item {
-		private String type;
-		private String name;
-		private String labelText;
-		private String iconName;
-		private List<String> groups;
-		private String bindingConfig;
-
-		public String getType() {
-			return type;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public String getLabelText() {
-			return labelText;
-		}
-
-		public String getIconName() {
-			return iconName;
-		}
-
-		public List<String> getGroups() {
-			return groups;
-		}
-
-		public String getBindingConfig() {
-			return bindingConfig;
-		}
-
-	}
-
 	private String name;
 	private List<Item> items = Lists.newArrayList();
 	private Map<String, Item> map = Maps.newHashMap();
 	
-	public ItemResource(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -66,12 +36,33 @@ public class ItemResource {
 		return items;
 	}
 	
-	public void addItem(Item item) throws ItemNameInUseException {
-		if (map.get(item.name) != null) {
-			throw new ItemNameInUseException(item.name);
+	@Override
+	public void load() {
+		items.clear();
+		map.clear();
+		List<String> content = persist.getContent(name);
+		for (String s : content) {
+			Item item = Item.parse(s);
+			items.add(item);
+			map.put(name, item);
 		}
-		map.put(item.name, item);
-		items.add(item);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("name:\"" + name + "\"");
+		sb.append(",");
+		sb.append("items:[");
+		for (Item item : items) {
+			sb.append("\"" + item + "\"");
+			sb.append(",");
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		sb.append("]");
+		sb.append("}");
+		return sb.toString();
 	}
 
 }

@@ -1,31 +1,34 @@
 package org.openhab.designerfx.server.businesslogic.domainrepository.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResource;
 import org.openhab.designerfx.server.businesslogic.domainrepository.ItemResourceRepository;
 import org.openhab.designerfx.server.common.Context;
+import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
-@Component
+//@Component
 public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 
-	@Resource
+//	@Resource
 	private Context context;
-	private Map<String, ItemResource> map = Maps.newHashMap();
+//	@Resource
+	private ItemResourcePersistence persist;
+	
 	private List<ItemResource> list = Lists.newArrayList();
-
+	
 	public ItemResourceRepositoryImpl() {
-		final String name = "demo";
-		ItemResource ir = new ItemResource(name);
-		map.put(name, ir);
-		list.add(ir);
+		List<String> names = persist.listNames();
+		for (String name : names) {
+			ItemResource ir = new ItemResource();
+			ir.setName(name);
+			list.add(ir);
+		}
 	}
 
 	@Override
