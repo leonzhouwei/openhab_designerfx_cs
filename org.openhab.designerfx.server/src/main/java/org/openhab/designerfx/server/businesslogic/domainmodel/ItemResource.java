@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.openhab.designerfx.server.businesslogic.domainmodel.internal.Item;
+import org.openhab.designerfx.server.common.Loadable;
 import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

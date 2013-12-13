@@ -13,24 +13,24 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Test {
 
-	private static ApplicationContext springApplicationContext;
+	private static ApplicationContext appContext;
 
 	public static void main(String[] args) throws Exception {
 		// 启动 Spring
-		springApplicationContext = new ClassPathXmlApplicationContext(
+		appContext = new ClassPathXmlApplicationContext(
 				"/beans.xml");
 		// 加载配置文件
-		Config config = springApplicationContext.getBean(Config.class);
+		Config config = appContext.getBean(Config.class);
 		InputStreamReader isr = new InputStreamReader(new FileInputStream(
 				"server.properties"), "utf-8");
 		config.load(isr);
 		isr.close();
 		// 设置上下文环境
-		Context context = springApplicationContext.getBean(Context.class);
+		Context context = appContext.getBean(Context.class);
 		final String openHABHome = Constants.CURRENT_WORKING_DIR + Constants.FILE_SEPARATOR + "test" + Constants.FILE_SEPARATOR + "resources" + Constants.FILE_SEPARATOR + "openhab-runtime";
 		context.setOpenHABHome(openHABHome);
 		// 获取各个领域仓库
-		ItemResourceRepository irr = springApplicationContext.getBean(ItemResourceRepository.class);
+		ItemResourceRepository irr = appContext.getBean(ItemResourceRepository.class);
 		List<String> names = irr.listAllNames();
 		for (String name : names) {
 			System.out.println(name);
@@ -41,7 +41,7 @@ public class Test {
 	}
 
 	public static ApplicationContext getSpringApplicationContext() {
-		return springApplicationContext;
+		return appContext;
 	}
 
 }

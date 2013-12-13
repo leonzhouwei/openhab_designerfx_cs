@@ -16,14 +16,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class Server {
 	
-	private static ApplicationContext springApplicationContext;
+	private static ApplicationContext appContext;
 
 	public static void main(String[] args) throws IOException {
 		// 启动 Spring
-		springApplicationContext = new ClassPathXmlApplicationContext(
+		appContext = new ClassPathXmlApplicationContext(
 				"/beans.xml");
 		// 加载配置文件
-		Config config = springApplicationContext.getBean(Config.class);
+		Config config = appContext.getBean(Config.class);
 		InputStreamReader isr = new InputStreamReader(new FileInputStream("server.properties"), "utf-8");
 		config.load(isr);
 		isr.close();
@@ -37,7 +37,7 @@ public class Server {
 	}
 	
 	public static ApplicationContext getSpringApplicationContext() {
-		return springApplicationContext;
+		return appContext;
 	}
 	
 }

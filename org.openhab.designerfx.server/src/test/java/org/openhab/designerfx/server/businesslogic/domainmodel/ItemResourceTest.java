@@ -16,7 +16,7 @@ public class ItemResourceTest extends AbstractJUnit4SpringContextTests {
 	@Resource
 	private Context context;
 	@Resource
-	private ApplicationContext springAppContext;
+	private ApplicationContext appContext;
 	
 	@Before
     public void setUp() throws Exception {
@@ -26,7 +26,7 @@ public class ItemResourceTest extends AbstractJUnit4SpringContextTests {
 	
 	@Test
 	public void testLoad() {
-		ItemResource ir = springAppContext.getBean(ItemResource.class);
+		ItemResource ir = appContext.getBean(ItemResource.class);
 		ir.setName("demo");
 		ir.load();
 		ir.toString();

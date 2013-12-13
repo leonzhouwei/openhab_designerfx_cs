@@ -8,29 +8,21 @@ import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResource;
 import org.openhab.designerfx.server.businesslogic.domainrepository.ItemResourceRepository;
 import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 
-//@Component
+@Component
 public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 
-//	@Resource
+	@Resource
+	private ApplicationContext appContext;
+	@Resource
 	private Context context;
-//	@Resource
-	private ItemResourcePersistence persist;
 	
 	private List<ItemResource> list = Lists.newArrayList();
 	
-	public ItemResourceRepositoryImpl() {
-		List<String> names = persist.listNames();
-		for (String name : names) {
-			ItemResource ir = new ItemResource();
-			ir.setName(name);
-			list.add(ir);
-		}
-	}
-
 	@Override
 	public List<ItemResource> listAll() {
 		return list;
@@ -43,6 +35,18 @@ public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 			names.add(ir.getName());
 		}
 		return names;
+	}
+
+	@Override
+	public void load() {
+		System.out.println("oops: " + appContext);
+		ItemResourcePersistence persist = appContext.getBean(ItemResourcePersistence.class);
+		List<String> names = persist.listNames();
+		for (String name : names) {
+			ItemResource ir = new ItemResource();
+			ir.setName(name);
+			list.add(ir);
+		}
 	}
 
 }

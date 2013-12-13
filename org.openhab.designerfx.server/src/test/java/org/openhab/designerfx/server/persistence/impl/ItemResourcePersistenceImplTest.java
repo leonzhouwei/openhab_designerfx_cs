@@ -20,14 +20,13 @@ public class ItemResourcePersistenceImplTest extends AbstractJUnit4SpringContext
 	@Resource
 	private Context context;
 	@Resource
-	private ApplicationContext springAppContext;
+	private ApplicationContext appContext;
 
 	@Before
     public void setUp() throws Exception {
 		final String openHABHome = Constants.CURRENT_WORKING_DIR + Constants.FILE_SEPARATOR + "test" + Constants.FILE_SEPARATOR + "resources" + Constants.FILE_SEPARATOR + "openhab-runtime";
 		context.setOpenHABHome(openHABHome);
-		irp = springAppContext.getBean(ItemResourcePersistence.class);
-		System.out.println(irp);
+		irp = appContext.getBean(ItemResourcePersistence.class);
     }
 	
 	@Test
