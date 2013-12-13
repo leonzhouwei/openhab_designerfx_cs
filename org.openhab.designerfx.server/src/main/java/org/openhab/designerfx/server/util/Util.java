@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import org.openhab.designerfx.server.internal.common.Constants;
+import org.openhab.designerfx.server.common.Constants;
 
 import com.google.common.collect.Lists;
 
