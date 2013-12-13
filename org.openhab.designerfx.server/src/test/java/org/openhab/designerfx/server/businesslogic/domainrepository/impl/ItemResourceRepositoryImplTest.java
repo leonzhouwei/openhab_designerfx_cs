@@ -22,7 +22,7 @@ public class ItemResourceRepositoryImplTest extends AbstractJUnit4SpringContextT
 	@Resource
 	private ApplicationContext appContext;
 	@Resource
-	private Context context;//System.out.print
+	private Context context;
 	@Resource
 	private ItemResourceRepository itemResRepo;
 	
