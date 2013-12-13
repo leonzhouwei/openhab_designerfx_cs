@@ -13,26 +13,15 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 
-//@Component
+@Component
 public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 
-//	@Resource
+	@Resource
 	private ApplicationContext appContext;
-//	@Resource
+	@Resource
 	private Context context;
 	
 	private List<ItemResource> list = Lists.newArrayList();
-	
-	public ItemResourceRepositoryImpl() {
-		ItemResourcePersistence persist = appContext.getBean(ItemResourcePersistence.class);
-		List<String> names = persist.listNames();
-		System.out.println("oops: " + names.size());
-		for (String name : names) {
-			ItemResource ir = appContext.getBean(ItemResource.class);
-			ir.setName(name);
-			list.add(ir);
-		}
-	}
 	
 	@Override
 	public List<ItemResource> listAll() {
@@ -46,6 +35,18 @@ public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 			names.add(ir.getName());
 		}
 		return names;
+	}
+
+	@Override
+	public void load() {
+		ItemResourcePersistence persist = appContext.getBean(ItemResourcePersistence.class);
+		List<String> names = persist.listNames();
+		System.out.println("oops: " + names.size());
+		for (String name : names) {
+			ItemResource ir = appContext.getBean(ItemResource.class);
+			ir.setName(name);
+			list.add(ir);
+		}
 	}
 
 }

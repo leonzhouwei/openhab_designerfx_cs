@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openhab.designerfx.server.businesslogic.domainrepository.ItemResourceRepository;
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
@@ -16,16 +17,21 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 @ContextConfiguration("classpath:beans.xml")
 public class ItemResourcePersistenceImplTest extends AbstractJUnit4SpringContextTests {
 	
-	private ItemResourcePersistence irp;
+	@Resource
+	private ApplicationContext appContext;
 	@Resource
 	private Context context;
 	@Resource
-	private ApplicationContext appContext;
+	private ItemResourceRepository itemResRepo;
+	
+	private ItemResourcePersistence irp;
+
 
 	@Before
     public void setUp() throws Exception {
 		final String openHABHome = Constants.CURRENT_WORKING_DIR + Constants.FILE_SEPARATOR + "test" + Constants.FILE_SEPARATOR + "resources" + Constants.FILE_SEPARATOR + "openhab-runtime";
 		context.setOpenHABHome(openHABHome);
+		itemResRepo.load();
 		irp = appContext.getBean(ItemResourcePersistence.class);
     }
 	
