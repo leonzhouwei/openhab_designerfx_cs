@@ -47,6 +47,8 @@ public class Item {
 		line = line.substring(index).trim();
 		index = line.indexOf(Constants.STRING_SPACE);
 		if (index == -1) {
+			item.setName(line);
+			return item;
 		}
 		final String name = line.substring(0, index);
 		item.setName(name);

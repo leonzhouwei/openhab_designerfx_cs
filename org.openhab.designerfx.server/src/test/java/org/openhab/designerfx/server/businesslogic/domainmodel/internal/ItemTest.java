@@ -7,7 +7,7 @@ public class ItemTest {
 
 	@Test
 	public void test() {
-		String line = "Switch Light_Room_Table \"Table Light\" <iconname> ";
+		String line = "Switch Light_Room_Table \"Table Light\" <iconname> (Room,Lights)";
 		Item item = Item.parse(line);
 		Util.printSeparateLine();
 		System.out.println(item);
