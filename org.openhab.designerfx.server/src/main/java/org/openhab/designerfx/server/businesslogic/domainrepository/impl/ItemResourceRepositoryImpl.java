@@ -8,15 +8,13 @@ import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResource;
 import org.openhab.designerfx.server.businesslogic.domainrepository.ItemResourceRepository;
 import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 
 //@Component
-public class ItemResourceRepositoryImpl implements ItemResourceRepository, BeanPostProcessor {
+public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 
 //	@Resource
 	private ApplicationContext appContext;
@@ -24,6 +22,17 @@ public class ItemResourceRepositoryImpl implements ItemResourceRepository, BeanP
 	private Context context;
 	
 	private List<ItemResource> list = Lists.newArrayList();
+	
+	public ItemResourceRepositoryImpl() {
+		ItemResourcePersistence persist = appContext.getBean(ItemResourcePersistence.class);
+		List<String> names = persist.listNames();
+		System.out.println("oops: " + names.size());
+		for (String name : names) {
+			ItemResource ir = appContext.getBean(ItemResource.class);
+			ir.setName(name);
+			list.add(ir);
+		}
+	}
 	
 	@Override
 	public List<ItemResource> listAll() {
@@ -37,27 +46,6 @@ public class ItemResourceRepositoryImpl implements ItemResourceRepository, BeanP
 			names.add(ir.getName());
 		}
 		return names;
-	}
-
-	@Override
-	public Object postProcessAfterInitialization(Object arg0, String arg1)
-			throws BeansException {
-		ItemResourcePersistence persist = appContext.getBean(ItemResourcePersistence.class);
-		List<String> names = persist.listNames();
-		System.out.println("oops: " + names.size());
-		for (String name : names) {
-			ItemResource ir = appContext.getBean(ItemResource.class);
-			ir.setName(name);
-			list.add(ir);
-		}
-		return arg0;
-	}
-
-	@Override
-	public Object postProcessBeforeInitialization(Object arg0, String arg1)
-			throws BeansException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
