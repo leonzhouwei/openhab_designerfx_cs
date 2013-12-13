@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-//@Component
-//@Scope("prototype")
+@Component
+@Scope("prototype")
 public class ItemResource implements Loadable {
 	
-//	@Resource
+	@Resource
 	private ItemResourcePersistence persist;
 	
 	private String name;

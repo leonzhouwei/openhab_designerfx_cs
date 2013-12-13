@@ -47,10 +47,4 @@ public class ItemResourcePersistenceImpl implements ItemResourcePersistence {
 		return content;
 	}
 
-	@Override
-	public void load() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

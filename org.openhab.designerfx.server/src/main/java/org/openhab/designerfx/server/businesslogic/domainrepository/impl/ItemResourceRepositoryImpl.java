@@ -8,17 +8,19 @@ import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResource;
 import org.openhab.designerfx.server.businesslogic.domainrepository.ItemResourceRepository;
 import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 
-@Component
-public class ItemResourceRepositoryImpl implements ItemResourceRepository {
+//@Component
+public class ItemResourceRepositoryImpl implements ItemResourceRepository, BeanPostProcessor {
 
-	@Resource
+//	@Resource
 	private ApplicationContext appContext;
-	@Resource
+//	@Resource
 	private Context context;
 	
 	private List<ItemResource> list = Lists.newArrayList();
@@ -38,15 +40,24 @@ public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 	}
 
 	@Override
-	public void load() {
-		System.out.println("oops: " + appContext);
+	public Object postProcessAfterInitialization(Object arg0, String arg1)
+			throws BeansException {
 		ItemResourcePersistence persist = appContext.getBean(ItemResourcePersistence.class);
 		List<String> names = persist.listNames();
+		System.out.println("oops: " + names.size());
 		for (String name : names) {
-			ItemResource ir = new ItemResource();
+			ItemResource ir = appContext.getBean(ItemResource.class);
 			ir.setName(name);
 			list.add(ir);
 		}
+		return arg0;
+	}
+
+	@Override
+	public Object postProcessBeforeInitialization(Object arg0, String arg1)
+			throws BeansException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
