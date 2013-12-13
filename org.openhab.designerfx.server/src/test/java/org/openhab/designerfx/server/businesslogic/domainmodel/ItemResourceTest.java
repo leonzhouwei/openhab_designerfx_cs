@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Context;
+import org.openhab.designerfx.server.util.Util;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
@@ -26,6 +27,7 @@ public class ItemResourceTest extends AbstractJUnit4SpringContextTests {
 	
 	@Test
 	public void testLoad() {
+		Util.printSeparateLine();
 		ItemResource ir = appContext.getBean(ItemResource.class);
 		ir.setName("demo");
 		ir.load();

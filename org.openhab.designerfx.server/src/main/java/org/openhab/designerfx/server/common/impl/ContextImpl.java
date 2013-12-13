@@ -20,7 +20,7 @@ public class ContextImpl implements Context {
 	public void setOpenHABHome(String path) throws Exception {
 		synchronized (this) {
 			Util.printSeparateLine();
-			System.out.println("Listing the openHAB home directory (" + path + ")...");
+			System.out.println("Listing the openHAB home directory..." + " (" + path + ")");
 			File file = new File(path);
 			if (!file.exists() || !file.isDirectory()) {
 				throw new Exception(path + " does not exist or is not a directory");

@@ -26,13 +26,10 @@ public class Item {
 		// parse the type
 		int typeEndIndex = line.indexOf(Constants.STRING_SPACE);
 		final String type = line.substring(0, typeEndIndex);
-		System.out.println("type: " + type);
 		// parse the name
 		line = line.substring(typeEndIndex).trim();
-		System.out.println(line);
 		int nameEndIndex = line.indexOf(Constants.STRING_SPACE);
 		final String name = line.substring(0, nameEndIndex);
-		System.out.println("name: " + name);
 		// parse the label text
 		// parse the icon name
 		// parse the groups
