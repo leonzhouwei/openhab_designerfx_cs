@@ -1,0 +1,6 @@
+Group gGF (All)
+Group GF_Living "Living room" <video> (gGF)
+Group:Number:AVG Lighting "Average lighting [%.2f Lux]" <switch> (Status)
+
+Number Lighting_Room_Sensor "Lighting in the Room [%.2f Lux]" <switch> (Room,Lighting) { knx = "<0/1/1" }
+Switch Light_Room_Table "Table Light" (Room, Lights) { knx = "<0/1/10+0/1/30"}
