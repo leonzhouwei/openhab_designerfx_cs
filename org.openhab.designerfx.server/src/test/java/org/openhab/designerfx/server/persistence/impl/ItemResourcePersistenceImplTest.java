@@ -10,10 +10,8 @@ import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
 import org.openhab.designerfx.server.util.Util;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-@ContextConfiguration("classpath:beans.xml")
 public class ItemResourcePersistenceImplTest extends AbstractJUnit4SpringContextTests {
 	
 	private ApplicationContext appContext;
