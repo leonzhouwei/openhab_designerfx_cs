@@ -2,7 +2,7 @@ package org.openhab.designerfx.server.persistence;
 
 import java.util.List;
 
-public interface ItemResourcePersistence {
+public interface ItemResourcePersister {
 
 	public List<String> listNames();
 	

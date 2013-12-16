@@ -6,24 +6,20 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Loadable;
-import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
+import org.openhab.designerfx.server.persistence.ItemResourcePersister;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class ItemResourceMaster implements Loadable {
 
-	private ItemResourcePersistence itemResourcePersistence;
+	private ItemResourcePersister itemResourcePersistence;
 	private Long nextId;
 	// name-id mapping
 	private Map<String, Long> map = Maps.newHashMap();
 
-	public ItemResourcePersistence getItemResourcePersistence() {
-		return itemResourcePersistence;
-	}
-
 	public void setItemResourcePersistence(
-			ItemResourcePersistence itemResourcePersistence) {
+			ItemResourcePersister itemResourcePersistence) {
 		this.itemResourcePersistence = itemResourcePersistence;
 	}
 

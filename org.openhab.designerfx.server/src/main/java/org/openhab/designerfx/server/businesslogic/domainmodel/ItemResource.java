@@ -5,14 +5,14 @@ import java.util.Map;
 
 import org.openhab.designerfx.server.businesslogic.domainmodel.internal.Item;
 import org.openhab.designerfx.server.common.Loadable;
-import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
+import org.openhab.designerfx.server.persistence.ItemResourcePersister;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class ItemResource implements Loadable {
 	
-	private ItemResourcePersistence persist;
+	private ItemResourcePersister persist;
 	
 	private String name;
 	private List<Item> items = Lists.newArrayList();

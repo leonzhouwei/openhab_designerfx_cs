@@ -6,17 +6,13 @@ import java.util.List;
 
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Context;
-import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
+import org.openhab.designerfx.server.persistence.ItemResourcePersister;
 import org.openhab.designerfx.server.util.Util;
 
-public class ItemResourcePersistenceImpl implements ItemResourcePersistence {
+public class ItemResourcePersisterImpl implements ItemResourcePersister {
 	
 	private Context context;
 	
-	public Context getContext() {
-		return context;
-	}
-
 	public void setContext(Context context) {
 		this.context = context;
 	}

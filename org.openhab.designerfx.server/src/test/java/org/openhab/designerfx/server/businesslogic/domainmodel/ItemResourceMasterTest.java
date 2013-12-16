@@ -11,7 +11,7 @@ public class ItemResourceMasterTest extends BaseTest {
 	@Test
 	public void test() {
 		Util.printSeparateLine();
-		ItemResourceMaster irm = appContext.getBean(ItemResourceMaster.class);
+		ItemResourceMaster irm = ItemResourceMasterBuilder.build();
 		irm.load();
 		List<String> names = irm.listItemResourceNames();
 		for (String name : names) {

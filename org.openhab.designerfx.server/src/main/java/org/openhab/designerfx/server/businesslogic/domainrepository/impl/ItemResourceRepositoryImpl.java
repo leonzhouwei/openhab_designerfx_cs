@@ -5,7 +5,7 @@ import java.util.List;
 import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResource;
 import org.openhab.designerfx.server.businesslogic.domainrepository.ItemResourceRepository;
 import org.openhab.designerfx.server.common.Context;
-import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
+import org.openhab.designerfx.server.persistence.ItemResourcePersister;
 
 import com.google.common.collect.Lists;
 
@@ -31,7 +31,7 @@ public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 
 	@Override
 	public void load() {
-		ItemResourcePersistence persist = null;
+		ItemResourcePersister persist = null;
 		List<String> names = persist.listNames();
 		for (String name : names) {
 			ItemResource ir = null;
