@@ -22,13 +22,18 @@ import org.openhab.designerfx.server.util.Util;
  * 
  */
 public class Server {
-	
+
 	public static void main(String[] args) throws Exception {
+		init();
+	}
+
+	private static void init() throws Exception {
 		// 获取环境参数
 		File file = new File(Constants.CURRENT_WORKING_DIR).getParentFile();
 		final String openHABHome = findOpenHABHome(file);
 		if (openHABHome == null) {
-			System.err.println(PromptMessage.OPENHAB_HOME_NOT_FOUND + " in \"" + file.getPath() + "\"");
+			System.err.println(PromptMessage.OPENHAB_HOME_NOT_FOUND + " in \""
+					+ file.getPath() + "\"");
 			System.exit(-1);
 		}
 		Context context = ContextBuilder.build();
@@ -39,7 +44,7 @@ public class Server {
 		Config config = ConfigBuilder.build();
 		config.load(isr);
 		isr.close();
-		// 
+		//
 		Util.printSeparateLine();
 		ItemResourceMaster irm = ItemResourceMasterBuilder.build();
 		irm.load();
@@ -48,13 +53,14 @@ public class Server {
 			System.out.println(name);
 		}
 	}
-	
+
 	/**
 	 * 
-	 * @param directory  the upper direcotry of the home of this programme
+	 * @param directory
+	 *            the upper direcotry of the home of this programme
 	 * @return
 	 */
-	public static String findOpenHABHome(File directory) {
+	private static String findOpenHABHome(File directory) {
 		String path = null;
 		File[] files = directory.listFiles();
 		for (File f : files) {
@@ -66,5 +72,5 @@ public class Server {
 		}
 		return path;
 	}
-	
+
 }
