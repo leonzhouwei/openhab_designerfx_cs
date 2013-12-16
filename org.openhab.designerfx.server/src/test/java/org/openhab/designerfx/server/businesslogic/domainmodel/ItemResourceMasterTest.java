@@ -15,7 +15,7 @@ public class ItemResourceMasterTest extends BaseTest {
 		irm.load();
 		List<String> names = irm.listItemResourceNames();
 		for (String name : names) {
-			System.out.println(name);
+//			System.out.println(name);
 		}
 	}
 

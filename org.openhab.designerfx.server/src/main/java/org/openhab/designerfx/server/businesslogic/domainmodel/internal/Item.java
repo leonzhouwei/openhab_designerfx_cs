@@ -8,7 +8,7 @@ import org.openhab.designerfx.server.common.DesignerFXException;
 import com.google.common.collect.Lists;
 
 public class Item {
-	
+
 	public class InvalidParserStringException extends DesignerFXException {
 		private static final long serialVersionUID = -6306477045323118068L;
 
@@ -32,70 +32,90 @@ public class Item {
 	private List<String> groups = Lists.newArrayList(); // optional
 	private String bindingConfig; // optional
 
-	public static Item parse(String line) {
-		Item item = new Item();
-		// parse the type
-		int index = -1;
+	public static Item parse(String line) throws InvalidParserStringException {
 		line = line.trim();
-		index = line.indexOf(Constants.STRING_SPACE);
-		final String type = line.substring(0, index);
-		item.setType(type);
+		Item item = new Item();
+
+		if (line.startsWith("Group:")) {
+			String[] temp = line.split("\\s");
+			String type = null;
+			if (!temp[0].contains("(")) {
+				type = temp[0];
+			} else {
+				final int endIndex = line.indexOf(")");
+				type = line.substring(0, endIndex + 1);
+			}
+			item.setType(type);
+			line = line.substring(type.length(), line.length()).trim();
+		} else {
+			// parse the type
+			String[] forType = line.split("\\s");
+			if (forType.length > 0) {
+				for (String s : forType) {
+					if (!s.trim().isEmpty()) {
+						item.setType(s);
+						final int index = line.indexOf(s);
+						line = line
+								.substring(index + s.length(), line.length())
+								.trim();
+						break;
+					}
+				}
+			}
+		}
 		// parse the name
-		if (index > line.length() - 1) {
-			return item;
+		//System.out.println("will parse name from " + line);
+		if (!line.isEmpty()) {
+			String[] array = line.split("\\b");
+			if (array.length > 0) {
+				for (String s : array) {
+					if (!s.trim().isEmpty()) {
+						item.setName(s);
+						final int index = line.indexOf(s);
+						line = line
+								.substring(index + s.length(), line.length())
+								.trim();
+						break;
+					}
+				}
+			}
 		}
-		line = line.substring(index).trim();
-		index = line.indexOf(Constants.STRING_SPACE);
-		if (index == -1) {
-			item.setName(line);
-			return item;
-		}
-		final String name = line.substring(0, index);
-		item.setName(name);
-		// parse the label text if exists
-		if (index > line.length() - 1) {
-			return item;
-		}
-		line = line.substring(index).trim();
+		// parse the label text
+		//System.out.println("will parse label text from " + line);
 		if (line.startsWith("\"")) {
-			index = line.indexOf("\"", 1);
-			final String labelText = line.substring(1, index);
-			item.setLabelText(labelText);
-			index = index + 1;
+			final int start = line.indexOf("\"");
+			final int end = line.indexOf("\"", start + 1);
+			item.setLabelText(line.substring(start + 1, end));
+			line = line.substring(end + 1, line.length()).trim();
 		}
-		// parse the icon name if exists
-		if (index > line.length() - 1) {
-			return item;
-		}
-		line = line.substring(index).trim();
+		// parse the icon name
+		//System.out.println("will parse icon name from " + line);
 		if (line.startsWith("<")) {
-			index = line.indexOf(">", 1);
-			final String iconName = line.substring(1, index);
-			item.setIconName(iconName);
-			index = index + 1;
+			final int start = line.indexOf("<");
+			final int end = line.indexOf(">");
+			item.setIconName(line.substring(start + 1, end));
+			line = line.substring(end + 1, line.length()).trim();
 		}
-		// parse the groups if exists
-		if (index > line.length() - 1) {
-			return item;
-		}
-		line = line.substring(index).trim();
+		// parse the group(s)
+		//System.out.println("will parse group(s) from " + line);
 		if (line.startsWith("(")) {
-			index = line.indexOf(")", index + 1);
-			final String s = line.substring(1, index);
-			String[] groups = s.split(",");
+			final int start = line.indexOf("(");
+			final int end = line.indexOf(")");
+			String s = line.substring(start + 1, end);
+			String[] groups = { s };
+			if (s.contains(",")) {
+				groups = s.split(",");
+			}
 			item.addGroups(groups);
-			index = index + 1;
+			line = line.substring(end + 1, line.length()).trim();
 		}
-		// parse the binding config if exists
-		if (index > line.length() - 1) {
-			return item;
-		}
-		line = line.substring(index).trim();
+		// parse the binding config
 		if (line.startsWith("{")) {
-			index = line.indexOf("}", index + 1);
-			final String bindingConfig = line.substring(1, index);
-			item.setBindingConfig(bindingConfig);
+			final int start = line.indexOf("{");
+			final int end = line.indexOf("}");
+			item.setBindingConfig(line.substring(start + 1, end));
 		}
+
 		return item;
 	}
 
@@ -125,39 +145,41 @@ public class Item {
 
 	@Override
 	public String toString() {
-		// itemtype itemname ["labeltext"] [<iconname>] [(group1, group2, ...)] [{bindingconfig}]
 		StringBuilder sb = new StringBuilder();
+		sb.append("{\n");
+		sb.append(super.toString());
+		sb.append("\n");
+		sb.append("type: ");
 		sb.append(type);
-		sb.append(Constants.STRING_SPACE);
+		sb.append("\n");
+		sb.append("name: ");
 		sb.append(name);
+		sb.append("\n");
 		if (labelText != null) {
-			sb.append(Constants.STRING_SPACE);
-			sb.append("\"");
+			sb.append("labeltext: ");
 			sb.append(labelText);
-			sb.append("\"");
+			sb.append("\n");
 		}
 		if (iconName != null) {
-			sb.append(Constants.STRING_SPACE);
-			sb.append("<");
+			sb.append("iconname: ");
 			sb.append(iconName);
-			sb.append(">");
+			sb.append("\n");
 		}
 		if (!groups.isEmpty()) {
-			sb.append(Constants.STRING_SPACE);
-			sb.append("(");
+			sb.append("groups: ");
 			for (String group : groups) {
 				sb.append(group);
 				sb.append(",");
 			}
 			sb.deleteCharAt(sb.length() - 1);
-			sb.append(")");
+			sb.append("\n");
 		}
 		if (bindingConfig != null) {
-			sb.append(Constants.STRING_SPACE);
-			sb.append("{");
+			sb.append("bindingconfig: ");
 			sb.append(bindingConfig);
-			sb.append("}");
+			sb.append("\n");
 		}
+		sb.append("}");
 		return sb.toString();
 	}
 
@@ -179,8 +201,12 @@ public class Item {
 
 	public void addGroups(String[] groups) {
 		for (String group : groups) {
-			this.groups.add(group.trim());
+			addGroup(group);
 		}
+	}
+
+	public void addGroup(String group) {
+		groups.add(group.trim());
 	}
 
 	public void setBindingConfig(String bindingConfig) {

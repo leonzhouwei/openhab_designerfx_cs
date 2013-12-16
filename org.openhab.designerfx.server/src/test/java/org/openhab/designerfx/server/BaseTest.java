@@ -1,11 +1,6 @@
 package org.openhab.designerfx.server;
 
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-
 import org.junit.Before;
-import org.openhab.designerfx.server.common.Config;
-import org.openhab.designerfx.server.common.ConfigBuilder;
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.common.ContextBuilder;
@@ -14,18 +9,14 @@ public class BaseTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		// 加载配置文件
-		InputStreamReader isr = new InputStreamReader(new FileInputStream(
-				"server.properties"), "utf-8");
-		Config config = ConfigBuilder.build();
-		config.load(isr);
-		isr.close();
-		// 设置程序的运行时上下文
+		// 获取环境参数
 		final String openHABHome = Constants.CURRENT_WORKING_DIR
 				+ Constants.FILE_SEPARATOR + "test" + Constants.FILE_SEPARATOR
-				+ "resources" + Constants.FILE_SEPARATOR + "openhab-runtime";
+				+ "resources" + Constants.FILE_SEPARATOR + "openhab-runtime-1.2.0";
 		Context context = ContextBuilder.build();
 		context.setOpenHABHome(openHABHome);
+		// 加载配置文件
+		Server.loadConfig();
 	}
 	
 }

@@ -1,8 +1,8 @@
 package org.openhab.designerfx.server.businesslogic.domainmodel;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Loadable;
@@ -13,38 +13,42 @@ import com.google.common.collect.Maps;
 
 public class ItemResourceMaster implements Loadable {
 
-	private ItemResourcePersister itemResourcePersistence;
-	private Long nextId;
+	private static Long nextId;
 	// name-id mapping
 	private Map<String, Long> map = Maps.newHashMap();
+	private List<ItemResource> list = Lists.newArrayList();
+	
+	private ItemResourcePersister itemResourcePersistence;
 
 	public void setItemResourcePersistence(
 			ItemResourcePersister itemResourcePersistence) {
 		this.itemResourcePersistence = itemResourcePersistence;
 	}
 
-	public Long getItemResourceId(String name) {
-		return map.get(name);
-	}
-
 	@Override
 	public void load() {
 		nextId = 1L;
 		map.clear();
+		list.clear();
 		List<String> names = itemResourcePersistence.listNames();
 		for (String name : names) {
+			ItemResource ir = new ItemResource(nextId, name);
+			ir.load();
+			list.add(ir);
 			map.put(name, nextId);
+			System.out.println(ir.toString());
 			nextId += 1;
 		}
 	}
 	
 	public List<String> listItemResourceNames() {
 		List<String> names = Lists.newArrayList();
-		Set<Entry<String, Long>> set = map.entrySet();
-		for (Entry<String, Long> entry : set) {
-			names.add(entry.getKey());
+		Set<String> set = map.keySet();
+		for (String name : set) {
+			names.add(name);
 		}
+		Collections.sort(names);
 		return names;
 	}
-
+	
 }

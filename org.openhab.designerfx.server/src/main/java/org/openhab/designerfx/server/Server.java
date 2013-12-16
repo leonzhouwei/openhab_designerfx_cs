@@ -2,6 +2,7 @@ package org.openhab.designerfx.server;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class Server {
 	public static void main(String[] args) throws Exception {
 		init();
 	}
-
-	private static void init() throws Exception {
+	
+	public static void getContext() throws Exception {
 		// 获取环境参数
 		File file = new File(Constants.CURRENT_WORKING_DIR).getParentFile();
 		final String openHABHome = findOpenHABHome(file);
@@ -38,20 +39,15 @@ public class Server {
 		}
 		Context context = ContextBuilder.build();
 		context.setOpenHABHome(openHABHome);
+	}
+
+	public static void loadConfig() throws IOException {
 		// 加载配置文件
 		InputStreamReader isr = new InputStreamReader(new FileInputStream(
 				"server.properties"), "utf-8");
 		Config config = ConfigBuilder.build();
 		config.load(isr);
 		isr.close();
-		//
-		Util.printSeparateLine();
-		ItemResourceMaster irm = ItemResourceMasterBuilder.build();
-		irm.load();
-		List<String> names = irm.listItemResourceNames();
-		for (String name : names) {
-			System.out.println(name);
-		}
 	}
 
 	/**
@@ -71,6 +67,19 @@ public class Server {
 			}
 		}
 		return path;
+	}
+	
+	private static void init() throws Exception {
+		getContext();
+		loadConfig();
+		//
+		Util.printSeparateLine();
+		ItemResourceMaster irm = ItemResourceMasterBuilder.build();
+		irm.load();
+		List<String> names = irm.listItemResourceNames();
+		for (String name : names) {
+			System.out.println(name);
+		}
 	}
 
 }
