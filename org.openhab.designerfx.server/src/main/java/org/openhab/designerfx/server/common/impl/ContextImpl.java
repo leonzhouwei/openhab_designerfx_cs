@@ -4,9 +4,7 @@ import java.io.File;
 
 import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.util.Util;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ContextImpl implements Context {
 
 	private String openHABHome;

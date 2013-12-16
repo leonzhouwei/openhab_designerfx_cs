@@ -10,11 +10,9 @@ import java.util.Set;
 
 import org.openhab.designerfx.server.common.Config;
 import org.openhab.designerfx.server.util.Util;
-import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Maps;
 
-@Component
 public class ConfigImpl implements Config {
 	
 	private Map<String, String> map;

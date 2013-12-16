@@ -2,8 +2,6 @@ package org.openhab.designerfx.server.businesslogic.domainrepository.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResource;
@@ -18,11 +16,8 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 @ContextConfiguration("classpath:beans.xml")
 public class ItemResourceRepositoryImplTest extends AbstractJUnit4SpringContextTests {
 	
-	@Resource
 	private ApplicationContext appContext;
-	@Resource
 	private Context context;
-	@Resource
 	private ItemResourceRepository itemResRepo;
 	
 	@Before

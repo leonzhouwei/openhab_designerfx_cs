@@ -1,7 +1,5 @@
 package org.openhab.designerfx.server.businesslogic.domainmodel;
 
-import javax.annotation.Resource;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openhab.designerfx.server.common.Constants;
@@ -14,9 +12,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 @ContextConfiguration("classpath:beans.xml")
 public class ItemResourceTest extends AbstractJUnit4SpringContextTests {
 
-	@Resource
 	private Context context;
-	@Resource
 	private ApplicationContext appContext;
 	
 	@Before

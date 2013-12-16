@@ -4,22 +4,23 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
 import org.openhab.designerfx.server.util.Util;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
-@Component
-@Scope("prototype")
 public class ItemResourcePersistenceImpl implements ItemResourcePersistence {
 	
-	@Resource
 	private Context context;
 	
+	public Context getContext() {
+		return context;
+	}
+
+	public void setContext(Context context) {
+		this.context = context;
+	}
+
 	@Override
 	public List<String> listNames() {
 		String path = context.getOpenHABHome() + Constants.FILE_SEPARATOR + Constants.OPENHAB_ITEMS_DIR_RELATIVE_PATH;

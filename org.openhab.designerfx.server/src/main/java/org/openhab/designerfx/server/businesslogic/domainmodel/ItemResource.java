@@ -3,22 +3,15 @@ package org.openhab.designerfx.server.businesslogic.domainmodel;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.openhab.designerfx.server.businesslogic.domainmodel.internal.Item;
 import org.openhab.designerfx.server.common.Loadable;
 import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-@Component
-@Scope("prototype")
 public class ItemResource implements Loadable {
 	
-	@Resource
 	private ItemResourcePersistence persist;
 	
 	private String name;

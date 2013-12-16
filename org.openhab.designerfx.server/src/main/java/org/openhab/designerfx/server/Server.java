@@ -4,7 +4,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResourceMaster;
 import org.openhab.designerfx.server.common.Config;
+import org.openhab.designerfx.server.common.Constants;
+import org.openhab.designerfx.server.common.Context;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -18,7 +21,7 @@ public class Server {
 	
 	private static ApplicationContext appContext;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		// 启动 Spring
 		appContext = new ClassPathXmlApplicationContext(
 				"/beans.xml");
@@ -29,11 +32,12 @@ public class Server {
 		isr.close();
 		System.out.println(config.getHost());
 		System.out.println(config.getPort());
-		// 获取各个领域仓库
-		
-		// 获取各个领域模型
-		// 创建单例型actor
-		// 创建多例型acotr
+		//
+		final String openHABHome = Constants.CURRENT_WORKING_DIR + Constants.FILE_SEPARATOR + "test" + Constants.FILE_SEPARATOR + "resources" + Constants.FILE_SEPARATOR + "openhab-runtime";
+		Context context = appContext.getBean(Context.class);
+		context.setOpenHABHome(openHABHome);
+		ItemResourceMaster irm = appContext.getBean(ItemResourceMaster.class);
+		irm.load();
 	}
 	
 	public static ApplicationContext getSpringApplicationContext() {

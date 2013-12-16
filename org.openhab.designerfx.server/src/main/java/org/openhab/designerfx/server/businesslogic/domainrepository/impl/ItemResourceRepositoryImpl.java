@@ -2,23 +2,15 @@ package org.openhab.designerfx.server.businesslogic.domainrepository.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResource;
 import org.openhab.designerfx.server.businesslogic.domainrepository.ItemResourceRepository;
 import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.persistence.ItemResourcePersistence;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 
-@Component
 public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 
-	@Resource
-	private ApplicationContext appContext;
-	@Resource
 	private Context context;
 	
 	private List<ItemResource> list = Lists.newArrayList();
@@ -39,10 +31,10 @@ public class ItemResourceRepositoryImpl implements ItemResourceRepository {
 
 	@Override
 	public void load() {
-		ItemResourcePersistence persist = appContext.getBean(ItemResourcePersistence.class);
+		ItemResourcePersistence persist = null;
 		List<String> names = persist.listNames();
 		for (String name : names) {
-			ItemResource ir = appContext.getBean(ItemResource.class);
+			ItemResource ir = null;
 			ir.setName(name);
 			list.add(ir);
 		}
