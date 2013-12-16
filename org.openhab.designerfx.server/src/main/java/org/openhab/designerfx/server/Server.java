@@ -1,14 +1,19 @@
 package org.openhab.designerfx.server;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResourceMaster;
+import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResourceMasterBuilder;
 import org.openhab.designerfx.server.common.Config;
+import org.openhab.designerfx.server.common.ConfigBuilder;
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Context;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.openhab.designerfx.server.common.ContextBuilder;
+import org.openhab.designerfx.server.common.PromptMessage;
+import org.openhab.designerfx.server.util.Util;
 
 /**
  * 主Acotr监听socket连接请求，然后将请求转发给新建Acotr处理
@@ -18,27 +23,48 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class Server {
 	
-	private static ApplicationContext appContext;
-
 	public static void main(String[] args) throws Exception {
-		// 启动 Spring
-		appContext = new ClassPathXmlApplicationContext(
-				"/beans.xml");
+		// 获取环境参数
+		File file = new File(Constants.CURRENT_WORKING_DIR).getParentFile();
+		final String openHABHome = findOpenHABHome(file);
+		if (openHABHome == null) {
+			System.err.println(PromptMessage.OPENHAB_HOME_NOT_FOUND + " in \"" + file.getPath() + "\"");
+			System.exit(-1);
+		}
+		Context context = ContextBuilder.build();
+		context.setOpenHABHome(openHABHome);
 		// 加载配置文件
-		Config config = appContext.getBean(Config.class);
-		InputStreamReader isr = new InputStreamReader(new FileInputStream("server.properties"), "utf-8");
+		InputStreamReader isr = new InputStreamReader(new FileInputStream(
+				"server.properties"), "utf-8");
+		Config config = ConfigBuilder.build();
 		config.load(isr);
 		isr.close();
-		//
-		final String openHABHome = Constants.CURRENT_WORKING_DIR + Constants.FILE_SEPARATOR + "test" + Constants.FILE_SEPARATOR + "resources" + Constants.FILE_SEPARATOR + "openhab-runtime";
-		Context context = appContext.getBean(Context.class);
-		context.setOpenHABHome(openHABHome);
-		ItemResourceMaster irm = appContext.getBean(ItemResourceMaster.class);
+		// 
+		Util.printSeparateLine();
+		ItemResourceMaster irm = ItemResourceMasterBuilder.build();
 		irm.load();
+		List<String> names = irm.listItemResourceNames();
+		for (String name : names) {
+			System.out.println(name);
+		}
 	}
 	
-	public static ApplicationContext getSpringApplicationContext() {
-		return appContext;
+	/**
+	 * 
+	 * @param directory  the upper direcotry of the home of this programme
+	 * @return
+	 */
+	public static String findOpenHABHome(File directory) {
+		String path = null;
+		File[] files = directory.listFiles();
+		for (File f : files) {
+			String name = f.getName();
+			if (name.startsWith("openhab-runtime")) {
+				path = f.getPath();
+				break;
+			}
+		}
+		return path;
 	}
 	
 }

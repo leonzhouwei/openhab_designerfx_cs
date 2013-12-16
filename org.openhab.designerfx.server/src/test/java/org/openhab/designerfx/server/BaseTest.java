@@ -20,7 +20,7 @@ public class BaseTest {
 		Config config = ConfigBuilder.build();
 		config.load(isr);
 		isr.close();
-		//
+		// 设置程序的运行时上下文
 		final String openHABHome = Constants.CURRENT_WORKING_DIR
 				+ Constants.FILE_SEPARATOR + "test" + Constants.FILE_SEPARATOR
 				+ "resources" + Constants.FILE_SEPARATOR + "openhab-runtime";
