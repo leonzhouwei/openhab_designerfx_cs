@@ -1,7 +1,6 @@
 package org.openhab.designerfx.server;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.openhab.designerfx.server.businesslogic.domainmodel.ItemResourceMaster;
@@ -30,8 +29,6 @@ public class Server {
 		InputStreamReader isr = new InputStreamReader(new FileInputStream("server.properties"), "utf-8");
 		config.load(isr);
 		isr.close();
-		System.out.println(config.getHost());
-		System.out.println(config.getPort());
 		//
 		final String openHABHome = Constants.CURRENT_WORKING_DIR + Constants.FILE_SEPARATOR + "test" + Constants.FILE_SEPARATOR + "resources" + Constants.FILE_SEPARATOR + "openhab-runtime";
 		Context context = appContext.getBean(Context.class);
