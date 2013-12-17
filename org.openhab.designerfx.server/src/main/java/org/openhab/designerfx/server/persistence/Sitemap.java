@@ -2,6 +2,8 @@ package org.openhab.designerfx.server.persistence;
 
 import java.util.List;
 
+import org.openhab.designerfx.server.common.Constants;
+
 import com.google.common.collect.Lists;
 
 public class Sitemap {
@@ -28,6 +30,17 @@ public class Sitemap {
 	
 	public void addElement(SitemapElement e) {
 		elements.add(e);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append(Constants.LINE_SEPARATOR);
+		sb.append("name: " + name);
+		sb.append(Constants.LINE_SEPARATOR);
+		sb.append("label: " + label);
+		return sb.toString();
 	}
 
 }

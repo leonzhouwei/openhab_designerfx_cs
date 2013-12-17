@@ -21,6 +21,8 @@ public class SitemapParserTest extends BaseTest {
 		File file = new File(path);
 		Util.printSeparateLine();
 		Sitemap sitemap = SitemapParser.parse(file);
+		Util.printSeparateLine();
+		System.out.println(sitemap.toString());
 	}
 
 }

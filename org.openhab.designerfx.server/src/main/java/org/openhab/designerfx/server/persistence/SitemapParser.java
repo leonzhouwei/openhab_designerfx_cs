@@ -10,11 +10,29 @@ import com.google.common.collect.Lists;
 
 public class SitemapParser {
 	
+	private static final String SITEMAP = "sitemap";
+	
 	public static Sitemap parse(File file) throws IOException {
 		List<String> lines = Util.readAllTrimEmptyLines(file);
+		if (lines.isEmpty() || !lines.get(0).startsWith(SITEMAP)) {
+			throw new RuntimeException("Invalid sitemap file (" + file.getPath() + ")");
+		}
 		format(lines);
 		print(lines);
+		return doParse(lines);
+	}
+	
+	private static Sitemap doParse(List<String> lines) {
 		Sitemap sitemap = new Sitemap();
+		// parse the head part (e.g. sitemap demo label="Main Menu")
+		String line = lines.get(0);
+		String temp = line.substring(SITEMAP.length(), line.length()).trim();
+		String name = temp.split("\\s")[0].trim();
+		sitemap.setName(name);
+		if (!temp.endsWith(name)) {
+			String label = temp.substring(name.length(), temp.length()).trim();
+			sitemap.setLabel(label.split("=")[1].trim());
+		}
 		return sitemap;
 	}
 	

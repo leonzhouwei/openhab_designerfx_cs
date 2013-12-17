@@ -5,6 +5,7 @@ public class Constants {
 	// System
 	public static final String CURRENT_WORKING_DIR = System.getProperty("user.dir");
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 	public static final String USER_HOME_DIR = System.getProperty("user.home");
 	
 	//
