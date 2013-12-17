@@ -38,6 +38,10 @@ public class ItemResource implements Loadable {
 		map.clear();
 		List<String> content = persist.getContent(name);
 		for (String s : content) {
+			s = s.trim();
+			if (s.startsWith("/\\*") || s.startsWith("*") || s.endsWith("*/")) {
+				continue;
+			}
 			Item item = Item.parse(s);
 			items.add(item);
 			map.put(name, item);

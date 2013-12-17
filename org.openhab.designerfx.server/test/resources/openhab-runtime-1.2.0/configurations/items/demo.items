@@ -1,1 +1,2 @@
-String UnknownDevices    "Unknown Devices in Range: [%s]" { bluetooth="?" }
+/* active groups */
+Group:Switch:OR(ON, OFF)        Lights      "All Lights [(%d)]"                                 (All)
