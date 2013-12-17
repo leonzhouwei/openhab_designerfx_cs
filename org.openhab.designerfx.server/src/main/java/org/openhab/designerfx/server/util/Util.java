@@ -59,4 +59,17 @@ public class Util {
 		System.out.println("--------------------------------------------------------------------------------");
 	}
 	
+	public static int count(String source, String target) {
+		int count = 0;
+		int index = -1;
+		while ((index = source.indexOf(target)) >= 0) {
+			count += 1;
+			if (index > source.length() - 1) {
+				break;
+			}
+			source = source.substring(index + 1, source.length());
+		}
+		return count;
+	}
+	
 }

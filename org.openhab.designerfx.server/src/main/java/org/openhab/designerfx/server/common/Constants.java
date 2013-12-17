@@ -18,8 +18,10 @@ public class Constants {
 	public static final String OPENHAB_RULES_DIR_BASE_NAME = "rules";
 	public static final String OPENHAB_SCRIPTS_DIR_BASE_NAME = "scripts";
 	public static final String OPENHAB_SITEMAPS_DIR_BASE_NAME = "sitemaps";
+	public static final String OPENHAB_SITEMAPS_DIR_RELATIVE_PATH = Constants.FILE_SEPARATOR + OPENHAB_CONFIG_DIR_BASE_NAME + FILE_SEPARATOR + OPENHAB_SITEMAPS_DIR_BASE_NAME;
 	public static final String OPENHAB_TRANSFORM_DIR_BASE_NAME = "transform";
-	public static final String OPENHAB_ITEMS_DIR_RELATIVE_PATH = OPENHAB_CONFIG_DIR_BASE_NAME + FILE_SEPARATOR + OPENHAB_ITEMS_DIR_BASE_NAME;
+	public static final String OPENHAB_ITEMS_DIR_RELATIVE_PATH = Constants.FILE_SEPARATOR + OPENHAB_CONFIG_DIR_BASE_NAME + FILE_SEPARATOR + OPENHAB_ITEMS_DIR_BASE_NAME;
+	public static final String SITEMAP_FILE_EXTENSION = ".sitemap";
 	
 	// DesignerFX
 }

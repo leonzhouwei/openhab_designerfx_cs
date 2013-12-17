@@ -19,7 +19,7 @@ public class ItemResourcePersisterImpl implements ItemResourcePersister {
 
 	@Override
 	public List<String> listNames() {
-		String path = context.getOpenHABHome() + Constants.FILE_SEPARATOR + Constants.OPENHAB_ITEMS_DIR_RELATIVE_PATH;
+		String path = context.getOpenHABHome() + Constants.OPENHAB_ITEMS_DIR_RELATIVE_PATH;
 		List<File> files = Util.listRegularFileNames(new File(path), Constants.ITEMS_FILE_EXTENSION);
 		List<String> names = Util.baseNames(files, Constants.ITEMS_FILE_EXTENSION);
 		return names;
@@ -29,7 +29,7 @@ public class ItemResourcePersisterImpl implements ItemResourcePersister {
 	public List<String> getContent(String name) {
 		List<String> content = null;
 		try {
-			File file = new File(context.getOpenHABHome() + Constants.FILE_SEPARATOR + Constants.OPENHAB_ITEMS_DIR_RELATIVE_PATH + Constants.FILE_SEPARATOR + name + Constants.ITEMS_FILE_EXTENSION);
+			File file = new File(context.getOpenHABHome() + Constants.OPENHAB_ITEMS_DIR_RELATIVE_PATH + Constants.FILE_SEPARATOR + name + Constants.ITEMS_FILE_EXTENSION);
 			if (file.exists()) {
 				content = Util.readAllTrimEmptyLines(file);
 			}

@@ -2,7 +2,6 @@ package org.openhab.designerfx.server.businesslogic.domainmodel.internal;
 
 import java.util.List;
 
-import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.DesignerFXException;
 
 import com.google.common.collect.Lists;
@@ -115,7 +114,6 @@ public class Item {
 			final int end = line.indexOf("}");
 			item.setBindingConfig(line.substring(start + 1, end));
 		}
-
 		return item;
 	}
 

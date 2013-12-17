@@ -65,8 +65,8 @@ public class ItemResource implements Loadable {
 		sb.append("{\n");
 		for (Item item : items) {
 			sb.append(item.toString());
+			sb.append("\n");
 		}
-		sb.append("\n");
 		sb.append("}");
 		return sb.toString();
 	}
