@@ -6,7 +6,7 @@ import com.google.common.collect.Lists;
 
 public class SitemapElement {
 
-	private List<SitemapElementProperty> props = Lists.newArrayList();
+	private List<SitemapElementProperty> properties = Lists.newArrayList();
 	private List<SitemapElement> children = Lists.newArrayList();
 
 	public List<SitemapElement> getChildren() {
@@ -17,8 +17,12 @@ public class SitemapElement {
 		children.add(child);
 	}
 	
-	public void addProperty(SitemapElementProperty prop) {
-		props.add(prop);
+	public void clearProperties() {
+		properties.clear();
 	}
-
+	
+	public void addProperty(SitemapElementProperty prop) {
+		properties.add(prop);
+	}
+	
 }

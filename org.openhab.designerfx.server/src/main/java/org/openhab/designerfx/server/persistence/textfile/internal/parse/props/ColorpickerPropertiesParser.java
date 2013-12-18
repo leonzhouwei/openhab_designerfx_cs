@@ -8,7 +8,22 @@ import org.openhab.designerfx.server.persistence.textfile.internal.parse.Sitemap
 
 import com.google.common.collect.Lists;
 
+/**
+ * 
+ * Syntax:
+ * Colorpicker [item="<itemname>"] [label="<labelname>"] [icon="<iconname>"] [sendFrequency=""]
+ * 
+ * @author zhouwei
+ *
+ */
 public class ColorpickerPropertiesParser implements SitemapElementPropertiesParser {
+	
+	public static final String[] SEPARATORS = {
+		"icon=",
+		"item=",
+		"label=",
+		"sendFrequency="
+	};
 
 	@Override
 	public void parse(SitemapElement e, String line) {

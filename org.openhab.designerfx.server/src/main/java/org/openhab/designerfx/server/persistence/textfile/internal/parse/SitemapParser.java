@@ -57,13 +57,7 @@ public class SitemapParser {
 	}
 	
 	private SitemapElement parseAtomic(String line) {
-		line = line.trim();
-		SitemapElement e = new SitemapElement();
-		String type = line.split("\\s")[0]; 
-		e.setType(type);
-		line = line.substring(type.length(), type.length()).trim();
-		String[] propNames = line.split("=\\s");
-		return e;
+		return null;
 	}
 	
 	private static void format(List<String> lines) throws RuntimeException {

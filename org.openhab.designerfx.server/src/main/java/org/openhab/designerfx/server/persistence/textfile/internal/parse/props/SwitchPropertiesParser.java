@@ -8,8 +8,23 @@ import org.openhab.designerfx.server.persistence.textfile.internal.parse.Sitemap
 
 import com.google.common.collect.Lists;
 
+/**
+ * 
+ * Syntax:
+ * Switch item="<itemname>" [label="<labelname>"] [icon="<iconname>"] [mappings="<mapping definition>"]
+ * 
+ * @author zhouwei
+ *
+ */
 public class SwitchPropertiesParser implements SitemapElementPropertiesParser {
 
+	public static final String[] SEPARATORS = {
+		"icon=",
+		"item=",
+		"label=",
+		"mappings="
+	};
+	
 	@Override
 	public void parse(SitemapElement e, String line) {
 		List<SitemapElementProperty> list = Lists.newArrayList();

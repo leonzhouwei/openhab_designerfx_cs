@@ -8,8 +8,24 @@ import org.openhab.designerfx.server.persistence.textfile.internal.parse.Sitemap
 
 import com.google.common.collect.Lists;
 
+/**
+ * 
+ * Syntax:
+ * Webview item="<itemname>" [label="<labelname>"] [icon="<iconname>"] url="<url>" [height="<heightvalue"]
+ * 
+ * @author zhouwei
+ *
+ */
 public class WebviewPropertiesParser implements SitemapElementPropertiesParser {
 
+	public static final String[] SEPARATORS = {
+		"height=",
+		"icon=",
+		"item=",
+		"label=",
+		"url="
+	};
+	
 	@Override
 	public void parse(SitemapElement e, String line) {
 		List<SitemapElementProperty> list = Lists.newArrayList();

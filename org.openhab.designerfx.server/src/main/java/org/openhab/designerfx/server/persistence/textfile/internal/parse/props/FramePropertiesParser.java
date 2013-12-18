@@ -8,7 +8,21 @@ import org.openhab.designerfx.server.persistence.textfile.internal.parse.Sitemap
 
 import com.google.common.collect.Lists;
 
+/**
+ * 
+ * Syntax:
+ * Frame [label="<labelname>"] [icon="<icon>"] [item="<item">]
+ * 
+ * @author zhouwei
+ *
+ */
 public class FramePropertiesParser implements SitemapElementPropertiesParser {
+	
+	public static final String[] SEPARATORS = {
+		"icon=", 
+		"item=",
+		"label="
+	};
 
 	@Override
 	public void parse(SitemapElement e, String line) {

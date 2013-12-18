@@ -8,8 +8,22 @@ import org.openhab.designerfx.server.persistence.textfile.internal.parse.Sitemap
 
 import com.google.common.collect.Lists;
 
+/**
+ * 
+ * Syntax:
+ * Video item="<itemname>"  [icon="<iconname>"] url="<url of video to embed>"
+ * 
+ * @author zhouwei
+ *
+ */
 public class VideoPropertiesParser implements SitemapElementPropertiesParser {
 
+	public static final String[] SEPARATORS = {
+		"icon=",
+		"item=",
+		"url="
+	};
+	
 	@Override
 	public void parse(SitemapElement e, String line) {
 		List<SitemapElementProperty> list = Lists.newArrayList();
