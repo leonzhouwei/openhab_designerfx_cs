@@ -22,7 +22,7 @@ public class ListPropertiesParser implements SitemapElementPropertiesParser {
 
 	public static final String LIST = "List";
 	
-	private static final String[] SEPARATORS = {
+	private static final String[] KEYS = {
 		LIST,
 		"icon=",
 		"item=",
@@ -32,7 +32,7 @@ public class ListPropertiesParser implements SitemapElementPropertiesParser {
 
 	public static Set<String> keysCopy() {
 		Set<String> keys = Sets.newHashSet();
-		for (String key : SEPARATORS) {
+		for (String key : KEYS) {
 			keys.add(key);
 		}
 		return keys;

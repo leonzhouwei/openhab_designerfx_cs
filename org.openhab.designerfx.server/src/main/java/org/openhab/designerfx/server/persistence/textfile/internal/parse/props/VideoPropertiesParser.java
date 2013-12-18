@@ -22,7 +22,7 @@ public class VideoPropertiesParser implements SitemapElementPropertiesParser {
 
 	public static final String VIDEO = "Video";
 
-	private static final String[] SEPARATORS = {
+	private static final String[] KEYS = {
 		VIDEO,
 		"icon=",
 		"item=",
@@ -31,7 +31,7 @@ public class VideoPropertiesParser implements SitemapElementPropertiesParser {
 
 	public static Set<String> keysCopy() {
 		Set<String> keys = Sets.newHashSet();
-		for (String key : SEPARATORS) {
+		for (String key : KEYS) {
 			keys.add(key);
 		}
 		return keys;

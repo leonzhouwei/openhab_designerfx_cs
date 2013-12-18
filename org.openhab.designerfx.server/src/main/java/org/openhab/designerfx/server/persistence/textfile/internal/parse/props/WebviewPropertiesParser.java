@@ -22,7 +22,7 @@ public class WebviewPropertiesParser implements SitemapElementPropertiesParser {
 
 	public static final String WEBVIEW = "Webview";
 
-	private static final String[] SEPARATORS = {
+	private static final String[] KEYS = {
 		WEBVIEW,
 		"height=",
 		"icon=",
@@ -33,7 +33,7 @@ public class WebviewPropertiesParser implements SitemapElementPropertiesParser {
 
 	public static Set<String> keysCopy() {
 		Set<String> keys = Sets.newHashSet();
-		for (String key : SEPARATORS) {
+		for (String key : KEYS) {
 			keys.add(key);
 		}
 		return keys;

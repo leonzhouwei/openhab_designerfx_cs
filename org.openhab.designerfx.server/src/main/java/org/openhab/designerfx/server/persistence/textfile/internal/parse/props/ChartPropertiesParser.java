@@ -20,7 +20,7 @@ public class ChartPropertiesParser implements SitemapElementPropertiesParser {
 	
 	public static final String CHART = "Chart";
 	
-	private static final String[] SEPARATORS = {
+	private static final String[] KEYS = {
 		CHART,
 		"icon=",
 		"item=",
@@ -33,7 +33,7 @@ public class ChartPropertiesParser implements SitemapElementPropertiesParser {
 	
 	public static Set<String> keysCopy() {
 		Set<String> keys = Sets.newHashSet();
-		for (String key : SEPARATORS) {
+		for (String key : KEYS) {
 			keys.add(key);
 		}
 		return keys;

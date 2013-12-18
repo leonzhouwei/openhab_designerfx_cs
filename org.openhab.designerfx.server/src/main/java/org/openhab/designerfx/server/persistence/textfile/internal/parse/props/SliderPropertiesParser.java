@@ -22,7 +22,7 @@ public class SliderPropertiesParser implements SitemapElementPropertiesParser {
 
 	public static final String SLIDER = "Slider";
 
-	private static final String[] SEPARATORS = {
+	private static final String[] KEYS = {
 		SLIDER,
 		"item=",
 		"label=",
@@ -34,7 +34,7 @@ public class SliderPropertiesParser implements SitemapElementPropertiesParser {
 
 	public static Set<String> keysCopy() {
 		Set<String> keys = Sets.newHashSet();
-		for (String key : SEPARATORS) {
+		for (String key : KEYS) {
 			keys.add(key);
 		}
 		return keys;

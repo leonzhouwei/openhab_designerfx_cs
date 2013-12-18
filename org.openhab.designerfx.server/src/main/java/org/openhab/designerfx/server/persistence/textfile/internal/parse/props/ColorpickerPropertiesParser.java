@@ -22,7 +22,7 @@ public class ColorpickerPropertiesParser implements SitemapElementPropertiesPars
 	
 	public static final String COLORPICKER = "Colorpicker";
 	
-	private static final String[] SEPARATORS = {
+	private static final String[] KEYS = {
 		COLORPICKER,
 		"icon=",
 		"item=",
@@ -32,7 +32,7 @@ public class ColorpickerPropertiesParser implements SitemapElementPropertiesPars
 	
 	public static Set<String> keysCopy() {
 		Set<String> keys = Sets.newHashSet();
-		for (String key : SEPARATORS) {
+		for (String key : KEYS) {
 			keys.add(key);
 		}
 		return keys;
