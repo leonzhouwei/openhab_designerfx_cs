@@ -6,8 +6,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
 
@@ -16,7 +18,8 @@ import com.google.common.collect.Maps;
 
 public class Util {
 
-	public static List<File> listRegularFileNames(File directory, String fileExtension) {
+	public static List<File> listRegularFileNames(File directory,
+			String fileExtension) {
 		File[] array = directory.listFiles();
 		List<File> files = Lists.newArrayList();
 		for (File file : array) {
@@ -26,7 +29,7 @@ public class Util {
 		}
 		return files;
 	}
-	
+
 	public static List<String> baseNames(List<File> files, String fileExtension) {
 		List<String> baseNames = Lists.newArrayList();
 		for (File file : files) {
@@ -37,12 +40,14 @@ public class Util {
 		}
 		return baseNames;
 	}
-	
-	public static List<String> readAllTrimEmptyLines(File file) throws IOException {
+
+	public static List<String> readAllTrimEmptyLines(File file)
+			throws IOException {
 		BufferedReader br = null;
 		List<String> list = Lists.newArrayList();
 		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(file), Constants.CHARSET_NAME_UTF_8));
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(
+					file), Constants.CHARSET_NAME_UTF_8));
 			String s = null;
 			while ((s = br.readLine()) != null) {
 				s = s.trim();
@@ -52,16 +57,17 @@ public class Util {
 			}
 		} finally {
 			if (br != null) {
-				br.close();	
+				br.close();
 			}
 		}
 		return list;
 	}
-	
+
 	public static void printSeparateLine() {
-		System.out.println("--------------------------------------------------------------------------------");
+		System.out
+				.println("--------------------------------------------------------------------------------");
 	}
-	
+
 	public static int count(String source, String target) {
 		int count = 0;
 		int index = -1;
@@ -74,57 +80,50 @@ public class Util {
 		}
 		return count;
 	}
-	
-	public static List<String> separateTrimmingSpace(String string, String[] differentSeparators) {
-		List<String> result = Lists.newArrayList();
-		string = string.trim();
-		String[] seps = new String[differentSeparators.length];
-		for (int i = 0; i < seps.length; ++i) {
-			seps[i] = differentSeparators[i];
+
+	public static Map<String, String> toMap(String string, Set<String> keys) {
+		Map<String, String> result = Maps.newHashMap();
+		for (String key : keys) {
+			result.put(key, null);
 		}
-		if (seps.length == 1) {
-			String[] array = string.split(seps[0]);
-			for (String s : array) {
-				result.add(s.trim());
-			}
+		final int keyCount = keys.size();
+		if (keyCount == 1) {
+			String key = keys.iterator().next();
+			String[] array = string.split(key);
+			result.put(key, array[1]);
 			return result;
 		}
-		int[] indexes = new int[seps.length];
-		for (int i = 0; i < seps.length; ++i) {
-			int index = string.indexOf(seps[i]);
-			indexes[i] = index;
-		}
-		// effective separator and its start index in @string
-		Map<Integer, String> effectiveSepMap = Maps.newHashMap();
-		for (int i = 0; i < seps.length; ++i) {
-			if (indexes[i] != -1) {
-				effectiveSepMap.put(indexes[i], seps[i]);
+		// parse effective key-startIndex pairs from @string
+		Map<Integer, String> effectiveIndexKeyPairs = Maps.newHashMap();
+		Iterator<String> iterator = keys.iterator();
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			int index = string.indexOf(key);
+			if (index != -1) {
+				effectiveIndexKeyPairs.put(index, key);
 			}
 		}
-		
-		if (effectiveSepMap.isEmpty()) {
-			result.add(string.trim());
+		if (effectiveIndexKeyPairs.isEmpty()) {
 			return result;
 		}
+		List<Integer> orderedIndexes = Lists.newArrayList();
+		orderedIndexes.addAll(effectiveIndexKeyPairs.keySet());
+		Collections.sort(orderedIndexes);
 		
-		List<Integer> effectiveIndexes = Lists.newArrayList();
-		effectiveIndexes.addAll(effectiveSepMap.keySet());
-		Collections.sort(effectiveIndexes);
-		// extract the substring before the first separator
-		if (effectiveIndexes.get(0) != 0) {
-			result.add(string.substring(0, effectiveIndexes.get(0)).trim());
-		}
-		final int size = effectiveIndexes.size();
+		// extract keys and related values pairs before the last pair
+		final int size = orderedIndexes.size();
 		for (int i = 0; i < size - 1; ++i) {
-			final int start = effectiveIndexes.get(i) + effectiveSepMap.get(effectiveIndexes.get(i)).length();
-			result.add(string.substring(start, effectiveIndexes.get(i + 1)).trim());
+			final int start = orderedIndexes.get(i) + effectiveIndexKeyPairs.get(orderedIndexes.get(i)).length();
+			final String key = effectiveIndexKeyPairs.get(orderedIndexes.get(i));
+			final String value = string.substring(start, orderedIndexes.get(i + 1));
+			result.put(key, value);
 		}
-		if (effectiveIndexes.get(size - 1) < string.length() - 1) {
-			final int start = effectiveIndexes.get(size - 1) + effectiveSepMap.get(effectiveIndexes.get(size - 1)).length();
-			result.add(string.substring(start, string.length()).trim());
-		}
-		// extract the substring after the last separator
+		// extract the last pair
+		final int start = orderedIndexes.get(size - 1) + effectiveIndexKeyPairs.get(orderedIndexes.get(size - 1)).length();
+		final String key = effectiveIndexKeyPairs.get(orderedIndexes.get(size - 1));
+		final String value = string.substring(start, string.length());
+		result.put(key, value);
+		
 		return result;
 	}
-	
 }

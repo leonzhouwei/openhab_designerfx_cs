@@ -1,8 +1,12 @@
 package org.openhab.designerfx.server.persistence.textfile.internal.parse.props;
 
+import java.util.Set;
+
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElement;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementPropertiesParser;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementProperty;
+
+import com.google.common.collect.Sets;
 
 /**
  * 
@@ -15,16 +19,25 @@ import org.openhab.designerfx.server.persistence.textfile.internal.parse.Sitemap
 public class ChartPropertiesParser implements SitemapElementPropertiesParser {
 	
 	public static final String CHART = "Chart";
-	public static final String[] SEPARATORS = {
+	
+	private static final String[] SEPARATORS = {
+		CHART,
 		"icon=",
 		"item=",
 		"label=",
 		"period=",
 		"refresh=",
 		"service=",
-		"visibility=",
-		"{"
+		"visibility="
 	};
+	
+	public static Set<String> keysCopy() {
+		Set<String> keys = Sets.newHashSet();
+		for (String key : SEPARATORS) {
+			keys.add(key);
+		}
+		return keys;
+	}
 
 	@Override
 	public void parse(SitemapElement e, String formattedLine) {
