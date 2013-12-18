@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.openhab.designerfx.server.businesslogic.domainmodel.internal.Item;
 import org.openhab.designerfx.server.common.Loadable;
-import org.openhab.designerfx.server.persistence.ItemResourcePersister;
-import org.openhab.designerfx.server.persistence.ItemResourcePersisterBuilder;
+import org.openhab.designerfx.server.persistence.textfile.ItemResourcePersister;
+import org.openhab.designerfx.server.persistence.textfile.ItemResourcePersisterBuilder;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

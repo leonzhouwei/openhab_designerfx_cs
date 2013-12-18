@@ -1,6 +1,6 @@
 package org.openhab.designerfx.server.businesslogic.domainmodel;
 
-import org.openhab.designerfx.server.persistence.ItemResourcePersisterBuilder;
+import org.openhab.designerfx.server.persistence.textfile.ItemResourcePersisterBuilder;
 
 public class ItemResourceMasterBuilder {
 	

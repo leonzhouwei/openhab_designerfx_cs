@@ -1,8 +1,9 @@
-package org.openhab.designerfx.server.persistence;
+package org.openhab.designerfx.server.persistence.textfile;
 
 import java.util.List;
 
 import org.openhab.designerfx.server.common.Constants;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElement;
 
 import com.google.common.collect.Lists;
 

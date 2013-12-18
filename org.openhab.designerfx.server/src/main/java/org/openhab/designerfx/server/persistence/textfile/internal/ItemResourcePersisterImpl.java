@@ -1,4 +1,4 @@
-package org.openhab.designerfx.server.persistence.impl;
+package org.openhab.designerfx.server.persistence.textfile.internal;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Context;
-import org.openhab.designerfx.server.persistence.ItemResourcePersister;
+import org.openhab.designerfx.server.persistence.textfile.ItemResourcePersister;
 import org.openhab.designerfx.server.util.Util;
 
 public class ItemResourcePersisterImpl implements ItemResourcePersister {

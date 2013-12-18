@@ -1,4 +1,4 @@
-package org.openhab.designerfx.server.persistence;
+package org.openhab.designerfx.server.persistence.textfile;
 
 import java.util.List;
 

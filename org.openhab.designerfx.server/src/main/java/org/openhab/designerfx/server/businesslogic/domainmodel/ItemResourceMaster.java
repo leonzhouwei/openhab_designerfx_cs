@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Loadable;
-import org.openhab.designerfx.server.persistence.ItemResourcePersister;
+import org.openhab.designerfx.server.persistence.textfile.ItemResourcePersister;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

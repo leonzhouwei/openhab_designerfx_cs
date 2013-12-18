@@ -1,7 +1,7 @@
-package org.openhab.designerfx.server.persistence;
+package org.openhab.designerfx.server.persistence.textfile;
 
 import org.openhab.designerfx.server.common.ContextBuilder;
-import org.openhab.designerfx.server.persistence.impl.ItemResourcePersisterImpl;
+import org.openhab.designerfx.server.persistence.textfile.internal.ItemResourcePersisterImpl;
 
 public class ItemResourcePersisterBuilder {
 	

@@ -1,9 +1,10 @@
-package org.openhab.designerfx.server.persistence;
+package org.openhab.designerfx.server.persistence.textfile.internal.parse;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.openhab.designerfx.server.persistence.textfile.Sitemap;
 import org.openhab.designerfx.server.util.Util;
 
 import com.google.common.collect.Lists;
@@ -34,6 +35,35 @@ public class SitemapParser {
 			sitemap.setLabel(label.split("=")[1].trim());
 		}
 		return sitemap;
+	}
+	
+	private static int parseSitemapElement(SitemapElement empty, List<String> lines, final int startLine) {
+		int endLine = -1;
+		final int size = lines.size();
+		for (int i = startLine; i < size; ++i) {
+			String line = lines.get(i);
+			if (line.endsWith("{")) {
+				SitemapElement child = new SitemapElement();
+				parseSitemapElement(child, lines, i);
+				empty.addChild(child);
+			}
+			if (line.startsWith("}")) {
+				endLine = i;
+				break;
+			}
+			
+		}
+		return endLine;
+	}
+	
+	private SitemapElement parseAtomic(String line) {
+		line = line.trim();
+		SitemapElement e = new SitemapElement();
+		String type = line.split("\\s")[0]; 
+		e.setType(type);
+		line = line.substring(type.length(), type.length()).trim();
+		String[] propNames = line.split("=\\s");
+		return e;
 	}
 	
 	private static void format(List<String> lines) throws RuntimeException {
