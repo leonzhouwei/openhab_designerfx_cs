@@ -22,7 +22,8 @@ public class ChartPropertiesParser implements SitemapElementPropertiesParser {
 		"period=",
 		"refresh=",
 		"service=",
-		"visibility="
+		"visibility=",
+		"{"
 	};
 
 	@Override

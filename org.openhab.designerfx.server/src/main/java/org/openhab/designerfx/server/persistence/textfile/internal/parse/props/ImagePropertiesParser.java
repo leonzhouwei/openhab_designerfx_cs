@@ -23,7 +23,8 @@ public class ImagePropertiesParser implements SitemapElementPropertiesParser {
 		"item=",
 		"label=",
 		"refresh=",
-		"url="
+		"url=",
+		"{"
 	};
 
 	@Override

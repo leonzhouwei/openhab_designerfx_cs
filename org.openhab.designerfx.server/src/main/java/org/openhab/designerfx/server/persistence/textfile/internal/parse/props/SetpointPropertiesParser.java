@@ -24,7 +24,8 @@ public class SetpointPropertiesParser implements SitemapElementPropertiesParser 
 		"label=",
 		"maxValue=",
 		"minValue=",
-		"step="
+		"step=",
+		"{"
 	};
 	
 	@Override

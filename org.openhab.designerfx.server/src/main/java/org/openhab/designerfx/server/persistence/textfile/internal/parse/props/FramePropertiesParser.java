@@ -21,7 +21,8 @@ public class FramePropertiesParser implements SitemapElementPropertiesParser {
 	public static final String[] SEPARATORS = {
 		"icon=", 
 		"item=",
-		"label="
+		"label=",
+		"{"
 	};
 
 	@Override

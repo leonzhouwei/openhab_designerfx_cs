@@ -22,7 +22,8 @@ public class ColorpickerPropertiesParser implements SitemapElementPropertiesPars
 		"icon=",
 		"item=",
 		"label=",
-		"sendFrequency="
+		"sendFrequency=",
+		"{"
 	};
 
 	@Override

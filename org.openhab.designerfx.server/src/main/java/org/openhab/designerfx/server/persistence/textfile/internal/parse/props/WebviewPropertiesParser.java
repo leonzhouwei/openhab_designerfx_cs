@@ -23,7 +23,8 @@ public class WebviewPropertiesParser implements SitemapElementPropertiesParser {
 		"icon=",
 		"item=",
 		"label=",
-		"url="
+		"url=",
+		"{"
 	};
 	
 	@Override

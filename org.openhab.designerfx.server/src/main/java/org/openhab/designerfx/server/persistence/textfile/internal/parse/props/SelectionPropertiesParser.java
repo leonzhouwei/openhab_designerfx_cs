@@ -22,7 +22,8 @@ public class SelectionPropertiesParser implements SitemapElementPropertiesParser
 		"icon=",
 		"item=",
 		"label=",
-		"mappings="
+		"mappings=",
+		"{"
 	};
 	
 	@Override

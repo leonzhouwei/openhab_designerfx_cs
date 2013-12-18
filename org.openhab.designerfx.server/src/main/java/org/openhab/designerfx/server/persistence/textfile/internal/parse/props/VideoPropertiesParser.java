@@ -21,7 +21,8 @@ public class VideoPropertiesParser implements SitemapElementPropertiesParser {
 	public static final String[] SEPARATORS = {
 		"icon=",
 		"item=",
-		"url="
+		"url=",
+		"{"
 	};
 	
 	@Override

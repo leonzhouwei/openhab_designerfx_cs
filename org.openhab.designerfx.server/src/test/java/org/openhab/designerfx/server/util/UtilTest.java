@@ -29,10 +29,11 @@ public class UtilTest {
 
 	@Test
 	public void testTrimAndSeparateIngoreCase_SitemapElemetType() {
-		String string = "SitemapElemetType";
+		String string = "SitemapElemetType {";
 		String[] separators = { 
 			"item=",
-			"label="
+			"label=",
+			"{"
 		};
 		List<String> expected = Lists.newArrayList("SitemapElemetType");
 		List<String> actual = Util.separateTrimmingSpace(string, separators);

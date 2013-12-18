@@ -22,7 +22,8 @@ public class SwitchPropertiesParser implements SitemapElementPropertiesParser {
 		"icon=",
 		"item=",
 		"label=",
-		"mappings="
+		"mappings=",
+		"{"
 	};
 	
 	@Override

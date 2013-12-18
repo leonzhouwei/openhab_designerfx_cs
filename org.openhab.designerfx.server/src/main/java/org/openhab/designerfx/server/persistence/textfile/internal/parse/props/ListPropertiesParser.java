@@ -22,7 +22,8 @@ public class ListPropertiesParser implements SitemapElementPropertiesParser {
 		"icon=",
 		"item=",
 		"label=",
-		"separator="
+		"separator=",
+		"{"
 	};
 	
 	@Override
