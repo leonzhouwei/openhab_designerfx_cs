@@ -2,18 +2,17 @@ package org.openhab.designerfx.server.persistence.textfile.internal.parse.props;
 
 import java.util.List;
 
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElement;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementPropertiesParser;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementProperty;
-
 
 import com.google.common.collect.Lists;
 
 public class SwitchPropertiesParser implements SitemapElementPropertiesParser {
 
 	@Override
-	public List<SitemapElementProperty> parse(String type, String props) {
+	public void parse(SitemapElement e, String line) {
 		List<SitemapElementProperty> list = Lists.newArrayList();
-		
-		return list;
 	}
 
 }

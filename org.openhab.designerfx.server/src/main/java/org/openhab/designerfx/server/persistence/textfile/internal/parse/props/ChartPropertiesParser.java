@@ -6,10 +6,17 @@ import org.openhab.designerfx.server.persistence.textfile.internal.parse.Sitemap
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementPropertiesParser;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementProperty;
 
+
 import com.google.common.collect.Lists;
 
-public class SliderPropertiesParser implements SitemapElementPropertiesParser {
+public class ChartPropertiesParser implements SitemapElementPropertiesParser {
+	
+	public static final String CHART = "Chart";
 
+	/**
+	 * Syntax:
+	 * Chart [item="<itemname>"] [icon="<iconname>"] [label="<labelname>"] [service="<service>"] [period=xxxx] [refresh=xxxx]
+	 */
 	@Override
 	public void parse(SitemapElement e, String line) {
 		List<SitemapElementProperty> list = Lists.newArrayList();
