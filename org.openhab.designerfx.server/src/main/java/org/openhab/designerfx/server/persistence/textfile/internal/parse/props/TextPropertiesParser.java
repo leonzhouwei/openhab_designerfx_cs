@@ -26,7 +26,8 @@ public class TextPropertiesParser implements SitemapElementPropertiesParser {
 		TEXT,
 		"icon=",
 		"item=",
-		"label="
+		"label=",
+		"valuecolor="
 	};
 
 	public static Set<String> keysCopy() {

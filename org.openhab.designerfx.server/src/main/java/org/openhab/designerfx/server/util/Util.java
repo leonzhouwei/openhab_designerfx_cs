@@ -81,7 +81,15 @@ public class Util {
 		return count;
 	}
 
-	public static Map<String, String> toMap(String string, Set<String> keys) {
+	/**
+	 * 
+	 * 
+	 * @param string
+	 * @param keys
+	 * @return
+	 */
+	public static Map<String, String> toMapTrimmingValues(String string, Set<String> keys) {
+		string = string.trim();
 		Map<String, String> result = Maps.newHashMap();
 		for (String key : keys) {
 			result.put(key, null);
@@ -90,7 +98,7 @@ public class Util {
 		if (keyCount == 1) {
 			String key = keys.iterator().next();
 			String[] array = string.split(key);
-			result.put(key, array[1]);
+			result.put(key, array[1].trim());
 			return result;
 		}
 		// parse effective key-startIndex pairs from @string
@@ -100,7 +108,7 @@ public class Util {
 			String key = iterator.next();
 			int index = string.indexOf(key);
 			if (index != -1) {
-				effectiveIndexKeyPairs.put(index, key);
+				effectiveIndexKeyPairs.put(index, key.trim());
 			}
 		}
 		if (effectiveIndexKeyPairs.isEmpty()) {
@@ -116,14 +124,13 @@ public class Util {
 			final int start = orderedIndexes.get(i) + effectiveIndexKeyPairs.get(orderedIndexes.get(i)).length();
 			final String key = effectiveIndexKeyPairs.get(orderedIndexes.get(i));
 			final String value = string.substring(start, orderedIndexes.get(i + 1));
-			result.put(key, value);
+			result.put(key, value.trim());
 		}
 		// extract the last pair
 		final int start = orderedIndexes.get(size - 1) + effectiveIndexKeyPairs.get(orderedIndexes.get(size - 1)).length();
 		final String key = effectiveIndexKeyPairs.get(orderedIndexes.get(size - 1));
 		final String value = string.substring(start, string.length());
-		result.put(key, value);
-		
+		result.put(key, value.trim());
 		return result;
 	}
 }
