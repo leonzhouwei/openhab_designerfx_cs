@@ -16,6 +16,8 @@ import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.S
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.SliderPropertiesParser;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.SwitchPropertiesParser;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.TextPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.VideoPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.WebviewPropertiesParser;
 
 import com.google.common.collect.Lists;
 
@@ -226,6 +228,39 @@ public class UtilTest {
 				"\"icon\""
 		);
 		List<String> actual = Util.separateTrimmingSpace(string, TextPropertiesParser.SEPARATORS);
+		final int size = expected.size();
+		for (int i = 0; i < size; ++i) {
+			String e = expected.get(i);
+			String a = actual.get(i);
+			assertThat(a, Matchers.equalTo(e));
+		}
+	}
+	
+	@Test
+	public void testTrimAndSeparateIngoreCase_Video() {
+		String string = "Video url=\"http://demo.openhab.org/Hue.m4v\"";
+		List<String> expected = Lists.newArrayList(
+				"Video", 
+				"\"http://demo.openhab.org/Hue.m4v\""
+		);
+		List<String> actual = Util.separateTrimmingSpace(string, VideoPropertiesParser.SEPARATORS);
+		final int size = expected.size();
+		for (int i = 0; i < size; ++i) {
+			String e = expected.get(i);
+			String a = actual.get(i);
+			assertThat(a, Matchers.equalTo(e));
+		}
+	}
+	
+	@Test
+	public void testTrimAndSeparateIngoreCase_Webview() {
+		String string = "Webview url=\"http://heise-online.mobi/\" height=8";
+		List<String> expected = Lists.newArrayList(
+				"Webview", 
+				"\"http://heise-online.mobi/\"",
+				"8"
+		);
+		List<String> actual = Util.separateTrimmingSpace(string, WebviewPropertiesParser.SEPARATORS);
 		final int size = expected.size();
 		for (int i = 0; i < size; ++i) {
 			String e = expected.get(i);
