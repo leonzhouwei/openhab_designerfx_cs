@@ -23,7 +23,8 @@ public class SliderPropertiesParser implements SitemapElementPropertiesParser {
 		"label=",
 		"icon=",
 		"sendFrequency=",
-		"switchEnabled"
+		"switchEnabled",
+		"switchSupport"
 	};
 	
 	@Override

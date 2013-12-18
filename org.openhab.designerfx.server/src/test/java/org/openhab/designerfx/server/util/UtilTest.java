@@ -10,6 +10,12 @@ import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.C
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.ColorpickerPropertiesParser;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.FramePropertiesParser;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.GroupPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.ImagePropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.SelectionPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.SetpointPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.SliderPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.SwitchPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.TextPropertiesParser;
 
 import com.google.common.collect.Lists;
 
@@ -20,7 +26,7 @@ public class UtilTest {
 	}
 
 	@Test
-	public void testTrimAndSeparateIngoreCase_1() {
+	public void testTrimAndSeparateIngoreCase_SitemapElemetType() {
 		String string = "SitemapElemetType";
 		String[] separators = { 
 			"item=",
@@ -37,7 +43,7 @@ public class UtilTest {
 	}
 	
 	@Test
-	public void testTrimAndSeparateIngoreCase_2() {
+	public void testTrimAndSeparateIngoreCase_Chart() {
 		String string = "Chart item=Weather_Chart period=h refresh=600 visibility=[Weather_Chart_Period==0, Weather_Chart_Period==\"Uninitialized\"]";
 		List<String> expected = Lists.newArrayList(
 				"Chart", 
@@ -56,7 +62,7 @@ public class UtilTest {
 	}
 	
 	@Test
-	public void testTrimAndSeparateIngoreCase_3() {
+	public void testTrimAndSeparateIngoreCase_Colorpicker() {
 		String string = "Colorpicker item=RGBLight icon=\"slider\"";
 		List<String> expected = Lists.newArrayList(
 				"Colorpicker", 
@@ -73,7 +79,7 @@ public class UtilTest {
 	}
 	
 	@Test
-	public void testTrimAndSeparateIngoreCase_4() {
+	public void testTrimAndSeparateIngoreCase_Frame() {
 		String string = "Frame label=\"Weather\"";
 		List<String> expected = Lists.newArrayList(
 				"Frame", 
@@ -89,7 +95,7 @@ public class UtilTest {
 	}
 	
 	@Test
-	public void testTrimAndSeparateIngoreCase_5() {
+	public void testTrimAndSeparateIngoreCase_Group() {
 		String string = "Group item=gFF label=\"First Floor\" icon=\"firstfloor\"";
 		List<String> expected = Lists.newArrayList(
 				"Group", 
@@ -98,6 +104,128 @@ public class UtilTest {
 				"\"firstfloor\""
 		);
 		List<String> actual = Util.separateTrimmingSpace(string, GroupPropertiesParser.SEPARATORS);
+		final int size = expected.size();
+		for (int i = 0; i < size; ++i) {
+			String e = expected.get(i);
+			String a = actual.get(i);
+			assertThat(a, Matchers.equalTo(e));
+		}
+	}
+	
+	@Test
+	public void testTrimAndSeparateIngoreCase_Image() {
+		String string = "Image url=\"http://localhost:8080/images/splash-ipad-h.png\"";
+		List<String> expected = Lists.newArrayList(
+				"Image", 
+				"\"http://localhost:8080/images/splash-ipad-h.png\""
+		);
+		List<String> actual = Util.separateTrimmingSpace(string, ImagePropertiesParser.SEPARATORS);
+		final int size = expected.size();
+		for (int i = 0; i < size; ++i) {
+			String e = expected.get(i);
+			String a = actual.get(i);
+			assertThat(a, Matchers.equalTo(e));
+		}
+	}
+	
+	@Test
+	public void testTrimAndSeparateIngoreCase_List() {
+		String string = "List item=itemname label=\"labelname\" icon=\"iconname\"";
+		List<String> expected = Lists.newArrayList(
+				"List", 
+				"itemname",
+				"\"labelname\"",
+				"\"iconname\""
+		);
+		List<String> actual = Util.separateTrimmingSpace(string, ImagePropertiesParser.SEPARATORS);
+		final int size = expected.size();
+		for (int i = 0; i < size; ++i) {
+			String e = expected.get(i);
+			String a = actual.get(i);
+			assertThat(a, Matchers.equalTo(e));
+		}
+	}
+	
+	@Test
+	public void testTrimAndSeparateIngoreCase_Selection() {
+		String string = "Selection item=Scene_General label=\"Scene Selection\" mappings=[0=off, 1=TV, 2=Dinner, 3=Reading]";
+		List<String> expected = Lists.newArrayList(
+				"Selection", 
+				"Scene_General",
+				"\"Scene Selection\"",
+				"[0=off, 1=TV, 2=Dinner, 3=Reading]"
+		);
+		List<String> actual = Util.separateTrimmingSpace(string, SelectionPropertiesParser.SEPARATORS);
+		final int size = expected.size();
+		for (int i = 0; i < size; ++i) {
+			String e = expected.get(i);
+			String a = actual.get(i);
+			assertThat(a, Matchers.equalTo(e));
+		}
+	}
+	
+	@Test
+	public void testTrimAndSeparateIngoreCase_Setpoint() {
+		String string = "Setpoint item=Temperature_Setpoint minValue=16 maxValue=28 step=0.5";
+		List<String> expected = Lists.newArrayList(
+				"Setpoint", 
+				"Temperature_Setpoint",
+				"16",
+				"28",
+				"0.5"
+		);
+		List<String> actual = Util.separateTrimmingSpace(string, SetpointPropertiesParser.SEPARATORS);
+		final int size = expected.size();
+		for (int i = 0; i < size; ++i) {
+			String e = expected.get(i);
+			String a = actual.get(i);
+			assertThat(a, Matchers.equalTo(e));
+		}
+	}
+	
+	@Test
+	public void testTrimAndSeparateIngoreCase_Slider() {
+		String string = "Slider item=DimmedLight switchSupport";
+		List<String> expected = Lists.newArrayList(
+				"Slider", 
+				"DimmedLight"
+		);
+		List<String> actual = Util.separateTrimmingSpace(string, SliderPropertiesParser.SEPARATORS);
+		final int size = expected.size();
+		for (int i = 0; i < size; ++i) {
+			String e = expected.get(i);
+			String a = actual.get(i);
+			assertThat(a, Matchers.equalTo(e));
+		}
+	}
+	
+	@Test
+	public void testTrimAndSeparateIngoreCase_Switch() {
+		String string = "Switch item=Weather_Chart_Period label=\"Chart Period\" mappings=[0=\"Hour\", 1=\"Day\", 2=\"Week\"]";
+		List<String> expected = Lists.newArrayList(
+				"Switch", 
+				"Weather_Chart_Period",
+				"\"Chart Period\"",
+				"[0=\"Hour\", 1=\"Day\", 2=\"Week\"]"
+		);
+		List<String> actual = Util.separateTrimmingSpace(string, SwitchPropertiesParser.SEPARATORS);
+		final int size = expected.size();
+		for (int i = 0; i < size; ++i) {
+			String e = expected.get(i);
+			String a = actual.get(i);
+			assertThat(a, Matchers.equalTo(e));
+		}
+	}
+	
+	@Test
+	public void testTrimAndSeparateIngoreCase_Text() {
+		String string = "Text label=\"http://www.openHAB.org\" icon=\"icon\"";
+		List<String> expected = Lists.newArrayList(
+				"Text", 
+				"\"http://www.openHAB.org\"",
+				"\"icon\""
+		);
+		List<String> actual = Util.separateTrimmingSpace(string, TextPropertiesParser.SEPARATORS);
 		final int size = expected.size();
 		for (int i = 0; i < size; ++i) {
 			String e = expected.get(i);

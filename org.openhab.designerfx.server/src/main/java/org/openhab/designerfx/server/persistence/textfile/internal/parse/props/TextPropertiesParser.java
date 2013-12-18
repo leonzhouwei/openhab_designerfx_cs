@@ -21,7 +21,7 @@ public class TextPropertiesParser implements SitemapElementPropertiesParser {
 	public static final String[] SEPARATORS = {
 		"icon=",
 		"item=",
-		"lablel="
+		"label="
 	};
 	
 	@Override
