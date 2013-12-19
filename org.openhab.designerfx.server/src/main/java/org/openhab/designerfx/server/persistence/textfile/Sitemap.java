@@ -36,11 +36,14 @@ public class Sitemap {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
+		sb.append("sitemap");
+		sb.append(Constants.STRING_SPACE);
+		sb.append(name);
+		sb.append(Constants.STRING_SPACE);
+		if (label != null) {
+			sb.append(label);
+		}
 		sb.append(Constants.LINE_SEPARATOR);
-		sb.append("name: " + name);
-		sb.append(Constants.LINE_SEPARATOR);
-		sb.append("label: " + label);
 		return sb.toString();
 	}
 

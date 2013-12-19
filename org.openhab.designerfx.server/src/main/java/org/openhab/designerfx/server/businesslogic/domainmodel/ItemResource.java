@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openhab.designerfx.server.businesslogic.domainmodel.internal.Item;
+import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Loadable;
 import org.openhab.designerfx.server.persistence.textfile.ItemResourcePersister;
 import org.openhab.designerfx.server.persistence.textfile.ItemResourcePersisterBuilder;
@@ -53,7 +54,7 @@ public class ItemResource implements Loadable {
 		StringBuilder sb = new StringBuilder();
 		for (Item item : items) {
 			sb.append(item.toString());
-			sb.append("\n");
+			sb.append(Constants.LINE_SEPARATOR);
 		}
 		return sb.toString();
 	
@@ -61,21 +62,22 @@ public class ItemResource implements Loadable {
 	
 	public String toJson() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("{\n");
-		sb.append(super.toString());
-		sb.append("\n");
+		sb.append("{");
+		sb.append(Constants.LINE_SEPARATOR);
+		sb.append(Constants.LINE_SEPARATOR);
 		sb.append("id: ");
 		sb.append(id);
-		sb.append("\n");
+		sb.append(Constants.LINE_SEPARATOR);
 		sb.append("name: ");
 		sb.append(name);
-		sb.append("\n");
+		sb.append(Constants.LINE_SEPARATOR);
 		sb.append("items:");
-		sb.append("\n");
-		sb.append("{\n");
+		sb.append(Constants.LINE_SEPARATOR);
+		sb.append("{");
+		sb.append(Constants.LINE_SEPARATOR);
 		for (Item item : items) {
 			sb.append(item.toString());
-			sb.append("\n");
+			sb.append(Constants.LINE_SEPARATOR);
 		}
 		sb.append("}");
 		return sb.toString();

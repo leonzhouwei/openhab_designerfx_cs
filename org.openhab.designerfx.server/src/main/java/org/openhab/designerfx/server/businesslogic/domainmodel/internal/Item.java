@@ -172,22 +172,22 @@ public class Item {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{\n");
 		sb.append(super.toString());
-		sb.append("\n");
+		sb.append(Constants.LINE_SEPARATOR);
 		sb.append("type: ");
 		sb.append(type);
-		sb.append("\n");
+		sb.append(Constants.LINE_SEPARATOR);
 		sb.append("name: ");
 		sb.append(name);
-		sb.append("\n");
+		sb.append(Constants.LINE_SEPARATOR);
 		if (labelText != null) {
 			sb.append("labeltext: ");
 			sb.append(labelText);
-			sb.append("\n");
+			sb.append(Constants.LINE_SEPARATOR);
 		}
 		if (iconName != null) {
 			sb.append("iconname: ");
 			sb.append(iconName);
-			sb.append("\n");
+			sb.append(Constants.LINE_SEPARATOR);
 		}
 		if (!groups.isEmpty()) {
 			sb.append("groups: ");
@@ -196,12 +196,12 @@ public class Item {
 				sb.append(",");
 			}
 			sb.deleteCharAt(sb.length() - 1);
-			sb.append("\n");
+			sb.append(Constants.LINE_SEPARATOR);
 		}
 		if (bindingConfig != null) {
 			sb.append("bindingconfig: ");
 			sb.append(bindingConfig);
-			sb.append("\n");
+			sb.append(Constants.LINE_SEPARATOR);
 		}
 		sb.append("}");
 		return sb.toString();
