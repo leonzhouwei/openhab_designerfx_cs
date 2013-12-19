@@ -12,6 +12,14 @@ import org.openhab.designerfx.server.util.Util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+/**
+ * 
+ * Syntax:
+ * Group [item="<itemname>"] [label="<labelname>"] [icon="<iconname>"]
+ * 
+ * @author zhouwei
+ *
+ */
 public class Group implements SitemapElementIf {
 
 	public static final String TYPE = "Group";
@@ -22,10 +30,10 @@ public class Group implements SitemapElementIf {
 		"item=",
 		"label="
 	};
-	private static final String[] PROPERTY_NAMES = {
-		"icon",
+	private static final String[] ORDERED_PROPERTY_NAMES = {
 		"item",
-		"label"
+		"label",
+		"icon"
 	};
 	
 	private List<SitemapElementProperty> properties = Lists.newArrayList();
@@ -64,7 +72,7 @@ public class Group implements SitemapElementIf {
 	@Override
 	public Set<String> propertyNameSet() {
 		Set<String> set = Sets.newTreeSet();
-		for (String s : PROPERTY_NAMES) {
+		for (String s : ORDERED_PROPERTY_NAMES) {
 			set.add(s);
 		}
 		return set;
@@ -114,7 +122,7 @@ public class Group implements SitemapElementIf {
 
 	@Override
 	public String toXtext() {
-		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties);
+		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties, ORDERED_PROPERTY_NAMES);
 	}
 
 	@Override

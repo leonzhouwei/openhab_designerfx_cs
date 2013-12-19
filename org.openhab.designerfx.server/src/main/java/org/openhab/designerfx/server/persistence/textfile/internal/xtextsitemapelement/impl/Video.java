@@ -12,6 +12,14 @@ import org.openhab.designerfx.server.util.Util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+/**
+ * 
+ * Syntax:
+ * Video item="<itemname>"  [icon="<iconname>"] url="<url of video to embed>"
+ * 
+ * @author zhouwei
+ *
+ */
 public class Video implements SitemapElementIf {
 
 	public static final String TYPE = "Video";
@@ -22,9 +30,9 @@ public class Video implements SitemapElementIf {
 		"item=",
 		"url="
 	};
-	private static final String[] PROPERTY_NAMES = {
-		"icon",
+	private static final String[] ORDERED_PROPERTY_NAMES = {
 		"item",
+		"icon",
 		"url"
 	};
 	
@@ -64,7 +72,7 @@ public class Video implements SitemapElementIf {
 	@Override
 	public Set<String> propertyNameSet() {
 		Set<String> set = Sets.newTreeSet();
-		for (String s : PROPERTY_NAMES) {
+		for (String s : ORDERED_PROPERTY_NAMES) {
 			set.add(s);
 		}
 		return set;
@@ -114,7 +122,7 @@ public class Video implements SitemapElementIf {
 
 	@Override
 	public String toXtext() {
-		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties);
+		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties, ORDERED_PROPERTY_NAMES);
 	}
 
 	@Override

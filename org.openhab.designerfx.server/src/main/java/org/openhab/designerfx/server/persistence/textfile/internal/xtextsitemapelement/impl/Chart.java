@@ -34,7 +34,7 @@ public class Chart implements SitemapElementIf {
 		"service=",
 		"visibility="
 	};
-	private static final String[] PROPERTY_NAMES = {
+	private static final String[] ORDERED_PROPERTY_NAMES = {
 		"item",
 		"icon",
 		"label",
@@ -80,7 +80,7 @@ public class Chart implements SitemapElementIf {
 	@Override
 	public Set<String> propertyNameSet() {
 		Set<String> set = Sets.newTreeSet();
-		for (String s : PROPERTY_NAMES) {
+		for (String s : ORDERED_PROPERTY_NAMES) {
 			set.add(s);
 		}
 		return set;
@@ -130,7 +130,7 @@ public class Chart implements SitemapElementIf {
 
 	@Override
 	public String toXtext() {
-		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties, PROPERTY_NAMES);
+		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties, ORDERED_PROPERTY_NAMES);
 	}
 
 	@Override

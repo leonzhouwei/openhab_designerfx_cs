@@ -164,14 +164,18 @@ public class Util {
 		for (SitemapElementProperty p : properties) {
 			String name = p.getName();
 			String value = p.getValue();
-			if (name != null && !name.isEmpty() && value != null && !value.isEmpty()) {
-				sb.append(name);
+			if (name != null && !name.trim().isEmpty() && value != null && !value.isEmpty()) {
+				sb.append(name.trim());
 				sb.append("=");
-				sb.append(value);
+				sb.append(value.trim());
 				sb.append(Constants.STRING_SPACE);
+			} else {
+				if (value != null) {
+					sb.append(value.trim());
+				}
 			}
 		}
-		return sb.toString();
+		return sb.toString().trim();
 	}
 
 	public static String toXtext(List<SitemapElementProperty> properties, String[] orders) {
@@ -186,21 +190,19 @@ public class Util {
 			if (p != null) {
 				String name = p.getName();
 				String value = p.getValue();
-				if (name != null && !name.isEmpty() &&
-					value != null && !value.isEmpty()) {
-					sb.append(name);
+				if (name != null && !name.trim().isEmpty() && value != null && !value.isEmpty()) {
+					sb.append(name.trim());
 					sb.append("=");
-					sb.append(value);
+					sb.append(value.trim());
 					sb.append(Constants.STRING_SPACE);
 				} else {
 					if (value != null) {
-						sb.append(value);
-						sb.append(Constants.STRING_SPACE);
+						sb.append(value.trim());
 					}
 				}
 			}
 		}
-		return sb.toString();
+		return sb.toString().trim();
 	}
 	
 }

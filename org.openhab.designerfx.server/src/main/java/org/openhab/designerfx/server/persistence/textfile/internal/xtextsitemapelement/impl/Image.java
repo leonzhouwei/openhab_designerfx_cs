@@ -12,6 +12,14 @@ import org.openhab.designerfx.server.util.Util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+/**
+ * 
+ * Syntax:
+ * Image [item="<itemname>"] [icon="<iconname>"] url="<url of image>" [label="<labelname>"] [refresh=IMAGE]
+ * 
+ * @author zhouwei
+ *
+ */
 public class Image implements SitemapElementIf {
 
 	public static final String TYPE = "Image";
@@ -24,12 +32,12 @@ public class Image implements SitemapElementIf {
 		"refresh=",
 		"url="
 	};
-	private static final String[] PROPERTY_NAMES = {
-		"icon",
+	private static final String[] ORDERED_PROPERTY_NAMES = {
 		"item",
+		"icon",
+		"url",
 		"label",
-		"refresh",
-		"url"
+		"refresh"
 	};
 	
 	private List<SitemapElementProperty> properties = Lists.newArrayList();
@@ -68,7 +76,7 @@ public class Image implements SitemapElementIf {
 	@Override
 	public Set<String> propertyNameSet() {
 		Set<String> set = Sets.newTreeSet();
-		for (String s : PROPERTY_NAMES) {
+		for (String s : ORDERED_PROPERTY_NAMES) {
 			set.add(s);
 		}
 		return set;
@@ -118,7 +126,7 @@ public class Image implements SitemapElementIf {
 
 	@Override
 	public String toXtext() {
-		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties);
+		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties, ORDERED_PROPERTY_NAMES);
 	}
 
 	@Override

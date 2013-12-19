@@ -12,6 +12,14 @@ import org.openhab.designerfx.server.util.Util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+/**
+ * 
+ * Syntax:
+ * Webview item="<itemname>" [label="<labelname>"] [icon="<iconname>"] url="<url>" [height="<heightvalue"]
+ * 
+ * @author zhouwei
+ *
+ */
 public class Webview implements SitemapElementIf {
 
 	public static final String TYPE = "Webview";
@@ -24,12 +32,12 @@ public class Webview implements SitemapElementIf {
 		"label=",
 		"url="
 	};
-	private static final String[] PROPERTY_NAMES = {
-		"height",
-		"icon",
+	private static final String[] ORDERED_PROPERTY_NAMES = {
 		"item",
 		"label",
-		"url"
+		"icon",
+		"url",
+		"height"
 	};
 	
 	private List<SitemapElementProperty> properties = Lists.newArrayList();
@@ -68,7 +76,7 @@ public class Webview implements SitemapElementIf {
 	@Override
 	public Set<String> propertyNameSet() {
 		Set<String> set = Sets.newTreeSet();
-		for (String s : PROPERTY_NAMES) {
+		for (String s : ORDERED_PROPERTY_NAMES) {
 			set.add(s);
 		}
 		return set;
@@ -118,7 +126,7 @@ public class Webview implements SitemapElementIf {
 
 	@Override
 	public String toXtext() {
-		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties);
+		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties, ORDERED_PROPERTY_NAMES);
 	}
 
 	@Override

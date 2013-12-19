@@ -12,6 +12,14 @@ import org.openhab.designerfx.server.util.Util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+/**
+ * 
+ * Syntax:
+ * Slider item="<itemname>" [label="<labelname>"] [icon="<iconname>"] [sendFrequency="frequency"] [switchEnabled]
+ * 
+ * @author zhouwei
+ *
+ */
 public class Slider implements SitemapElementIf {
 
 	public static final String TYPE = "Slider";
@@ -25,10 +33,10 @@ public class Slider implements SitemapElementIf {
 		"switchEnabled",
 		"switchSupport"
 	};
-	private static final String[] PROPERTY_NAMES = {
-		"icon",
+	private static final String[] ORDERED_PROPERTY_NAMES = {
 		"item",
 		"label",
+		"icon",
 		"sendFrequency",
 		"switchEnabled",
 		"switchSupport"
@@ -70,7 +78,7 @@ public class Slider implements SitemapElementIf {
 	@Override
 	public Set<String> propertyNameSet() {
 		Set<String> set = Sets.newTreeSet();
-		for (String s : PROPERTY_NAMES) {
+		for (String s : ORDERED_PROPERTY_NAMES) {
 			set.add(s);
 		}
 		return set;
@@ -120,7 +128,7 @@ public class Slider implements SitemapElementIf {
 
 	@Override
 	public String toXtext() {
-		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties);
+		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties, ORDERED_PROPERTY_NAMES);
 	}
 
 	@Override
