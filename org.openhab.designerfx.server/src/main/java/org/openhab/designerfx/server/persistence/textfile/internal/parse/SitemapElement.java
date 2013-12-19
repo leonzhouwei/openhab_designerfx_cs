@@ -25,4 +25,8 @@ public class SitemapElement {
 		properties.add(prop);
 	}
 	
+	public void addPropertys(List<SitemapElementProperty> props) {
+		properties.addAll(props);
+	}
+	
 }

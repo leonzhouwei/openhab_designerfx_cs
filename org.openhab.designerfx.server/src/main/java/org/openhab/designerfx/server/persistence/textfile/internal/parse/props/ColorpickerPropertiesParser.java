@@ -40,6 +40,7 @@ public class ColorpickerPropertiesParser implements SitemapElementPropertiesPars
 
 	@Override
 	public void parse(SitemapElement e, String line) {
+		line = line.replaceAll("\\{", "");
 		List<SitemapElementProperty> list = Lists.newArrayList();
 	}
 

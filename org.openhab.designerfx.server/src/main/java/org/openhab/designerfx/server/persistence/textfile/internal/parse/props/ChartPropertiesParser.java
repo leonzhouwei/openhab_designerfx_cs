@@ -1,10 +1,13 @@
 package org.openhab.designerfx.server.persistence.textfile.internal.parse.props;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElement;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementPropertiesParser;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementProperty;
+import org.openhab.designerfx.server.util.Util;
 
 import com.google.common.collect.Sets;
 
@@ -40,17 +43,16 @@ public class ChartPropertiesParser implements SitemapElementPropertiesParser {
 	}
 
 	@Override
-	public void parse(SitemapElement e, String formattedLine) {
+	public void parse(SitemapElement e, String line) {
+		line = line.replaceAll("\\{", "").trim();
 		e.clearProperties();
-		formattedLine = formattedLine.trim();
-		final String type = formattedLine.split("\\s")[0].trim(); 
-		if (type.compareToIgnoreCase(CHART) != 0) {
-			throw new RuntimeException(formattedLine + " is NOT a " + CHART);
+		if (!line.startsWith(CHART)) {
+			throw new RuntimeException(line + " is NOT a " + CHART);
 		}
-		SitemapElementProperty prop = new SitemapElementProperty();
-		prop.setName(CHART);
-		prop.setValue(CHART);
-		String propsString = formattedLine.substring(type.length(), type.length()).trim();
+		Set<String> keysCopy = keysCopy();
+		Map<String, String> map = Util.toMapTrimmingValues(line, keysCopy);
+		List<SitemapElementProperty> list = Util.toSitemapElementPropertyList(map, CHART, keysCopy);
+		e.addPropertys(list);
 	}
 
 }

@@ -39,6 +39,7 @@ public class FramePropertiesParser implements SitemapElementPropertiesParser {
 	
 	@Override
 	public void parse(SitemapElement e, String line) {
+		line = line.replaceAll("\\{", "");
 		List<SitemapElementProperty> list = Lists.newArrayList();
 		
 	}

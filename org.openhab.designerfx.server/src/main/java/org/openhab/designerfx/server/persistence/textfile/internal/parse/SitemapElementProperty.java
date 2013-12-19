@@ -1,7 +1,7 @@
 package org.openhab.designerfx.server.persistence.textfile.internal.parse;
 
 public class SitemapElementProperty {
-
+	
 	private String name;
 	private String value;
 

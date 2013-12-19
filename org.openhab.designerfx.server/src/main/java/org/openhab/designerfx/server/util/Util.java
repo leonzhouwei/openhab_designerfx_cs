@@ -10,8 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.openhab.designerfx.server.common.Constants;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementProperty;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -133,4 +135,33 @@ public class Util {
 		result.put(key, value.trim());
 		return result;
 	}
+	
+	public static List<SitemapElementProperty> toSitemapElementPropertyList(Map<String, String> map, String type, Set<String> keys) {
+		List<SitemapElementProperty> list = Lists.newArrayList();
+		Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Entry<String, String> entry = iterator.next();
+			String key = entry.getKey();
+			String value = entry.getValue();
+			if (key.compareTo(type) == 0) {
+				SitemapElementProperty prop = new SitemapElementProperty();
+				prop.setName("type");
+				prop.setValue(type);
+				list.add(prop);	
+			} else {
+				if (keys.contains(key)) {
+					SitemapElementProperty prop = new SitemapElementProperty();
+					String name = key;
+					if (key.endsWith("=")) {
+						name = key.replace("=", "");
+					}
+					prop.setName(name);
+					prop.setValue(value);
+					list.add(prop);					
+				}
+			}
+		}
+		return list;
+	}
+	
 }
