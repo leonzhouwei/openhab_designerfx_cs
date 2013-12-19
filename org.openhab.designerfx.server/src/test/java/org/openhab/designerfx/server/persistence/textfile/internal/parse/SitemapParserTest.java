@@ -1,4 +1,4 @@
-package org.openhab.designerfx.server.persistence;
+package org.openhab.designerfx.server.persistence.textfile.internal.parse;
 
 import java.io.File;
 import java.io.IOException;
