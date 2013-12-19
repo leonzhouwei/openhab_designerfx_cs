@@ -1,14 +1,18 @@
 package org.openhab.designerfx.server.persistence.textfile.internal.xtextsitemapelement.impl;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 public class ColorpickerTest {
 
 	@Test
 	public void testParse() {
-		String string = "Colorpicker item=RGBLight icon=\"slider\"";
-		Colorpicker colorpicker = Colorpicker.parse(string);
-		System.out.println(colorpicker.toXtext());
+		final String expected = "Colorpicker item=RGBLight icon=\"slider\"";
+		Colorpicker sitemapElement = Colorpicker.parse(expected);
+		String actual = sitemapElement.toXtext();
+		assertThat(actual, Matchers.equalTo(expected));
 	}
 
 }
