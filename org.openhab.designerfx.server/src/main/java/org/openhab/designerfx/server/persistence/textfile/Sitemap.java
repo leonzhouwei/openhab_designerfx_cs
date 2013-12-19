@@ -1,14 +1,18 @@
 package org.openhab.designerfx.server.persistence.textfile;
 
+import java.util.List;
+
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElement;
+import org.openhab.designerfx.server.persistence.textfile.internal.xtextsitemapelement.SitemapElementIf;
 
 public class Sitemap {
 
+	public static final String SITEMAP = "sitemap";
+	
+	/* sitemap <name> <label> is not the root, according to the openHAB wiki */
 	private String name;
 	private String label;
-	/* sitemap <name> <label> is not the root, according to the openHAB wiki */
-	private SitemapElement root = new SitemapElement();
+	private SitemapElementIf root;
 
 	public String getName() {
 		return name;
@@ -26,12 +30,11 @@ public class Sitemap {
 		this.label = label;
 	}
 	
-	public void setRoot(SitemapElement e) {
-		this.root = e;
+	public void setRoot(SitemapElementIf root) {
+		this.root = root;
 	}
 	
-	@Override
-	public String toString() {
+	public String toXtext() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("sitemap");
 		sb.append(Constants.STRING_SPACE);
@@ -42,10 +45,28 @@ public class Sitemap {
 			sb.append(Constants.STRING_SPACE);
 		}
 		sb.append("{");
-		sb.append(root.toString());
+		if (root != null) {
+			sb.append(toXtext(root, "\t").toString());
+		}
 		sb.append(Constants.LINE_SEPARATOR);
 		sb.append("}");
 		return sb.toString();
+	}
+	
+	private StringBuilder toXtext(SitemapElementIf e, String indentation) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(indentation + e.toXtext());
+		List<SitemapElementIf> children = e.children();
+		if (!children.isEmpty()) {
+			sb.append(" {");
+			sb.append(Constants.LINE_SEPARATOR);
+			for (SitemapElementIf child : children) {
+				sb.append(toXtext(child, indentation + indentation).toString());
+				sb.append(Constants.LINE_SEPARATOR);
+			}
+			sb.append(indentation + "}");
+		}
+		return sb;
 	}
 
 }
