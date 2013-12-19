@@ -158,7 +158,7 @@ public class Util {
 		}
 		return list;
 	}
-
+	
 	public static String toXtext(List<SitemapElementProperty> properties) {
 		StringBuilder sb = new StringBuilder();
 		for (SitemapElementProperty p : properties) {
@@ -169,6 +169,35 @@ public class Util {
 				sb.append("=");
 				sb.append(value);
 				sb.append(Constants.STRING_SPACE);
+			}
+		}
+		return sb.toString();
+	}
+
+	public static String toXtext(List<SitemapElementProperty> properties, String[] orders) {
+		StringBuilder sb = new StringBuilder();
+		Map<String, SitemapElementProperty> map = Maps.newHashMap();
+		for (SitemapElementProperty p : properties) {
+			String name = p.getName();
+			map.put(name, p);
+		}
+		for (String order : orders) {
+			SitemapElementProperty p = map.get(order);
+			if (p != null) {
+				String name = p.getName();
+				String value = p.getValue();
+				if (name != null && !name.isEmpty() &&
+					value != null && !value.isEmpty()) {
+					sb.append(name);
+					sb.append("=");
+					sb.append(value);
+					sb.append(Constants.STRING_SPACE);
+				} else {
+					if (value != null) {
+						sb.append(value);
+						sb.append(Constants.STRING_SPACE);
+					}
+				}
 			}
 		}
 		return sb.toString();

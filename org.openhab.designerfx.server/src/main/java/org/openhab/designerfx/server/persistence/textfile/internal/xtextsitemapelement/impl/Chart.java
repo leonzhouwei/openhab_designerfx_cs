@@ -12,6 +12,14 @@ import org.openhab.designerfx.server.util.Util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+/**
+ * 
+ * Syntax:
+ * Chart [item="<itemname>"] [icon="<iconname>"] [label="<labelname>"] [service="<service>"] [period=xxxx] [refresh=xxxx] [visibility=xxxx]
+ * 
+ * @author zhouwei
+ *
+ */
 public class Chart implements SitemapElementIf {
 	
 	public static final String TYPE = "Chart";
@@ -27,12 +35,12 @@ public class Chart implements SitemapElementIf {
 		"visibility="
 	};
 	private static final String[] PROPERTY_NAMES = {
-		"icon",
 		"item",
+		"icon",
 		"label",
+		"service",
 		"period",
 		"refresh",
-		"service",
 		"visibility"
 	};
 	
@@ -122,7 +130,7 @@ public class Chart implements SitemapElementIf {
 
 	@Override
 	public String toXtext() {
-		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties);
+		return TYPE + Constants.STRING_SPACE + Util.toXtext(properties, PROPERTY_NAMES);
 	}
 
 	@Override
