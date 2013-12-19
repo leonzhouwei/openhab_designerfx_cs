@@ -121,8 +121,7 @@ public class Switch implements SitemapElementIf {
 
 	@Override
 	public void addProperties(List<SitemapElementProperty> prop) {
-		// TODO Auto-generated method stub
-		
+		properties.addAll(prop);
 	}
 
 }

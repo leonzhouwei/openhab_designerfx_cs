@@ -50,7 +50,6 @@ public class Item {
 			}
 		}
 		// parse the name
-		//System.out.println("will parse name from " + line);
 		if (!line.isEmpty()) {
 			String[] array = line.split("\\b");
 			if (array.length > 0) {
@@ -67,7 +66,6 @@ public class Item {
 			}
 		}
 		// parse the label text
-		//System.out.println("will parse label text from " + line);
 		if (line.startsWith("\"")) {
 			final int start = line.indexOf("\"");
 			final int end = line.indexOf("\"", start + 1);
@@ -75,7 +73,6 @@ public class Item {
 			line = line.substring(end + 1, line.length()).trim();
 		}
 		// parse the icon name
-		//System.out.println("will parse icon name from " + line);
 		if (line.startsWith("<")) {
 			final int start = line.indexOf("<");
 			final int end = line.indexOf(">");
@@ -83,7 +80,6 @@ public class Item {
 			line = line.substring(end + 1, line.length()).trim();
 		}
 		// parse the group(s)
-		//System.out.println("will parse group(s) from " + line);
 		if (line.startsWith("(")) {
 			final int start = line.indexOf("(");
 			final int end = line.indexOf(")");

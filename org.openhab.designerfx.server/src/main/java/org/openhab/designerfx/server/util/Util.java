@@ -143,12 +143,7 @@ public class Util {
 			Entry<String, String> entry = iterator.next();
 			String key = entry.getKey();
 			String value = entry.getValue();
-			if (key.compareTo(type) == 0) {
-				SitemapElementProperty prop = new SitemapElementProperty();
-				prop.setName("type");
-				prop.setValue(type);
-				list.add(prop);	
-			} else {
+			if (key.compareTo(type) != 0) {
 				if (keys.contains(key)) {
 					SitemapElementProperty prop = new SitemapElementProperty();
 					String name = key;
@@ -173,11 +168,8 @@ public class Util {
 				sb.append(name);
 				sb.append("=");
 				sb.append(value);
-			} else {
-				sb.append(name);
-				sb.append(value);
+				sb.append(Constants.STRING_SPACE);
 			}
-			sb.append(Constants.STRING_SPACE);
 		}
 		return sb.toString();
 	}

@@ -119,8 +119,7 @@ public class Frame implements SitemapElementIf {
 
 	@Override
 	public void addProperties(List<SitemapElementProperty> prop) {
-		// TODO Auto-generated method stub
-		
+		properties.addAll(prop);
 	}
 
 }

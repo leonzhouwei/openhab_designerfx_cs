@@ -120,8 +120,7 @@ public class List implements SitemapElementIf {
 
 	@Override
 	public void addProperties(java.util.List<SitemapElementProperty> prop) {
-		// TODO Auto-generated method stub
-		
+		properties.addAll(prop);
 	}
 
 }
