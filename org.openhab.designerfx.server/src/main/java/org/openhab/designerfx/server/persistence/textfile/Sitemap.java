@@ -1,17 +1,14 @@
 package org.openhab.designerfx.server.persistence.textfile;
 
-import java.util.List;
-
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElement;
-
-import com.google.common.collect.Lists;
 
 public class Sitemap {
 
 	private String name;
 	private String label;
-	private List<SitemapElement> elements = Lists.newArrayList();
+	/* sitemap <name> <label> is not the root, according to the openHAB wiki */
+	private SitemapElement root = new SitemapElement();
 
 	public String getName() {
 		return name;
@@ -29,8 +26,8 @@ public class Sitemap {
 		this.label = label;
 	}
 	
-	public void addElement(SitemapElement e) {
-		elements.add(e);
+	public void setRoot(SitemapElement e) {
+		this.root = e;
 	}
 	
 	@Override
@@ -42,8 +39,12 @@ public class Sitemap {
 		sb.append(Constants.STRING_SPACE);
 		if (label != null) {
 			sb.append(label);
+			sb.append(Constants.STRING_SPACE);
 		}
+		sb.append("{");
+		sb.append(root.toString());
 		sb.append(Constants.LINE_SEPARATOR);
+		sb.append("}");
 		return sb.toString();
 	}
 
