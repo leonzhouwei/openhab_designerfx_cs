@@ -2,27 +2,14 @@ package org.openhab.designerfx.server.businesslogic.domainmodel.internal;
 
 import java.util.List;
 
-import org.openhab.designerfx.server.common.DesignerFXException;
+import org.openhab.designerfx.server.common.Constants;
 
 import com.google.common.collect.Lists;
 
 public class Item {
 
-	public class InvalidParserStringException extends DesignerFXException {
-		private static final long serialVersionUID = -6306477045323118068L;
-
-		public InvalidParserStringException(String string) {
-			super(string + " is not correct");
-		}
-	}
-
-	public class ItemNameInUseException extends DesignerFXException {
-		private static final long serialVersionUID = -6306477045323118068L;
-
-		public ItemNameInUseException(String itemName) {
-			super("Item name '" + itemName + "' has already been used.");
-		}
-	}
+	private static final String COMMA = Constants.STRING_COMMA;
+	private static final String SPACE = Constants.STRING_SPACE;
 
 	private String type; // mandatory
 	private String name; // mandatory
@@ -31,7 +18,7 @@ public class Item {
 	private List<String> groups = Lists.newArrayList(); // optional
 	private String bindingConfig; // optional
 
-	public static Item parse(String line) throws InvalidParserStringException {
+	public static Item parse(String line) {
 		line = line.trim();
 		Item item = new Item();
 
@@ -143,6 +130,45 @@ public class Item {
 
 	@Override
 	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(type);
+		sb.append(SPACE);
+		sb.append(name);
+		sb.append(SPACE);
+		if (labelText != null) {
+			sb.append("\"");
+			sb.append(labelText);
+			sb.append("\"");
+			sb.append(SPACE);
+		}
+		if (iconName != null) {
+			sb.append("<");
+			sb.append(iconName);
+			sb.append(">");
+			sb.append(SPACE);
+		}
+		if (!groups.isEmpty()) {
+			sb.append("(");
+			for (String group : groups) {
+				sb.append(group);
+				sb.append(COMMA);
+				sb.append(SPACE);	
+			}
+			sb.deleteCharAt(sb.length() - 1);
+			sb.deleteCharAt(sb.length() - 1);
+			sb.append(")");
+		}
+		if (bindingConfig != null) {
+			sb.append("{");
+			sb.append(bindingConfig);
+			sb.append(SPACE);
+			sb.append("}");
+		}
+		return sb.toString();
+	
+	}
+	
+	public String toJson() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{\n");
 		sb.append(super.toString());

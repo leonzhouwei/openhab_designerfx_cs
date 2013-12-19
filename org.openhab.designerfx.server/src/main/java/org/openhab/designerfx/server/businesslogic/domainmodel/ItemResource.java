@@ -51,6 +51,16 @@ public class ItemResource implements Loadable {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		for (Item item : items) {
+			sb.append(item.toString());
+			sb.append("\n");
+		}
+		return sb.toString();
+	
+	}
+	
+	public String toJson() {
+		StringBuilder sb = new StringBuilder();
 		sb.append("{\n");
 		sb.append(super.toString());
 		sb.append("\n");

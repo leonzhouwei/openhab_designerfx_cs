@@ -2,16 +2,48 @@ package org.openhab.designerfx.server.persistence.textfile.internal.parse;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openhab.designerfx.server.persistence.textfile.Sitemap;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.ChartPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.ColorpickerPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.FramePropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.GroupPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.ImagePropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.ListPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.SelectionPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.SetpointPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.SliderPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.SwitchPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.TextPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.VideoPropertiesParser;
+import org.openhab.designerfx.server.persistence.textfile.internal.parse.props.WebviewPropertiesParser;
 import org.openhab.designerfx.server.util.Util;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 public class SitemapParser {
 	
 	private static final String SITEMAP = "sitemap";
+	private static Map<String, SitemapElementPropertiesParser> typeAndPropsParsers = Maps.newHashMap();
+	static {
+		typeAndPropsParsers.put(ChartPropertiesParser.CHART, new ChartPropertiesParser());
+		typeAndPropsParsers.put(ColorpickerPropertiesParser.COLORPICKER, new ColorpickerPropertiesParser());
+		typeAndPropsParsers.put(FramePropertiesParser.FRAME, new FramePropertiesParser());
+		typeAndPropsParsers.put(GroupPropertiesParser.GROUP, new GroupPropertiesParser());
+		typeAndPropsParsers.put(ImagePropertiesParser.IMAGE, new ImagePropertiesParser());
+		typeAndPropsParsers.put(ListPropertiesParser.LIST, new ListPropertiesParser());
+		typeAndPropsParsers.put(SelectionPropertiesParser.SELECTION, new SelectionPropertiesParser());
+		typeAndPropsParsers.put(SetpointPropertiesParser.SETPOINT, new SetpointPropertiesParser());
+		typeAndPropsParsers.put(SliderPropertiesParser.SLIDER, new SliderPropertiesParser());
+		typeAndPropsParsers.put(SwitchPropertiesParser.SWITCH, new SwitchPropertiesParser());
+		typeAndPropsParsers.put(TextPropertiesParser.TEXT, new TextPropertiesParser());
+		typeAndPropsParsers.put(VideoPropertiesParser.VIDEO, new VideoPropertiesParser());
+		typeAndPropsParsers.put(WebviewPropertiesParser.WEBVIEW, new WebviewPropertiesParser());
+	}
 	
 	public static Sitemap parse(File file) throws IOException {
 		List<String> lines = Util.readAllTrimEmptyLines(file);
@@ -34,30 +66,47 @@ public class SitemapParser {
 			String label = temp.substring(name.length(), temp.length()).trim();
 			sitemap.setLabel(label.split("=")[1].trim());
 		}
+		SitemapElement root = new SitemapElement();
+		parseSitemapElement(root, lines, 1);
 		return sitemap;
 	}
 	
 	private static int parseSitemapElement(SitemapElement empty, List<String> lines, final int startLine) {
 		int endLine = -1;
 		final int size = lines.size();
-		for (int i = startLine; i < size; ++i) {
-			String line = lines.get(i);
+		for (int i = startLine; i < size;) {
+			int step = 1;
+			String line = lines.get(i).trim();
+			SitemapElementPropertiesParser sepp = findPropertiesParser(line);
+			sepp.parseAndFill(empty, line);
 			if (line.endsWith("{")) {
 				SitemapElement child = new SitemapElement();
-				parseSitemapElement(child, lines, i);
+				step = parseSitemapElement(child, lines, i) - i;
 				empty.addChild(child);
 			}
 			if (line.startsWith("}")) {
 				endLine = i;
 				break;
 			}
-			
+			SitemapElement child = new SitemapElement();
+			parseSitemapElement(child, lines, i);
+			empty.addChild(child);
+			i += step;
 		}
 		return endLine;
 	}
 	
-	private SitemapElement parseAtomic(String line) {
-		return null;
+	private static SitemapElementPropertiesParser findPropertiesParser(String startLine) {
+		SitemapElementPropertiesParser sepp = null;
+		Iterator<String> iterator = typeAndPropsParsers.keySet().iterator();
+		while (iterator.hasNext()) {
+			String type = iterator.next();
+			if (startLine.trim().startsWith(type)) {
+				sepp = typeAndPropsParsers.get(type);
+				break;
+			}
+		}
+		return sepp;
 	}
 	
 	private static void format(List<String> lines) throws RuntimeException {

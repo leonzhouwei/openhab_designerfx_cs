@@ -39,7 +39,7 @@ public class GroupPropertiesParser implements SitemapElementPropertiesParser {
 	}
 	
 	@Override
-	public void parse(SitemapElement e, String line) {
+	public void parseAndFill(SitemapElement e, String line) {
 		line = line.replaceAll("\\{", "").trim();
 		e.clearProperties();
 		if (!line.startsWith(GROUP)) {

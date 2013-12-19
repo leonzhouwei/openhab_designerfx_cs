@@ -10,6 +10,7 @@ public class Constants {
 	
 	//
 	public static final String CHARSET_NAME_UTF_8 = "utf-8";
+	public static final String STRING_COMMA = ",";
 	public static final String STRING_SPACE = " ";
 	
 	// openHAB
