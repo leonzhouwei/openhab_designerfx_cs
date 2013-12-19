@@ -87,25 +87,25 @@ public class Util {
 	 * 
 	 * 
 	 * @param string
-	 * @param keys
-	 * @return
+	 * @param keywords  keywords for separation
+	 * @return  a map containg the properties that have appeared in the string
 	 */
-	public static Map<String, String> toMapTrimmingValues(String string, Set<String> keys) {
+	public static Map<String, String> toMapTrimmingValues(String string, Set<String> keywords) {
 		string = string.trim();
 		Map<String, String> result = Maps.newHashMap();
-		for (String key : keys) {
+		for (String key : keywords) {
 			result.put(key, null);
 		}
-		final int keyCount = keys.size();
+		final int keyCount = keywords.size();
 		if (keyCount == 1) {
-			String key = keys.iterator().next();
+			String key = keywords.iterator().next();
 			String[] array = string.split(key);
 			result.put(key, array[1].trim());
 			return result;
 		}
 		// parse effective key-startIndex pairs from @string
 		Map<Integer, String> effectiveIndexKeyPairs = Maps.newHashMap();
-		Iterator<String> iterator = keys.iterator();
+		Iterator<String> iterator = keywords.iterator();
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 			int index = string.indexOf(key);
@@ -133,6 +133,16 @@ public class Util {
 		final String key = effectiveIndexKeyPairs.get(orderedIndexes.get(size - 1));
 		final String value = string.substring(start, string.length());
 		result.put(key, value.trim());
+		// remove properties that did NOT appear in the text line
+		Set<String> set = result.keySet();
+		List<String> list = Lists.newArrayList();
+		list.addAll(set);
+		for (String s : list) {
+			String v = result.get(s);
+			if (v == null) {
+				result.remove(s);
+			}
+		}
 		return result;
 	}
 	
@@ -170,8 +180,8 @@ public class Util {
 				sb.append(value.trim());
 				sb.append(Constants.STRING_SPACE);
 			} else {
-				if (value != null) {
-					sb.append(value.trim());
+				if (name != null) {
+					sb.append(name.trim());
 				}
 			}
 		}
@@ -196,8 +206,8 @@ public class Util {
 					sb.append(value.trim());
 					sb.append(Constants.STRING_SPACE);
 				} else {
-					if (value != null) {
-						sb.append(value.trim());
+					if (name != null) {
+						sb.append(name.trim());
 					}
 				}
 			}

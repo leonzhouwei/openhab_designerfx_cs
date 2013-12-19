@@ -2,6 +2,7 @@ package org.openhab.designerfx.server.persistence.textfile.internal.xtextsitemap
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
@@ -59,6 +60,9 @@ public class Slider implements SitemapElementIf {
 		}
 		Set<String> keysCopy = keywords();
 		Map<String, String> map = Util.toMapTrimmingValues(line, keysCopy);
+		for (Entry<String, String> entry : map.entrySet()) {
+			System.out.println("oops: " + entry.getKey() + ", " + entry.getValue());
+		}
 		List<SitemapElementProperty> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
 		Slider instance = new Slider();
 		instance.addProperties(list);
