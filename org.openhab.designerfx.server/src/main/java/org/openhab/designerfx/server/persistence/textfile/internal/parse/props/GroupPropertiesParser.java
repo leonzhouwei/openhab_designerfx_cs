@@ -1,13 +1,14 @@
 package org.openhab.designerfx.server.persistence.textfile.internal.parse.props;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElement;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementPropertiesParser;
 import org.openhab.designerfx.server.persistence.textfile.internal.parse.SitemapElementProperty;
+import org.openhab.designerfx.server.util.Util;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 /**
@@ -39,9 +40,15 @@ public class GroupPropertiesParser implements SitemapElementPropertiesParser {
 	
 	@Override
 	public void parse(SitemapElement e, String line) {
-		line = line.replaceAll("\\{", "");
-		List<SitemapElementProperty> list = Lists.newArrayList();
-		
+		line = line.replaceAll("\\{", "").trim();
+		e.clearProperties();
+		if (!line.startsWith(GROUP)) {
+			throw new RuntimeException(line + " is NOT a " + GROUP);
+		}
+		Set<String> keysCopy = keysCopy();
+		Map<String, String> map = Util.toMapTrimmingValues(line, keysCopy);
+		List<SitemapElementProperty> list = Util.toSitemapElementPropertyList(map, GROUP, keysCopy);
+		e.addPropertys(list);
 	}
 
 }
