@@ -11,10 +11,10 @@ public class SitemapTest {
 		Sitemap sitemap = new Sitemap();
 		sitemap.setLabel("Main Menu");
 		sitemap.setName("demo");
-//		Frame root = Frame.parse("Frame {");
+		Frame root = Frame.parse("Frame {");
 //		Group group = Group.parse("Group item=gFF label=\"First Floor\" icon=\"firstfloor\"");
 //		root.addChild(group);
-//		sitemap.setRoot(root);
+		sitemap.setRoot(root);
 		System.out.println(sitemap.toXtext());
 	}
 

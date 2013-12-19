@@ -9,6 +9,8 @@ public class Sitemap {
 
 	public static final String SITEMAP = "sitemap";
 	
+	private static final String TAB = "    ";
+	
 	/* sitemap <name> <label> is not the root, according to the openHAB wiki */
 	private String name;
 	private String label;
@@ -41,12 +43,16 @@ public class Sitemap {
 		sb.append(name);
 		sb.append(Constants.STRING_SPACE);
 		if (label != null) {
+			sb.append("label=");
+			sb.append("\"");
 			sb.append(label);
+			sb.append("\"");
 			sb.append(Constants.STRING_SPACE);
 		}
 		sb.append("{");
+		sb.append(Constants.LINE_SEPARATOR);
 		if (root != null) {
-			sb.append(toXtext(root, "\t").toString());
+			sb.append(toXtext(root, TAB).toString());
 		}
 		sb.append(Constants.LINE_SEPARATOR);
 		sb.append("}");
@@ -57,7 +63,7 @@ public class Sitemap {
 		StringBuilder sb = new StringBuilder();
 		sb.append(indentation + e.toXtext());
 		List<SitemapElementIf> children = e.children();
-		if (!children.isEmpty()) {
+		if (children != null && !children.isEmpty()) {
 			sb.append(" {");
 			sb.append(Constants.LINE_SEPARATOR);
 			for (SitemapElementIf child : children) {
