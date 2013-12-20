@@ -8,8 +8,8 @@ import org.openhab.designerfx.server.BaseTest;
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Context;
 import org.openhab.designerfx.server.common.ContextBuilder;
+import org.openhab.designerfx.server.persistence.xtext.Sitemap;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.SitemapParser;
-import org.openhab.designerfx.server.persistence.xtext.sitemap.Sitemap;
 import org.openhab.designerfx.server.util.Util;
 
 public class SitemapParserTest extends BaseTest {

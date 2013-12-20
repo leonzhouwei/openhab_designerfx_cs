@@ -2,13 +2,13 @@ package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse;
 
 import java.util.List;
 
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapElementProperty;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
 
 import com.google.common.collect.Lists;
 
 public class SitemapElement {
 
-	private List<SitemapElementProperty> properties = Lists.newArrayList();
+	private List<Property> properties = Lists.newArrayList();
 	private List<SitemapElement> children = Lists.newArrayList();
 
 	public List<SitemapElement> getChildren() {
@@ -23,11 +23,11 @@ public class SitemapElement {
 		properties.clear();
 	}
 	
-	public void addProperty(SitemapElementProperty prop) {
+	public void addProperty(Property prop) {
 		properties.add(prop);
 	}
 	
-	public void addPropertys(List<SitemapElementProperty> props) {
+	public void addPropertys(List<Property> props) {
 		properties.addAll(props);
 	}
 	

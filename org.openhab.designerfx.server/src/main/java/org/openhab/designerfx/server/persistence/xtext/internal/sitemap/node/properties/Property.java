@@ -1,4 +1,4 @@
-package org.openhab.designerfx.server.persistence.xtext.internal.sitemap;
+package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties;
 
 import java.util.Set;
 
@@ -18,7 +18,7 @@ import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.pr
 
 import com.google.common.collect.Sets;
 
-public class SitemapElementProperty {
+public class Property {
 	
 //	private static Set<String> types = Sets.newHashSet();
 //	static {

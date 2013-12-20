@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapElementProperty;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -146,8 +146,8 @@ public class Util {
 		return result;
 	}
 	
-	public static List<SitemapElementProperty> toSitemapElementPropertyList(Map<String, String> map, String type, Set<String> keys) {
-		List<SitemapElementProperty> list = Lists.newArrayList();
+	public static List<Property> toSitemapElementPropertyList(Map<String, String> map, String type, Set<String> keys) {
+		List<Property> list = Lists.newArrayList();
 		Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<String, String> entry = iterator.next();
@@ -155,7 +155,7 @@ public class Util {
 			String value = entry.getValue();
 			if (key.compareTo(type) != 0) {
 				if (keys.contains(key)) {
-					SitemapElementProperty prop = new SitemapElementProperty();
+					Property prop = new Property();
 					String name = key;
 					if (key.endsWith("=")) {
 						name = key.replace("=", "");
@@ -169,9 +169,9 @@ public class Util {
 		return list;
 	}
 	
-	public static String toXtext(List<SitemapElementProperty> properties) {
+	public static String toXtext(List<Property> properties) {
 		StringBuilder sb = new StringBuilder();
-		for (SitemapElementProperty p : properties) {
+		for (Property p : properties) {
 			String name = p.getName();
 			String value = p.getValue();
 			if (name != null && !name.trim().isEmpty() && value != null && !value.isEmpty()) {
@@ -188,15 +188,15 @@ public class Util {
 		return sb.toString().trim();
 	}
 
-	public static String toXtext(List<SitemapElementProperty> properties, String[] orders) {
+	public static String toXtext(List<Property> properties, String[] orders) {
 		StringBuilder sb = new StringBuilder();
-		Map<String, SitemapElementProperty> map = Maps.newHashMap();
-		for (SitemapElementProperty p : properties) {
+		Map<String, Property> map = Maps.newHashMap();
+		for (Property p : properties) {
 			String name = p.getName();
 			map.put(name, p);
 		}
 		for (String order : orders) {
-			SitemapElementProperty p = map.get(order);
+			Property p = map.get(order);
 			if (p != null) {
 				String name = p.getName();
 				String value = p.getValue();

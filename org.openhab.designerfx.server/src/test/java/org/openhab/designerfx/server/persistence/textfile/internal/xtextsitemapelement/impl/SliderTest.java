@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.impl.Slider;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.impl.Slider;
 
 public class SliderTest {
 

@@ -1,11 +1,13 @@
-package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.impl;
+package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.impl;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.NodeProperties;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapElementProperty;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Properties;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
 import org.openhab.designerfx.server.util.Util;
 
 import com.google.common.collect.Lists;
@@ -14,31 +16,35 @@ import com.google.common.collect.Sets;
 /**
  * 
  * Syntax:
- * List item="<itemname>" [label="<labelname>"] [icon="<iconname>"] [separator=""]
+ * Slider item="<itemname>" [label="<labelname>"] [icon="<iconname>"] [sendFrequency="frequency"] [switchEnabled]
  * 
  * @author zhouwei
  *
  */
-public class List implements NodeProperties {
+public class Slider implements Properties {
 
-	public static final String TYPE = "List";
-
+	public static final String TYPE = "Slider";
+	
 	private static final String[] KEYWORDS = {
 		TYPE,
-		"icon=",
 		"item=",
+		"icon=",
 		"label=",
-		"separator="
+		"sendFrequency=",
+		"switchEnabled",
+		"switchSupport"
 	};
 	private static final String[] ORDERED_PROPERTY_NAMES = {
 		"item",
 		"label",
 		"icon",
-		"separator"
+		"sendFrequency",
+		"switchEnabled",
+		"switchSupport"
 	};
 	
-	private java.util.List<SitemapElementProperty> properties = Lists.newArrayList();
-	private java.util.List<NodeProperties> children = Lists.newArrayList();
+	private List<Property> properties = Lists.newArrayList();
+	private List<Properties> children = Lists.newArrayList();
 	
 	public static Set<String> keywords() {
 		Set<String> keys = Sets.newHashSet();
@@ -48,26 +54,29 @@ public class List implements NodeProperties {
 		return keys;
 	}
 	
-	public static List parse(String line) {
+	public static Slider parse(String line) {
 		line = line.replaceAll("\\{", "").trim();
 		if (!line.startsWith(TYPE)) {
 			throw new RuntimeException(line + " is NOT a " + TYPE);
 		}
 		Set<String> keysCopy = keywords();
 		Map<String, String> map = Util.toMapTrimmingValues(line, keysCopy);
-		java.util.List<SitemapElementProperty> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
-		List instance = new List();
+		for (Entry<String, String> entry : map.entrySet()) {
+			System.out.println("oops: " + entry.getKey() + ", " + entry.getValue());
+		}
+		List<Property> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
+		Slider instance = new Slider();
 		instance.addProperties(list);
 		return instance;
 	}
-
+	
 	@Override
 	public String type() {
 		return TYPE;
 	}
 
 	@Override
-	public java.util.List<SitemapElementProperty> properties() {
+	public List<Property> properties() {
 		return properties;
 	}
 
@@ -82,14 +91,8 @@ public class List implements NodeProperties {
 
 	@Override
 	public String getValue(String name) {
-		String value = null;
-		for (SitemapElementProperty p : properties) {
-			if (p.getName().compareTo(name) == 0) {
-				value = p.getValue();
-				break;
-			}
-		}
-		return value;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -99,19 +102,19 @@ public class List implements NodeProperties {
 	}
 
 	@Override
-	public java.util.List<NodeProperties> children() {
+	public List<Properties> children() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addProperty(SitemapElementProperty prop) {
+	public void addProperty(Property prop) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addChild(NodeProperties child) {
+	public void addChild(Properties child) {
 		children.add(child);
 	}
 
@@ -133,7 +136,7 @@ public class List implements NodeProperties {
 	}
 
 	@Override
-	public void addProperties(java.util.List<SitemapElementProperty> prop) {
+	public void addProperties(List<Property> prop) {
 		properties.addAll(prop);
 	}
 

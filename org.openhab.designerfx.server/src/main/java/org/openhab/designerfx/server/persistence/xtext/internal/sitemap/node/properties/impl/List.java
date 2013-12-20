@@ -1,12 +1,11 @@
-package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.impl;
+package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.impl;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.NodeProperties;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapElementProperty;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Properties;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
 import org.openhab.designerfx.server.util.Util;
 
 import com.google.common.collect.Lists;
@@ -15,31 +14,31 @@ import com.google.common.collect.Sets;
 /**
  * 
  * Syntax:
- * Text item="<itemname>" [label="<labelname>"] [icon="<iconname>"] [valuecolor=xxxx]
+ * List item="<itemname>" [label="<labelname>"] [icon="<iconname>"] [separator=""]
  * 
  * @author zhouwei
  *
  */
-public class Text implements NodeProperties {
+public class List implements Properties {
 
-	public static final String TYPE = "Text";
-	
+	public static final String TYPE = "List";
+
 	private static final String[] KEYWORDS = {
 		TYPE,
 		"icon=",
 		"item=",
 		"label=",
-		"valuecolor="
+		"separator="
 	};
 	private static final String[] ORDERED_PROPERTY_NAMES = {
 		"item",
 		"label",
 		"icon",
-		"valuecolor"
+		"separator"
 	};
 	
-	private List<SitemapElementProperty> properties = Lists.newArrayList();
-	private List<NodeProperties> children = Lists.newArrayList();
+	private java.util.List<Property> properties = Lists.newArrayList();
+	private java.util.List<Properties> children = Lists.newArrayList();
 	
 	public static Set<String> keywords() {
 		Set<String> keys = Sets.newHashSet();
@@ -49,26 +48,26 @@ public class Text implements NodeProperties {
 		return keys;
 	}
 	
-	public static Text parse(String line) {
+	public static List parse(String line) {
 		line = line.replaceAll("\\{", "").trim();
 		if (!line.startsWith(TYPE)) {
 			throw new RuntimeException(line + " is NOT a " + TYPE);
 		}
 		Set<String> keysCopy = keywords();
 		Map<String, String> map = Util.toMapTrimmingValues(line, keysCopy);
-		List<SitemapElementProperty> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
-		Text instance = new Text();
+		java.util.List<Property> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
+		List instance = new List();
 		instance.addProperties(list);
 		return instance;
 	}
-	
+
 	@Override
 	public String type() {
 		return TYPE;
 	}
 
 	@Override
-	public List<SitemapElementProperty> properties() {
+	public java.util.List<Property> properties() {
 		return properties;
 	}
 
@@ -83,8 +82,14 @@ public class Text implements NodeProperties {
 
 	@Override
 	public String getValue(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		String value = null;
+		for (Property p : properties) {
+			if (p.getName().compareTo(name) == 0) {
+				value = p.getValue();
+				break;
+			}
+		}
+		return value;
 	}
 
 	@Override
@@ -94,19 +99,19 @@ public class Text implements NodeProperties {
 	}
 
 	@Override
-	public List<NodeProperties> children() {
+	public java.util.List<Properties> children() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addProperty(SitemapElementProperty prop) {
+	public void addProperty(Property prop) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addChild(NodeProperties child) {
+	public void addChild(Properties child) {
 		children.add(child);
 	}
 
@@ -128,7 +133,7 @@ public class Text implements NodeProperties {
 	}
 
 	@Override
-	public void addProperties(List<SitemapElementProperty> prop) {
+	public void addProperties(java.util.List<Property> prop) {
 		properties.addAll(prop);
 	}
 

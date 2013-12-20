@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.openhab.designerfx.server.persistence.xtext.Sitemap;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.ChartPropertiesParser;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.ColorpickerPropertiesParser;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.FramePropertiesParser;
@@ -19,7 +20,6 @@ import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.pr
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.TextPropertiesParser;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.VideoPropertiesParser;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.WebviewPropertiesParser;
-import org.openhab.designerfx.server.persistence.xtext.sitemap.Sitemap;
 import org.openhab.designerfx.server.util.Util;
 
 import com.google.common.collect.Lists;

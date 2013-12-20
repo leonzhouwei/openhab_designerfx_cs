@@ -1,12 +1,12 @@
-package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.impl;
+package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.impl;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.NodeProperties;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapElementProperty;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Properties;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
 import org.openhab.designerfx.server.util.Util;
 
 import com.google.common.collect.Lists;
@@ -15,14 +15,14 @@ import com.google.common.collect.Sets;
 /**
  * 
  * Syntax:
- * Group [item="<itemname>"] [label="<labelname>"] [icon="<iconname>"]
+ * Frame [label="<labelname>"] [icon="<icon>"] [item="<item">]
  * 
  * @author zhouwei
  *
  */
-public class Group implements NodeProperties {
+public class Frame implements Properties {
 
-	public static final String TYPE = "Group";
+	public static final String TYPE = "Frame";
 	
 	private static final String[] KEYWORDS = {
 		TYPE,
@@ -31,13 +31,13 @@ public class Group implements NodeProperties {
 		"label="
 	};
 	private static final String[] ORDERED_PROPERTY_NAMES = {
-		"item",
 		"label",
-		"icon"
+		"icon",
+		"item"
 	};
 	
-	private List<SitemapElementProperty> properties = Lists.newArrayList();
-	private List<NodeProperties> children = Lists.newArrayList();
+	private List<Property> properties = Lists.newArrayList();
+	private List<Properties> children = Lists.newArrayList();
 	
 	public static Set<String> keywords() {
 		Set<String> keys = Sets.newHashSet();
@@ -47,15 +47,15 @@ public class Group implements NodeProperties {
 		return keys;
 	}
 	
-	public static Group parse(String line) {
+	public static Frame parse(String line) {
 		line = line.replaceAll("\\{", "").trim();
 		if (!line.startsWith(TYPE)) {
 			throw new RuntimeException(line + " is NOT a " + TYPE);
 		}
 		Set<String> keysCopy = keywords();
 		Map<String, String> map = Util.toMapTrimmingValues(line, keysCopy);
-		List<SitemapElementProperty> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
-		Group instance = new Group();
+		List<Property> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
+		Frame instance = new Frame();
 		instance.addProperties(list);
 		return instance;
 	}
@@ -66,7 +66,7 @@ public class Group implements NodeProperties {
 	}
 
 	@Override
-	public List<SitemapElementProperty> properties() {
+	public List<Property> properties() {
 		return properties;
 	}
 
@@ -82,7 +82,7 @@ public class Group implements NodeProperties {
 	@Override
 	public String getValue(String name) {
 		String value = null;
-		for (SitemapElementProperty p : properties) {
+		for (Property p : properties) {
 			if (p.getName().compareTo(name) == 0) {
 				value = p.getValue();
 				break;
@@ -98,19 +98,18 @@ public class Group implements NodeProperties {
 	}
 
 	@Override
-	public List<NodeProperties> children() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Properties> children() {
+		return children;
 	}
 
 	@Override
-	public void addProperty(SitemapElementProperty prop) {
+	public void addProperty(Property prop) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addChild(NodeProperties child) {
+	public void addChild(Properties child) {
 		children.add(child);
 	}
 
@@ -132,7 +131,7 @@ public class Group implements NodeProperties {
 	}
 
 	@Override
-	public void addProperties(List<SitemapElementProperty> prop) {
+	public void addProperties(List<Property> prop) {
 		properties.addAll(prop);
 	}
 

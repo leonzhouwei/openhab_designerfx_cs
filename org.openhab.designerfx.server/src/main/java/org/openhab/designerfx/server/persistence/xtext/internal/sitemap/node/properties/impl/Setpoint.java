@@ -1,12 +1,12 @@
-package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.impl;
+package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.impl;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.NodeProperties;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapElementProperty;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Properties;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
 import org.openhab.designerfx.server.util.Util;
 
 import com.google.common.collect.Lists;
@@ -15,37 +15,35 @@ import com.google.common.collect.Sets;
 /**
  * 
  * Syntax:
- * Chart [item="<itemname>"] [icon="<iconname>"] [label="<labelname>"] [service="<service>"] [period=xxxx] [refresh=xxxx] [visibility=xxxx]
+ * Setpoint item="<itemname>" [label="<labelname>"] [icon="<iconname>"] minValue="<min value>" maxValue="<max value>" step="<step value>"
  * 
  * @author zhouwei
  *
  */
-public class Chart implements NodeProperties {
-	
-	public static final String TYPE = "Chart";
+public class Setpoint implements Properties {
+
+	public static final String TYPE = "Setpoint";
 	
 	private static final String[] KEYWORDS = {
 		TYPE,
 		"icon=",
 		"item=",
 		"label=",
-		"period=",
-		"refresh=",
-		"service=",
-		"visibility="
+		"maxValue=",
+		"minValue=",
+		"step="
 	};
 	private static final String[] ORDERED_PROPERTY_NAMES = {
 		"item",
-		"icon",
 		"label",
-		"service",
-		"period",
-		"refresh",
-		"visibility"
+		"icon",
+		"minValue",
+		"maxValue",
+		"step"
 	};
 	
-	private List<SitemapElementProperty> properties = Lists.newArrayList();
-	private List<NodeProperties> children = Lists.newArrayList();
+	private List<Property> properties = Lists.newArrayList();
+	private List<Properties> children = Lists.newArrayList();
 	
 	public static Set<String> keywords() {
 		Set<String> keys = Sets.newHashSet();
@@ -55,26 +53,26 @@ public class Chart implements NodeProperties {
 		return keys;
 	}
 	
-	public static Chart parse(String line) {
+	public static Setpoint parse(String line) {
 		line = line.replaceAll("\\{", "").trim();
 		if (!line.startsWith(TYPE)) {
 			throw new RuntimeException(line + " is NOT a " + TYPE);
 		}
 		Set<String> keysCopy = keywords();
 		Map<String, String> map = Util.toMapTrimmingValues(line, keysCopy);
-		List<SitemapElementProperty> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
-		Chart instance = new Chart();
+		List<Property> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
+		Setpoint instance = new Setpoint();
 		instance.addProperties(list);
 		return instance;
 	}
-
+	
 	@Override
 	public String type() {
 		return TYPE;
 	}
 
 	@Override
-	public List<SitemapElementProperty> properties() {
+	public List<Property> properties() {
 		return properties;
 	}
 
@@ -89,14 +87,8 @@ public class Chart implements NodeProperties {
 
 	@Override
 	public String getValue(String name) {
-		String value = null;
-		for (SitemapElementProperty p : properties) {
-			if (p.getName().compareTo(name) == 0) {
-				value = p.getValue();
-				break;
-			}
-		}
-		return value;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -106,19 +98,19 @@ public class Chart implements NodeProperties {
 	}
 
 	@Override
-	public List<NodeProperties> children() {
+	public List<Properties> children() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addProperty(SitemapElementProperty prop) {
+	public void addProperty(Property prop) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addChild(NodeProperties child) {
+	public void addChild(Properties child) {
 		children.add(child);
 	}
 
@@ -140,7 +132,7 @@ public class Chart implements NodeProperties {
 	}
 
 	@Override
-	public void addProperties(List<SitemapElementProperty> prop) {
+	public void addProperties(List<Property> prop) {
 		properties.addAll(prop);
 	}
 

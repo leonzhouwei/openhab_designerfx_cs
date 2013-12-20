@@ -1,12 +1,12 @@
-package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.impl;
+package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.impl;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.NodeProperties;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapElementProperty;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Properties;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
 import org.openhab.designerfx.server.util.Util;
 
 import com.google.common.collect.Lists;
@@ -15,31 +15,31 @@ import com.google.common.collect.Sets;
 /**
  * 
  * Syntax:
- * Colorpicker [item="<itemname>"] [label="<labelname>"] [icon="<iconname>"] [sendFrequency=""]
+ * Selection item="<itemname>" [label="<labelname>"] [icon="<iconname>"] [mappings="<mapping definition>"]
  * 
  * @author zhouwei
  *
  */
-public class Colorpicker implements NodeProperties {
-	
-	public static final String TYPE = "Colorpicker";
+public class Selection implements Properties {
+
+	public static final String TYPE = "Selection";
 	
 	private static final String[] KEYWORDS = {
 		TYPE,
 		"icon=",
 		"item=",
 		"label=",
-		"sendFrequency="
+		"mappings="
 	};
 	private static final String[] ORDERED_PROPERTY_NAMES = {
 		"item",
 		"label",
 		"icon",
-		"sendFrequency"
+		"mappings"
 	};
 	
-	private List<SitemapElementProperty> properties = Lists.newArrayList();
-	private List<NodeProperties> children = Lists.newArrayList();
+	private List<Property> properties = Lists.newArrayList();
+	private List<Properties> children = Lists.newArrayList();
 	
 	public static Set<String> keywords() {
 		Set<String> keys = Sets.newHashSet();
@@ -49,15 +49,15 @@ public class Colorpicker implements NodeProperties {
 		return keys;
 	}
 	
-	public static Colorpicker parse(String line) {
+	public static Selection parse(String line) {
 		line = line.replaceAll("\\{", "").trim();
 		if (!line.startsWith(TYPE)) {
 			throw new RuntimeException(line + " is NOT a " + TYPE);
 		}
 		Set<String> keysCopy = keywords();
 		Map<String, String> map = Util.toMapTrimmingValues(line, keysCopy);
-		List<SitemapElementProperty> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
-		Colorpicker instance = new Colorpicker();
+		List<Property> list = Util.toSitemapElementPropertyList(map, TYPE, keysCopy);
+		Selection instance = new Selection();
 		instance.addProperties(list);
 		return instance;
 	}
@@ -68,7 +68,7 @@ public class Colorpicker implements NodeProperties {
 	}
 
 	@Override
-	public List<SitemapElementProperty> properties() {
+	public List<Property> properties() {
 		return properties;
 	}
 
@@ -84,7 +84,7 @@ public class Colorpicker implements NodeProperties {
 	@Override
 	public String getValue(String name) {
 		String value = null;
-		for (SitemapElementProperty p : properties) {
+		for (Property p : properties) {
 			if (p.getName().compareTo(name) == 0) {
 				value = p.getValue();
 				break;
@@ -100,19 +100,19 @@ public class Colorpicker implements NodeProperties {
 	}
 
 	@Override
-	public List<NodeProperties> children() {
+	public List<Properties> children() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addProperty(SitemapElementProperty prop) {
+	public void addProperty(Property prop) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addChild(NodeProperties child) {
+	public void addChild(Properties child) {
 		children.add(child);
 	}
 
@@ -134,7 +134,7 @@ public class Colorpicker implements NodeProperties {
 	}
 
 	@Override
-	public void addProperties(List<SitemapElementProperty> prop) {
+	public void addProperties(List<Property> prop) {
 		properties.addAll(prop);
 	}
 

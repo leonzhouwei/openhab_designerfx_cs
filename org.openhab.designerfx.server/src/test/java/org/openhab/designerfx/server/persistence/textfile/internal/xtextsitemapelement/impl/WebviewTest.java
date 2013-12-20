@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.impl.Webview;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.impl.Webview;
 
 public class WebviewTest {
 

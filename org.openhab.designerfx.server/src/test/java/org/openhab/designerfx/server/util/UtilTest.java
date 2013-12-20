@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapElementProperty;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.ChartPropertiesParser;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.ColorpickerPropertiesParser;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.FramePropertiesParser;
@@ -268,24 +268,24 @@ public class UtilTest {
 		map.put(WebviewPropertiesParser.WEBVIEW, "");
 		map.put("url=", "\"http://heise-online.mobi/\"");
 		map.put("height=", "8");
-		List<SitemapElementProperty> expected = Lists.newArrayList();
-		SitemapElementProperty e = null;
-		e = new SitemapElementProperty();
+		List<Property> expected = Lists.newArrayList();
+		Property e = null;
+		e = new Property();
 		e.setName("type");
 		e.setValue(WebviewPropertiesParser.WEBVIEW);
 		expected.add(e);
-		e = new SitemapElementProperty();
+		e = new Property();
 		e.setName("url");
 		e.setValue("\"http://heise-online.mobi/\"");
 		expected.add(e);
-		e = new SitemapElementProperty();
+		e = new Property();
 		e.setName("height");
 		e.setValue("8");
 		expected.add(e);
-		List<SitemapElementProperty> actual = Util.toSitemapElementPropertyList(map, WebviewPropertiesParser.WEBVIEW, WebviewPropertiesParser.keysCopy());
-		for (SitemapElementProperty prop : expected) {
+		List<Property> actual = Util.toSitemapElementPropertyList(map, WebviewPropertiesParser.WEBVIEW, WebviewPropertiesParser.keysCopy());
+		for (Property prop : expected) {
 			boolean found = false;
-			for (SitemapElementProperty a : actual) {
+			for (Property a : actual) {
 				if (a.getName().compareTo(prop.getName()) == 0 &&
 					a.getValue().compareTo(prop.getValue()) == 0) {
 					found = true;

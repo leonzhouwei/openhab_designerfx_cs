@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapElementProperty;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.SitemapElement;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.SitemapElementPropertiesParser;
 import org.openhab.designerfx.server.util.Util;
@@ -50,7 +50,7 @@ public class SliderPropertiesParser implements SitemapElementPropertiesParser {
 		}
 		Set<String> keysCopy = keysCopy();
 		Map<String, String> map = Util.toMapTrimmingValues(line, keysCopy);
-		List<SitemapElementProperty> list = Util.toSitemapElementPropertyList(map, SLIDER, keysCopy);
+		List<Property> list = Util.toSitemapElementPropertyList(map, SLIDER, keysCopy);
 		e.addPropertys(list);
 	}
 
