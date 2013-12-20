@@ -53,7 +53,7 @@ public class Group implements Atom {
 
 	@Override
 	public String toXtext() {
-		return TYPE + Constants.STRING_SPACE + properties.toXtext(ORDERED_PROPERTY_NAMES);
+		return TYPE + Constants.SPACE_MARK + properties.toXtext(ORDERED_PROPERTY_NAMES);
 	}
 
 	@Override

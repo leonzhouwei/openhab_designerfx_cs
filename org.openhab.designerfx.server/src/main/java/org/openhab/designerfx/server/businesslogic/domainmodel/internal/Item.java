@@ -8,8 +8,8 @@ import com.google.common.collect.Lists;
 
 public class Item {
 
-	private static final String COMMA = Constants.STRING_COMMA;
-	private static final String SPACE = Constants.STRING_SPACE;
+	private static final String COMMA = Constants.COMMA_MARK;
+	private static final String SPACE = Constants.SPACE_MARK;
 
 	private String type; // mandatory
 	private String name; // mandatory

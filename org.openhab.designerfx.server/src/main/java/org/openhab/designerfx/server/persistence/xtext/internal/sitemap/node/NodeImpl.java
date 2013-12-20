@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.openhab.designerfx.server.common.Constants;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapImpl;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Atom;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Node;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Properties;
@@ -13,9 +14,9 @@ import com.google.common.collect.Lists;
 
 public class NodeImpl implements Node {
 	
-	private static final String SPACE = Constants.STRING_SPACE;
+	private static final String SPACE = Constants.SPACE_MARK;
 	private static final String LINE_SEPARATOR = Constants.LINE_SEPARATOR;
-	private static final String TAB = "    ";
+	private static final String TAB = SitemapImpl.DEFAULT_INDENTATION;
 
 	private Atom atom;
 	private List<Node> children = Lists.newArrayList();

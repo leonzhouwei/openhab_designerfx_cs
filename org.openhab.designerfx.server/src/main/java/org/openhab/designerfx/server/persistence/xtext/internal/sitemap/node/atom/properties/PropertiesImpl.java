@@ -56,7 +56,7 @@ public class PropertiesImpl implements Properties {
 					sb.append(name.trim());
 					sb.append("=");
 					sb.append(value.trim());
-					sb.append(Constants.STRING_SPACE);
+					sb.append(Constants.SPACE_MARK);
 				} else {
 					if (name != null) {
 						sb.append(name.trim());

@@ -1,10 +1,11 @@
-package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node;
+package org.openhab.designerfx.server.persistence.xtext.internal.sitemap;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.openhab.designerfx.server.common.Constants;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.NodeImpl;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.Frame;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.Group;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Atom;
