@@ -8,7 +8,6 @@ public class SitemapImpl implements Sitemap {
 	
 	public static final String DEFAULT_INDENTATION = "    ";
 	
-	private static final String ICON = Constants.ICON;
 	private static final String LABEL = Constants.LABEL;
 	private static final String LINE_SEPARATOR = Constants.LINE_SEPARATOR;
 	private static final String SITEMAP = Constants.SITEMAP;
