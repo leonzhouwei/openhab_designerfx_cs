@@ -1,4 +1,4 @@
-package org.openhab.designerfx.server.util;
+package org.openhab.designerfx.server.persistence.xtext.internal.util;
 
 import java.io.BufferedReader;
 import java.io.File;
