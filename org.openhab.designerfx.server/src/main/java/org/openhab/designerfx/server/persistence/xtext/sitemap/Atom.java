@@ -10,11 +10,11 @@ public interface Atom {
 	 */
 	public String getType();
 
-	public NodeProperties getProperties();
+	public Properties getProperties();
 
-	public boolean addProperty(NodeProperty property);
+	public boolean addProperty(Property property);
 
-	public boolean addProperties(Collection<? extends NodeProperty> properties);
+	public boolean addProperties(Collection<? extends Property> properties);
 	
 	public String toXtext();
 

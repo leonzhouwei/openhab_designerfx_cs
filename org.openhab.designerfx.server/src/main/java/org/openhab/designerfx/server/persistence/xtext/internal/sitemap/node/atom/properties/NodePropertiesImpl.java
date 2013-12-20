@@ -1,89 +1,74 @@
-package org.openhab.designerfx.server.persistence.xtext.internal.util;
+package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.properties;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.properties.NodePropertyImpl;
+import org.openhab.designerfx.server.persistence.xtext.sitemap.Properties;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Property;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-public class Util {
-
-	public static List<File> listRegularFileNames(File directory,
-			String fileExtension) {
-		File[] array = directory.listFiles();
-		List<File> files = Lists.newArrayList();
-		for (File file : array) {
-			if (file.getName().endsWith(fileExtension)) {
-				files.add(file);
-			}
-		}
-		return files;
+public class NodePropertiesImpl implements Properties {
+	
+	private List<Property> properties = Lists.newArrayList();
+	
+	@Override
+	public boolean add(Property property) {
+		properties.add(property);
+		return true;
 	}
 
-	public static List<String> baseNames(List<File> files, String fileExtension) {
-		List<String> baseNames = Lists.newArrayList();
-		for (File file : files) {
-			String name = file.getName();
-			int index = name.indexOf(fileExtension);
-			String baseName = name.substring(0, index);
-			baseNames.add(baseName);
-		}
-		return baseNames;
+	@Override
+	public boolean addAll(Collection<? extends Property> properties) {
+		this.properties.addAll(properties);
+		return true;
 	}
 
-	public static List<String> readAllTrimEmptyLines(File file)
-			throws IOException {
-		BufferedReader br = null;
-		List<String> list = Lists.newArrayList();
-		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(
-					file), Constants.CHARSET_NAME_UTF_8));
-			String s = null;
-			while ((s = br.readLine()) != null) {
-				s = s.trim();
-				if (!s.isEmpty()) {
-					list.add(s);
+	@Override
+	public String toXtext(String[] orders) {
+		StringBuilder sb = new StringBuilder();
+		Map<String, Property> map = Maps.newHashMap();
+		for (Property p : properties) {
+			String name = p.getName();
+			map.put(name, p);
+		}
+		for (String order : orders) {
+			Property p = map.get(order);
+			if (p != null) {
+				String name = p.getName();
+				String value = p.getValue();
+				if (name != null && !name.trim().isEmpty() && value != null && !value.isEmpty()) {
+					sb.append(name.trim());
+					sb.append("=");
+					sb.append(value.trim());
+					sb.append(Constants.STRING_SPACE);
+				} else {
+					if (name != null) {
+						sb.append(name.trim());
+					}
 				}
 			}
-		} finally {
-			if (br != null) {
-				br.close();
-			}
 		}
-		return list;
+		return sb.toString().trim();
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return properties.isEmpty();
 	}
 
-	public static void printSeparateLine() {
-		System.out
-				.println("--------------------------------------------------------------------------------");
+	@Override
+	public List<Property> getAll() {
+		return properties;
 	}
-
-	public static int count(String source, String target) {
-		int count = 0;
-		int index = -1;
-		while ((index = source.indexOf(target)) >= 0) {
-			count += 1;
-			if (index > source.length() - 1) {
-				break;
-			}
-			source = source.substring(index + 1, source.length());
-		}
-		return count;
-	}
-
+	
 	/**
 	 * 
 	 * 
@@ -91,7 +76,7 @@ public class Util {
 	 * @param keywords  keywords for separation
 	 * @return  a map containg the properties that have appeared in the string
 	 */
-	public static Map<String, String> toMapTrimmingValues(String string, Set<String> keywords) {
+	private static Map<String, String> toMapTrimmingValues(String string, Set<String> keywords) {
 		string = string.trim();
 		Map<String, String> result = Maps.newHashMap();
 		for (String key : keywords) {
@@ -147,7 +132,7 @@ public class Util {
 		return result;
 	}
 	
-	public static List<Property> toSitemapElementPropertyList(Map<String, String> map, String type, Set<String> keys) {
+	private static List<Property> toSitemapElementPropertyList(Map<String, String> map, String type, Set<String> keys) {
 		List<Property> list = Lists.newArrayList();
 		Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -169,5 +154,5 @@ public class Util {
 		}
 		return list;
 	}
-	
+
 }
