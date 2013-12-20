@@ -1,13 +1,10 @@
 package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.properties.NodePropertiesImpl;
-import org.openhab.designerfx.server.persistence.xtext.internal.util.Util;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Atom;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Properties;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Property;
@@ -49,10 +46,8 @@ public class Video implements Atom {
 		for (String key : KEYWORDS) {
 			keywordSet.add(key);
 		}
-		Map<String, String> map = Util.toMapTrimmingValues(line, keywordSet);
-		List<Property> list = Util.toSitemapElementPropertyList(map, TYPE, keywordSet);
 		Video instance = new Video();
-		instance.addProperties(list);
+		instance.addProperties(NodePropertiesImpl.parse(line, TYPE, keywordSet).getAll());
 		return instance;
 	}
 

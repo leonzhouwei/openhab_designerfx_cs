@@ -19,6 +19,14 @@ public class NodePropertiesImpl implements Properties {
 	
 	private List<Property> properties = Lists.newArrayList();
 	
+	public static NodePropertiesImpl parse(String xtext, String expectedType, Set<String> keywords) {
+		Map<String, String> map = toMapTrimmingValues(xtext, keywords);
+		List<Property> props = toPropertyList(map, expectedType, keywords);
+		NodePropertiesImpl instance = new NodePropertiesImpl();
+		instance.addAll(props);
+		return instance;
+	}
+	
 	@Override
 	public boolean add(Property property) {
 		properties.add(property);
@@ -132,14 +140,14 @@ public class NodePropertiesImpl implements Properties {
 		return result;
 	}
 	
-	private static List<Property> toSitemapElementPropertyList(Map<String, String> map, String type, Set<String> keys) {
+	private static List<Property> toPropertyList(Map<String, String> map, String expectedType, Set<String> keys) {
 		List<Property> list = Lists.newArrayList();
 		Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<String, String> entry = iterator.next();
 			String key = entry.getKey();
 			String value = entry.getValue();
-			if (key.compareTo(type) != 0) {
+			if (key.compareTo(expectedType) != 0) {
 				if (keys.contains(key)) {
 					NodePropertyImpl prop = new NodePropertyImpl();
 					String name = key;
