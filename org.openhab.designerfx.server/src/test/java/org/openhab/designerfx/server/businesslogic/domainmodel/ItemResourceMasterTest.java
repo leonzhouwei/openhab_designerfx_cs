@@ -1,7 +1,5 @@
 package org.openhab.designerfx.server.businesslogic.domainmodel;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.openhab.designerfx.server.BaseTest;
 import org.openhab.designerfx.server.util.Util;
@@ -13,10 +11,10 @@ public class ItemResourceMasterTest extends BaseTest {
 		Util.printSeparateLine();
 		ItemResourceMaster irm = ItemResourceMasterBuilder.build();
 		irm.load();
-		List<String> names = irm.listItemResourceNames();
-		for (String name : names) {
+//		List<String> names = irm.listItemResourceNames();
+//		for (String name : names) {
 //			System.out.println(name);
-		}
+//		}
 	}
 
 }

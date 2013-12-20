@@ -9,11 +9,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.NodePropertyImpl;
+import org.openhab.designerfx.server.persistence.xtext.sitemap.NodeProperties;
+import org.openhab.designerfx.server.persistence.xtext.sitemap.NodeProperty;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -146,8 +148,8 @@ public class Util {
 		return result;
 	}
 	
-	public static List<Property> toSitemapElementPropertyList(Map<String, String> map, String type, Set<String> keys) {
-		List<Property> list = Lists.newArrayList();
+	public static List<NodeProperty> toSitemapElementPropertyList(Map<String, String> map, String type, Set<String> keys) {
+		List<NodeProperty> list = Lists.newArrayList();
 		Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<String, String> entry = iterator.next();
@@ -155,7 +157,7 @@ public class Util {
 			String value = entry.getValue();
 			if (key.compareTo(type) != 0) {
 				if (keys.contains(key)) {
-					Property prop = new Property();
+					NodePropertyImpl prop = new NodePropertyImpl();
 					String name = key;
 					if (key.endsWith("=")) {
 						name = key.replace("=", "");
@@ -169,9 +171,9 @@ public class Util {
 		return list;
 	}
 	
-	public static String toXtext(List<Property> properties) {
+	public static String toXtext(List<NodeProperty> properties) {
 		StringBuilder sb = new StringBuilder();
-		for (Property p : properties) {
+		for (NodeProperty p : properties) {
 			String name = p.getName();
 			String value = p.getValue();
 			if (name != null && !name.trim().isEmpty() && value != null && !value.isEmpty()) {
@@ -188,15 +190,16 @@ public class Util {
 		return sb.toString().trim();
 	}
 
-	public static String toXtext(List<Property> properties, String[] orders) {
+	public static String toXtext(NodeProperties np, String[] orders) {
+		List<NodeProperty> properties = np.getAll();
 		StringBuilder sb = new StringBuilder();
-		Map<String, Property> map = Maps.newHashMap();
-		for (Property p : properties) {
+		Map<String, NodeProperty> map = Maps.newHashMap();
+		for (NodeProperty p : properties) {
 			String name = p.getName();
 			map.put(name, p);
 		}
 		for (String order : orders) {
-			Property p = map.get(order);
+			NodeProperty p = map.get(order);
 			if (p != null) {
 				String name = p.getName();
 				String value = p.getValue();
