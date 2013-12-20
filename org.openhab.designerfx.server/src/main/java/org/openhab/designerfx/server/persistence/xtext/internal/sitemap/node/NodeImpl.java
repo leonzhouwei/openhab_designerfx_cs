@@ -15,6 +15,7 @@ public class NodeImpl implements Node {
 	
 	private static final String SPACE = Constants.STRING_SPACE;
 	private static final String LINE_SEPARATOR = Constants.LINE_SEPARATOR;
+	private static final String TAB = "    ";
 
 	private Atom atom;
 	private List<Node> children = Lists.newArrayList();
@@ -69,9 +70,10 @@ public class NodeImpl implements Node {
 			sb.append("{");
 			sb.append(LINE_SEPARATOR);
 			for (Node child : children) {
-				sb.append(child.toXtext(indentation + indentation));
+				sb.append(child.toXtext(indentation + TAB));
 				sb.append(LINE_SEPARATOR);
 			}
+			sb.append(indentation);
 			sb.append("}");
 		}
 		return sb.toString();
