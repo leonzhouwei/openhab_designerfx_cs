@@ -77,4 +77,9 @@ public class NodeImpl implements Node {
 		return sb.toString();
 	}
 
+	@Override
+	public String toXtext() {
+		return toXtext("");
+	}
+
 }
