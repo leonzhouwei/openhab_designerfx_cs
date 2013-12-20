@@ -2,7 +2,7 @@ package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.at
 
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Property;
 
-public class NodePropertyImpl implements Property {
+public class PropertyImpl implements Property {
 
 	private String name;
 	private String value;

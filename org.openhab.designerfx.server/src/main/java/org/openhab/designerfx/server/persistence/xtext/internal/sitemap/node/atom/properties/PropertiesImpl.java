@@ -15,14 +15,14 @@ import org.openhab.designerfx.server.persistence.xtext.sitemap.Property;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-public class NodePropertiesImpl implements Properties {
+public class PropertiesImpl implements Properties {
 	
 	private List<Property> properties = Lists.newArrayList();
 	
-	public static NodePropertiesImpl parse(String xtext, String expectedType, Set<String> keywords) {
+	public static PropertiesImpl parse(String xtext, String expectedType, Set<String> keywords) {
 		Map<String, String> map = toMapTrimmingValues(xtext, keywords);
 		List<Property> props = toPropertyList(map, expectedType, keywords);
-		NodePropertiesImpl instance = new NodePropertiesImpl();
+		PropertiesImpl instance = new PropertiesImpl();
 		instance.addAll(props);
 		return instance;
 	}
@@ -149,7 +149,7 @@ public class NodePropertiesImpl implements Properties {
 			String value = entry.getValue();
 			if (key.compareTo(expectedType) != 0) {
 				if (keys.contains(key)) {
-					NodePropertyImpl prop = new NodePropertyImpl();
+					PropertyImpl prop = new PropertyImpl();
 					String name = key;
 					if (key.endsWith("=")) {
 						name = key.replace("=", "");

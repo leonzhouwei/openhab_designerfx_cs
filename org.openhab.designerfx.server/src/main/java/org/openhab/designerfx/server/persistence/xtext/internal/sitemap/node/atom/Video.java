@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.properties.NodePropertiesImpl;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.properties.PropertiesImpl;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Atom;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Properties;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Property;
@@ -35,7 +35,7 @@ public class Video implements Atom {
 		"url"
 	};
 	
-	private Properties properties = new NodePropertiesImpl();
+	private Properties properties = new PropertiesImpl();
 	
 	public static Video parse(String line) {
 		line = line.replaceAll("\\{", "").trim();
@@ -47,7 +47,7 @@ public class Video implements Atom {
 			keywordSet.add(key);
 		}
 		Video instance = new Video();
-		instance.addProperties(NodePropertiesImpl.parse(line, TYPE, keywordSet).getAll());
+		instance.addProperties(PropertiesImpl.parse(line, TYPE, keywordSet).getAll());
 		return instance;
 	}
 

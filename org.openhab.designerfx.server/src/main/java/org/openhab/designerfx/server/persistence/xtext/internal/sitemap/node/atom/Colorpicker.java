@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.properties.NodePropertiesImpl;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.properties.PropertiesImpl;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Atom;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Properties;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Property;
@@ -37,7 +37,7 @@ public class Colorpicker implements Atom {
 		"sendFrequency"
 	};
 	
-	private Properties properties = new NodePropertiesImpl();
+	private Properties properties = new PropertiesImpl();
 	
 	public static Colorpicker parse(String line) {
 		line = line.replaceAll("\\{", "").trim();
@@ -49,7 +49,7 @@ public class Colorpicker implements Atom {
 			keywordSet.add(key);
 		}
 		Colorpicker instance = new Colorpicker();
-		instance.addProperties(NodePropertiesImpl.parse(line, TYPE, keywordSet).getAll());
+		instance.addProperties(PropertiesImpl.parse(line, TYPE, keywordSet).getAll());
 		return instance;
 	}
 
