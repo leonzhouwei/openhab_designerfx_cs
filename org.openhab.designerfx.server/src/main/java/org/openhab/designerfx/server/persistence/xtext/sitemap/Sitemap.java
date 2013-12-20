@@ -1,6 +1,6 @@
 package org.openhab.designerfx.server.persistence.xtext.sitemap;
 
-public interface SitemapIf {
+public interface Sitemap {
 
 	public String getName();
 
