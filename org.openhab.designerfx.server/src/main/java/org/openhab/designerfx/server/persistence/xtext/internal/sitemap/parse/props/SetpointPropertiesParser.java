@@ -7,7 +7,7 @@ import java.util.Set;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.SitemapElement;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.SitemapElementPropertiesParser;
-import org.openhab.designerfx.server.util.Util;
+import org.openhab.designerfx.server.persistence.xtext.internal.util.Util;
 
 import com.google.common.collect.Sets;
 

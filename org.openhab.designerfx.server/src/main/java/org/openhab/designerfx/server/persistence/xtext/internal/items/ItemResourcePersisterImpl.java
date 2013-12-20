@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.common.Context;
+import org.openhab.designerfx.server.persistence.xtext.internal.util.Util;
 import org.openhab.designerfx.server.persistence.xtext.items.ItemResourcePersister;
-import org.openhab.designerfx.server.util.Util;
 
 public class ItemResourcePersisterImpl implements ItemResourcePersister {
 	

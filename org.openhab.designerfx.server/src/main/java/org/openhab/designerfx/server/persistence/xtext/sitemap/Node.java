@@ -4,6 +4,10 @@ import java.util.List;
 
 public interface Node {
 	
+	/**
+	 * 
+	 * @return  "Chart", "Colorpicker", ...
+	 */
 	public String getType();
 
 	public List<NodeProperty> getProperties();

@@ -20,7 +20,7 @@ import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.pr
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.TextPropertiesParser;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.VideoPropertiesParser;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.parse.props.WebviewPropertiesParser;
-import org.openhab.designerfx.server.util.Util;
+import org.openhab.designerfx.server.persistence.xtext.internal.util.Util;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

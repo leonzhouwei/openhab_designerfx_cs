@@ -7,7 +7,7 @@ import java.util.Set;
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Properties;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.properties.Property;
-import org.openhab.designerfx.server.util.Util;
+import org.openhab.designerfx.server.persistence.xtext.internal.util.Util;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
