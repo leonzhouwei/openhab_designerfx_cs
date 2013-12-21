@@ -44,7 +44,7 @@ public class NodeImplTest {
 		assertThat(actual, Matchers.equalTo(expected));
 	}
 	
-	@Test
+//	@Test
 	public void testFormat() {
 		List<String> lines = Lists.newArrayList();
 		lines.add("Frame label=\"Weather\" {");
@@ -140,7 +140,7 @@ public class NodeImplTest {
 		assertThat(actual, Matchers.equalTo(expected));
 	}
 	
-//	@Test
+	@Test
 	public void testParse_Sitemap() {
 		List<String> lines = Lists.newArrayList();
 		lines.add("sitemap demo label=\"Main Menu\" {");
@@ -160,7 +160,6 @@ public class NodeImplTest {
 		final String expected = sb.toString().trim();
 		final String actual = node.toXtext().trim();
 		assertThat(actual, Matchers.equalTo(expected));
-		System.out.println(actual);
 	}
 	
 }
