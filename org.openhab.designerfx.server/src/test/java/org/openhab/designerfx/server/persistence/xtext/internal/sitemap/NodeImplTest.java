@@ -135,5 +135,28 @@ public class NodeImplTest {
 		final String actual = node.toXtext().trim();
 		assertThat(actual, Matchers.equalTo(expected));
 	}
-
+	
+	@Test
+	public void testParse_Sitemap() {
+		List<String> lines = Lists.newArrayList();
+		lines.add("sitemap demo label=\"Main Menu\" {");
+		lines.add("    Frame {");
+		lines.add("        Group item=gFF label=\"First Floor\" icon=\"firstfloor\"");
+		lines.add("        Group item=gGF label=\"Ground Floor\" icon=\"groundfloor\"");
+		lines.add("        Group item=gC label=\"Cellar\" icon=\"cellar\"");
+		lines.add("        Group item=Outdoor icon=\"garden\"");
+		lines.add("    }");
+		lines.add("}");
+		NodeImpl node = NodeImpl.parse(lines, 0, lines.size() - 1);
+		StringBuilder sb = new StringBuilder();
+		for (String line : lines) {
+			sb.append(line);
+			sb.append(Constants.LINE_SEPARATOR);
+		}
+		final String expected = sb.toString().trim();
+		final String actual = node.toXtext().trim();
+		assertThat(actual, Matchers.equalTo(expected));
+		System.out.println(actual);
+	}
+	
 }
