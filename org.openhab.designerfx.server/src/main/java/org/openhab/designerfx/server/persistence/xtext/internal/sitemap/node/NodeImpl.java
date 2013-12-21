@@ -23,7 +23,9 @@ public class NodeImpl implements Node {
 
 	private List<Node> children = Lists.newArrayList();
 	
-	public static NodeImpl parse(List<String> lines, final int minIndex, final int maxIndex) {
+	public static NodeImpl parse(List<String> list, final int minIndex, final int maxIndex) {
+		List<String> lines = Lists.newArrayList();
+		lines.addAll(list);
 		format(lines, minIndex, maxIndex);
 		checkAfterFormat(lines, minIndex, maxIndex);
 		NodeImpl node = new NodeImpl();

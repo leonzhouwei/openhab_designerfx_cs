@@ -63,13 +63,9 @@ public class NodeImplTest {
 		lines.add("    }");
 		lines.add("}");
 		NodeImpl.format(lines, 0, lines.size() - 1);
-		for (String line : lines) {
-			System.out.println(line);
-		}
 	}
 	
-	@Test
-	public void testParse() {
+	public void testParseNode() {
 		final String frame = "Frame {";
 		final String group = "Group item=gFF label=\"First Floor\" icon=\"firstfloor\"";
 		final String closeure = "}";
@@ -88,6 +84,55 @@ public class NodeImplTest {
 		sb.append(Constants.LINE_SEPARATOR);
 		sb.append(closeure);
 		final String expected = sb.toString();
+		assertThat(actual, Matchers.equalTo(expected));
+	}
+	
+	@Test
+	public void testParse_1() {
+		List<String> lines = Lists.newArrayList();
+		lines.add("Frame {");
+		lines.add("    Group item=gFF label=\"First Floor\" icon=\"firstfloor\"");
+		lines.add("    Group item=gGF label=\"Ground Floor\" icon=\"groundfloor\"");
+		lines.add("    Group item=gC label=\"Cellar\" icon=\"cellar\"");
+		lines.add("    Group item=Outdoor icon=\"garden\"");
+		lines.add("}");
+		NodeImpl node = NodeImpl.parse(lines, 0, lines.size() - 1);
+		StringBuilder sb = new StringBuilder();
+		for (String line : lines) {
+			sb.append(line);
+			sb.append(Constants.LINE_SEPARATOR);
+		}
+		final String expected = sb.toString().trim();
+		final String actual = node.toXtext().trim();
+		assertThat(actual, Matchers.equalTo(expected));
+	}
+	
+	@Test
+	public void testParse_2() {
+		List<String> lines = Lists.newArrayList();
+		lines.add("Frame label=\"Weather\" {");
+		lines.add("    Text item=Weather_Temperature valuecolor=[Weather_LastUpdate==\"Uninitialized\"=\"lightgray\",Weather_LastUpdate>90=\"lightgray\",>25=\"orange\",>15=\"green\",>5=\"orange\",<=5=\"blue\"] {");
+		lines.add("        Frame {");
+		lines.add("            Text item=Weather_Temp_Max valuecolor=[>25=\"orange\",>15=\"green\",>5=\"orange\",<=5=\"blue\"]");
+		lines.add("            Text item=Weather_Temp_Min valuecolor=[>25=\"orange\",>15=\"green\",>5=\"orange\",<=5=\"blue\"]");
+		lines.add("            Text item=Weather_LastUpdate visibility=[Weather_LastUpdate>30] valuecolor=[Weather_LastUpdate>120=\"orange\", Weather_LastUpdate>300=\"red\"]");
+		lines.add("        }");
+		lines.add("        Frame {");
+		lines.add("            Switch item=Weather_Chart_Period label=\"Chart Period\" mappings=[0=\"Hour\", 1=\"Day\", 2=\"Week\"]");
+		lines.add("            Chart item=Weather_Chart period=h refresh=600 visibility=[Weather_Chart_Period==0, Weather_Chart_Period==\"Uninitialized\"]");
+		lines.add("            Chart item=Weather_Chart period=D refresh=3600 visibility=[Weather_Chart_Period==1]");
+		lines.add("            Chart item=Weather_Chart period=W refresh=3600 visibility=[Weather_Chart_Period==2]");
+		lines.add("        }");
+		lines.add("    }");
+		lines.add("}");
+		NodeImpl node = NodeImpl.parse(lines, 0, lines.size() - 1);
+		StringBuilder sb = new StringBuilder();
+		for (String line : lines) {
+			sb.append(line);
+			sb.append(Constants.LINE_SEPARATOR);
+		}
+		final String expected = sb.toString().trim();
+		final String actual = node.toXtext().trim();
 		assertThat(actual, Matchers.equalTo(expected));
 	}
 
