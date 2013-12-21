@@ -57,14 +57,12 @@ public class NodeImplTest {
 		lines.add("        Frame {");
 		lines.add("            Switch item=Weather_Chart_Period label=\"Chart Period\" mappings=[0=\"Hour\", 1=\"Day\", 2=\"Week\"]");
 		lines.add("            Chart item=Weather_Chart period=h refresh=600 visibility=[Weather_Chart_Period==0, Weather_Chart_Period==\"Uninitialized\"]");
-	    lines.add("            Chart item=Weather_Chart period=D refresh=3600 visibility=[Weather_Chart_Period==1]");
 		lines.add("            Chart item=Weather_Chart period=D refresh=3600 visibility=[Weather_Chart_Period==1]");
 		lines.add("            Chart item=Weather_Chart period=W refresh=3600 visibility=[Weather_Chart_Period==2]");
 		lines.add("        }");
 		lines.add("    }");
 		lines.add("}");
 		NodeImpl.format(lines, 0, lines.size() - 1);
-		
 		for (String line : lines) {
 			System.out.println(line);
 		}
