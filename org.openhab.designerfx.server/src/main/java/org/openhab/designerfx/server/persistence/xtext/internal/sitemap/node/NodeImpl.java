@@ -24,8 +24,10 @@ public class NodeImpl implements Node {
 	private List<Node> children = Lists.newArrayList();
 	
 	public static NodeImpl parse(List<String> list, final int minIndex, final int maxIndex) {
+		//
 		List<String> lines = Lists.newArrayList();
 		lines.addAll(list);
+		//
 		format(lines, minIndex, maxIndex);
 		checkAfterFormat(lines, minIndex, maxIndex);
 		NodeImpl node = new NodeImpl();
@@ -114,6 +116,9 @@ public class NodeImpl implements Node {
 	}
 	
 	private static void checkBeforeFormat(List<String> lines, final int minIndex, final int maxIndex) {
+		if (lines.get(minIndex).trim().startsWith("{")) {
+			throw new RuntimeException("should NOT start with a '{' in the first line: '" + lines.get(0).trim() + "'");
+		}
 		checkBraces(lines, minIndex, maxIndex);
 		for (int i = minIndex; i <= maxIndex; ++i) {
 			String line = lines.get(i).trim();
@@ -173,6 +178,7 @@ public class NodeImpl implements Node {
 	
 	public static void format(List<String> lines, final int minIndex, final int maxIndex) {
 		checkBeforeFormat(lines, minIndex, maxIndex);
+		trim(lines);
 		List<String> formatted = Lists.newArrayList();
 		for (int i = minIndex; i <= maxIndex; ++i) {
 			String line = lines.get(i).trim();
@@ -242,6 +248,18 @@ public class NodeImpl implements Node {
 			}
 		}
 		return nodeEndLine;
+	}
+	
+	private static void trim(List<String> list) {
+		List<String> lines = Lists.newArrayList();
+		for (String line : list) {
+			line = line.trim();
+			if (!line.isEmpty()) {
+				lines.add(line);
+			}
+		}
+		list.clear();
+		list.addAll(lines);
 	}
 
 }
