@@ -23,6 +23,14 @@ public class NodeImpl implements Node {
 
 	private List<Node> children = Lists.newArrayList();
 	
+	public static NodeImpl parse(List<String> lines, final int minIndex, final int maxIndex) {
+		format(lines, minIndex, maxIndex);
+		checkAfterFormat(lines, minIndex, maxIndex);
+		NodeImpl node = new NodeImpl();
+		parseNode(node, lines, minIndex, maxIndex);
+		return node;
+	}
+	
 	@Override
 	public String getType() {
 		return atom.getType();
@@ -91,7 +99,7 @@ public class NodeImpl implements Node {
 		this.atom = atom;
 	}
 	
-	public static void checkBraces(List<String> lines, final int minIndex, final int maxIndex) {
+	private static void checkBraces(List<String> lines, final int minIndex, final int maxIndex) {
 		// check if '{'s and '}'s have the same count
 		int count = 0;
 		for (String line : lines) {
@@ -103,7 +111,7 @@ public class NodeImpl implements Node {
 		}
 	}
 	
-	public static void checkBeforeFormat(List<String> lines, final int minIndex, final int maxIndex) {
+	private static void checkBeforeFormat(List<String> lines, final int minIndex, final int maxIndex) {
 		checkBraces(lines, minIndex, maxIndex);
 		for (int i = minIndex; i <= maxIndex; ++i) {
 			String line = lines.get(i).trim();
@@ -127,7 +135,7 @@ public class NodeImpl implements Node {
 		}
 	}
 	
-	public static void checkAfterFormat(List<String> formatted, final int minIndex, final int maxIndex) {
+	private static void checkAfterFormat(List<String> formatted, final int minIndex, final int maxIndex) {
 		checkBraces(formatted, minIndex, maxIndex);
 		// check the formatted lines
 		for (int i = minIndex; i <= maxIndex; ++i) {
