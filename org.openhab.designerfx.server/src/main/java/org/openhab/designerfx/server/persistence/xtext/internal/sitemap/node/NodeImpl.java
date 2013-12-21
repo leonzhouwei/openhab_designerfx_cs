@@ -23,15 +23,15 @@ public class NodeImpl implements Node {
 
 	private List<Node> children = Lists.newArrayList();
 	
-	public static NodeImpl parse(List<String> list, final int minIndex, final int maxIndex) {
+	public static NodeImpl parse(List<String> list) {
 		//
 		List<String> lines = Lists.newArrayList();
 		lines.addAll(list);
 		//
-		format(lines, minIndex, maxIndex);
-		checkAfterFormat(lines, minIndex, maxIndex);
+		format(lines);
+		checkAfterFormat(lines);
 		NodeImpl node = new NodeImpl();
-		parseNode(node, lines, minIndex, maxIndex);
+		parseNode(node, lines, 0);
 		return node;
 	}
 	
@@ -103,7 +103,7 @@ public class NodeImpl implements Node {
 		this.atom = atom;
 	}
 	
-	private static void checkBraces(List<String> lines, final int minIndex, final int maxIndex) {
+	private static void checkBraces(List<String> lines) {
 		// check if '{'s and '}'s have the same count
 		int count = 0;
 		for (String line : lines) {
@@ -115,12 +115,13 @@ public class NodeImpl implements Node {
 		}
 	}
 	
-	private static void checkBeforeFormat(List<String> lines, final int minIndex, final int maxIndex) {
-		if (lines.get(minIndex).trim().startsWith("{")) {
+	private static void checkBeforeFormat(List<String> lines) {
+		final int size = lines.size();
+		if (lines.get(size - 1).trim().startsWith("{")) {
 			throw new RuntimeException("should NOT start with a '{' in the first line: '" + lines.get(0).trim() + "'");
 		}
-		checkBraces(lines, minIndex, maxIndex);
-		for (int i = minIndex; i <= maxIndex; ++i) {
+		checkBraces(lines);
+		for (int i = 0; i < size; ++i) {
 			String line = lines.get(i).trim();
 			if (line.isEmpty()) {
 				continue;
@@ -142,10 +143,11 @@ public class NodeImpl implements Node {
 		}
 	}
 	
-	private static void checkAfterFormat(List<String> formatted, final int minIndex, final int maxIndex) {
-		checkBraces(formatted, minIndex, maxIndex);
+	private static void checkAfterFormat(List<String> formatted) {
+		checkBraces(formatted);
+		final int size = formatted.size();
 		// check the formatted lines
-		for (int i = minIndex; i <= maxIndex; ++i) {
+		for (int i = 0; i < size; ++i) {
 			String line = formatted.get(i).trim();
 			if (line.isEmpty()) {
 				throw new RuntimeException("an empty line has bee found");
@@ -176,11 +178,12 @@ public class NodeImpl implements Node {
 		}
 	}
 	
-	public static void format(List<String> lines, final int minIndex, final int maxIndex) {
-		Util.trim(lines, minIndex, maxIndex);
-		checkBeforeFormat(lines, minIndex, maxIndex);
+	public static void format(List<String> lines) {
+		Util.trim(lines);
+		checkBeforeFormat(lines);
 		List<String> formatted = Lists.newArrayList();
-		for (int i = minIndex; i <= maxIndex; ++i) {
+		final int size = lines.size();
+		for (int i = 0; i < size; ++i) {
 			String line = lines.get(i).trim();
 			if (line.isEmpty()) {
 				continue;
@@ -223,9 +226,9 @@ public class NodeImpl implements Node {
 		lines.addAll(formatted);
 	}
 	
-	public static int parseNode(NodeImpl root, List<String> lines, final int minIndex, final int maxIndex) {
-		int i = minIndex;
-		String line = lines.get(minIndex);
+	public static int parseNode(NodeImpl root, List<String> lines, final int start) {
+		int i = start;
+		String line = lines.get(start);
 		// parse its atom
 		Atom atom = AtomBuilder.build(line);
 		root.setAtom(atom);
@@ -235,14 +238,15 @@ public class NodeImpl implements Node {
 		// parse its children nodes
 		i += 1;
 		int nodeEndLine = -1;
-		while (i >= minIndex && i <= maxIndex) {
+		final int size = lines.size();
+		while (i >= 0 && i >= start && i < size) {
 			line = lines.get(i);
 			if (line.endsWith("}")) {
 				nodeEndLine = i;
 				break;
 			} else {
 				NodeImpl child = new NodeImpl();
-				i = parseNode(child, lines, i, maxIndex);
+				i = parseNode(child, lines, i);
 				root.addChild(child);
 				i += 1;
 			}

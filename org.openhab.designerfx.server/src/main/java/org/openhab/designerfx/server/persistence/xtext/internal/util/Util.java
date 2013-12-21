@@ -31,19 +31,15 @@ public class Util {
 	}
 	
 	public static void trim(List<String> list) {
-		trim(list, 0, list.size());
-	}
-	
-	public static void trim(List<String> list, final int minIndex, final int maxIndex) {
-		List<String> lines = Lists.newArrayList();
-		for (int i = minIndex; i <= maxIndex; ++i) {
-			String line = list.get(i).trim();
-			if (!line.isEmpty()) {
-				lines.add(line);
+		List<String> trimmed = Lists.newArrayList();
+		for (String string : list) {
+			string = string.trim();
+			if (!string.isEmpty()) {
+				trimmed.add(string);
 			}
 		}
 		list.clear();
-		list.addAll(lines);
+		list.addAll(trimmed);
 	}
-
+	
 }
