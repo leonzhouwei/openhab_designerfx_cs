@@ -104,9 +104,9 @@ public class NodeImpl implements Node {
 			return i;
 		}
 		// parse its children nodes
+		i += 1;
 		int nodeEndLine = -1;
-		final int size = lines.size();
-		while (i < size) {
+		while (i >= min && i <= max) {
 			line = lines.get(i);
 			if (line.endsWith("}")) {
 				nodeEndLine = i;

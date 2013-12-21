@@ -55,7 +55,13 @@ public class Colorpicker implements Atom {
 
 	@Override
 	public String toXtext() {
-		return TYPE + Constants.SPACE_MARK + properties.toXtext(ORDERED_PROPERTY_NAMES);
+		StringBuilder sb = new StringBuilder();
+		sb.append(TYPE);
+		if (!properties.isEmpty()) {
+			sb.append(Constants.SPACE_MARK);
+			sb.append(properties.toXtext(ORDERED_PROPERTY_NAMES));
+		}
+		return sb.toString();
 	}
 
 	@Override
