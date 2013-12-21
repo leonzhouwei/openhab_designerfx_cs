@@ -1,5 +1,7 @@
 package org.openhab.designerfx.server.persistence.xtext.internal.sitemap;
 
+import java.util.List;
+
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Node;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Sitemap;
@@ -16,6 +18,12 @@ public class SitemapImpl implements Sitemap {
 	private String name;
 	private String label;
 	private Node root;
+	
+	public static SitemapImpl parse(List<String> lines) {
+		SitemapImpl sitemap = new SitemapImpl();
+		
+		return sitemap;
+	}
 
 	@Override
 	public String getName() {
@@ -65,5 +73,5 @@ public class SitemapImpl implements Sitemap {
 	public void setRoot(Node root) {
 		this.root = root;
 	}
-
+	
 }

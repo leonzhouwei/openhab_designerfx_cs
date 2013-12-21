@@ -19,9 +19,11 @@ public class SitemapImplTest {
 		sitemap.setName(name);
 		sitemap.setLabel(label);
 		Atom rootAtom = Frame.parse(frame);
-		NodeImpl rootNode = new NodeImpl(rootAtom);
+		NodeImpl rootNode = new NodeImpl();
+		rootNode.setAtom(rootAtom);
 		Atom childAtom = Group.parse(group);
-		NodeImpl childNode = new NodeImpl(childAtom);
+		NodeImpl childNode = new NodeImpl();
+		childNode.setAtom(childAtom);
 		rootNode.addChild(childNode);
 		//
 		sitemap.setRoot(rootNode);

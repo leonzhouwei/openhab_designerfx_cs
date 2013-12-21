@@ -30,9 +30,11 @@ public class NodeImplTest {
 		sb.append("}");
 		final String expected = sb.toString();
 		Atom rootAtom = Frame.parse(frame);
-		NodeImpl rootNode = new NodeImpl(rootAtom);
+		NodeImpl rootNode = new NodeImpl();
+		rootNode.setAtom(rootAtom);
 		Atom childAtom = Group.parse(group);
-		NodeImpl childNode = new NodeImpl(childAtom);
+		NodeImpl childNode = new NodeImpl();
+		childNode.setAtom(childAtom);
 		rootNode.addChild(childNode);
 		final String actual = rootNode.toXtext(indentation);
 		assertThat(actual, Matchers.equalTo(expected));

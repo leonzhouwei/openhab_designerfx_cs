@@ -19,11 +19,8 @@ public class NodeImpl implements Node {
 	private static final String TAB = SitemapImpl.DEFAULT_INDENTATION;
 
 	private Atom atom;
+
 	private List<Node> children = Lists.newArrayList();
-	
-	public NodeImpl(Atom atom) {
-		this.atom = atom;
-	}
 	
 	@Override
 	public String getType() {
@@ -83,6 +80,45 @@ public class NodeImpl implements Node {
 	@Override
 	public String toXtext() {
 		return toXtext("");
+	}
+	
+	public Atom getAtom() {
+		return atom;
+	}
+
+	public void setAtom(Atom atom) {
+		this.atom = atom;
+	}
+	
+	public static void format(List<String> lines) {
+		
+	}
+	
+	public static int parseNode(NodeImpl root, List<String> lines, final int min, final int max) {
+		int i = min;
+		String line = lines.get(min);
+		// parse its atom
+		Atom atom = AtomBuilder.build(line);
+		root.setAtom(atom);
+		if (!line.endsWith("{")) {
+			return i;
+		}
+		// parse its children nodes
+		int nodeEndLine = -1;
+		final int size = lines.size();
+		while (i < size) {
+			line = lines.get(i);
+			if (line.endsWith("}")) {
+				nodeEndLine = i;
+				break;
+			} else {
+				NodeImpl child = new NodeImpl();
+				i = parseNode(child, lines, i, max);
+				root.addChild(child);
+				i += 1;
+			}
+		}
+		return nodeEndLine;
 	}
 
 }
