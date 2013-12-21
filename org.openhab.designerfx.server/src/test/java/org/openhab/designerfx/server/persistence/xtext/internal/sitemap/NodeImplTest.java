@@ -45,6 +45,15 @@ public class NodeImplTest {
 	}
 	
 	@Test
+	public void testFormat() {
+		List<String> lines = Lists.newArrayList();
+		lines.add("Frame {");
+		lines.add("Group item=gFF label=\"First Floor\" icon=\"firstfloor\"");
+		lines.add("}");
+		NodeImpl.format(lines, 0, lines.size() - 1);
+	}
+	
+	@Test
 	public void testParse() {
 		final String frame = "Frame {";
 		final String group = "Group item=gFF label=\"First Floor\" icon=\"firstfloor\"";

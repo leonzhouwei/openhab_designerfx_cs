@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openhab.designerfx.server.common.Constants;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapImpl;
+import org.openhab.designerfx.server.persistence.xtext.internal.util.Util;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Atom;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Node;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Properties;
@@ -90,13 +91,125 @@ public class NodeImpl implements Node {
 		this.atom = atom;
 	}
 	
-	public static void format(List<String> lines) {
-		
+	public static void checkBraces(List<String> lines, final int minIndex, final int maxIndex) {
+		// check if '{'s and '}'s have the same count
+		int count = 0;
+		for (String line : lines) {
+			count += Util.count(line, "{");
+			count -= Util.count(line, "}");
+		}
+		if (count != 0) {
+			throw new RuntimeException("the number of '{'s is not equal to '}'s");
+		}
 	}
 	
-	public static int parseNode(NodeImpl root, List<String> lines, final int min, final int max) {
-		int i = min;
-		String line = lines.get(min);
+	public static void checkBeforeFormat(List<String> lines, final int minIndex, final int maxIndex) {
+		checkBraces(lines, minIndex, maxIndex);
+		for (int i = minIndex; i <= maxIndex; ++i) {
+			String line = lines.get(i).trim();
+			if (line.isEmpty()) {
+				continue;
+			}
+			final int openBraceCount = Util.count(line, "{");
+			if (openBraceCount > 1) {
+				throw new RuntimeException("more than 1 '{' found in '" + line + "'");
+			}
+			final int closeBraceCount = Util.count(line, "}");
+			if (closeBraceCount > 1) {
+				throw new RuntimeException("more than 1 '}' found in '" + line + "'");
+			}
+			if (line.startsWith("{") && line.endsWith("}")) {
+				String sub = line.substring(1, line.length() - 1).trim();
+				if (sub.isEmpty()) {
+					throw new RuntimeException("no content found in '" + line + "'");
+				}
+			}
+		}
+	}
+	
+	public static void checkAfterFormat(List<String> formatted, final int minIndex, final int maxIndex) {
+		checkBraces(formatted, minIndex, maxIndex);
+		// check the formatted lines
+		for (int i = minIndex; i <= maxIndex; ++i) {
+			String line = formatted.get(i).trim();
+			if (line.isEmpty()) {
+				throw new RuntimeException("an empty line has bee found");
+			}
+			final int openBraceCount = Util.count(line, "{");
+			if (openBraceCount > 1) {
+				throw new RuntimeException("more than 1 '{' found in '" + line + "'");
+			}
+			final int closeBraceCount = Util.count(line, "}");
+			if (closeBraceCount > 1) {
+				throw new RuntimeException("more than 1 '}' found in '" + line + "'");
+			}
+			if (line.startsWith("{") && line.endsWith("}")) {
+				throw new RuntimeException("'{' and '}' should not be in the same line in '" + line + "'");
+			}
+			if (line.startsWith("{") && !line.endsWith("}")) {
+				String sub = line.substring(1, line.length()).trim();
+				if (sub.isEmpty()) {
+					throw new RuntimeException("no content found in '" + line + "'");
+				}
+			}
+			if (!line.startsWith("{") && line.endsWith("}")) {
+				String sub = line.substring(0, line.length() - 1).trim();
+				if (!sub.isEmpty()) {
+					throw new RuntimeException("content found before '}' in '" + line + "'");
+				}
+			}
+		}
+	}
+	
+	public static void format(List<String> lines, final int minIndex, final int maxIndex) {
+		checkBeforeFormat(lines, minIndex, maxIndex);
+		List<String> formatted = Lists.newArrayList();
+		for (int i = minIndex; i <= maxIndex; ++i) {
+			String line = lines.get(i).trim();
+			if (line.isEmpty()) {
+				continue;
+			}
+			if (line.startsWith("{") && line.endsWith("}")) {
+				String sub = line.substring(1, line.length() - 1).trim();
+				String last = formatted.get(formatted.size() - 1);
+				if (!last.endsWith("{")) {
+					formatted.set(formatted.size() - 1, last + " {");
+				}
+				formatted.add(sub);
+				formatted.add("}");
+				continue;
+			}
+			if (line.startsWith("{") && !line.endsWith("}")) {
+				String sub = line.substring(1, line.length()).trim();
+				String last = formatted.get(formatted.size() - 1);
+				if (!last.endsWith("{")) {
+					formatted.set(formatted.size() - 1, last + " {");
+				}
+				if (!sub.isEmpty()) {
+					formatted.add(sub);
+				}
+				continue;
+			}
+			if (!line.startsWith("{")  && line.endsWith("}")) {
+				String sub = line.substring(0, line.length() - 1).trim();
+				if (!sub.isEmpty()) {
+					formatted.add(sub);
+				}
+				formatted.add("}");
+				continue;
+			}
+			if (!line.startsWith("{")  && !line.endsWith("}")) {
+				formatted.add(line);
+				continue;
+			}
+		}
+		lines.clear();
+		lines.addAll(formatted);
+	}
+	
+	public static int parseNode(NodeImpl root, List<String> lines, final int minIndex, final int maxIndex) {
+		int i = minIndex;
+		String line = lines.get(minIndex);
 		// parse its atom
 		Atom atom = AtomBuilder.build(line);
 		root.setAtom(atom);
@@ -106,14 +219,14 @@ public class NodeImpl implements Node {
 		// parse its children nodes
 		i += 1;
 		int nodeEndLine = -1;
-		while (i >= min && i <= max) {
+		while (i >= minIndex && i <= maxIndex) {
 			line = lines.get(i);
 			if (line.endsWith("}")) {
 				nodeEndLine = i;
 				break;
 			} else {
 				NodeImpl child = new NodeImpl();
-				i = parseNode(child, lines, i, max);
+				i = parseNode(child, lines, i, maxIndex);
 				root.addChild(child);
 				i += 1;
 			}
