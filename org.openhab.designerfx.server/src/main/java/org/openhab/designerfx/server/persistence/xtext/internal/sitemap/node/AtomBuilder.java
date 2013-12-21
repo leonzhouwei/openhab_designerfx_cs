@@ -1,5 +1,6 @@
 package org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node;
 
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.AtomSitemap;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.Chart;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.Colorpicker;
 import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.Frame;
@@ -20,7 +21,9 @@ public class AtomBuilder {
 	public static Atom build(String line) {
 		line = line.trim();
 		Atom atom = null;
-		if (line.startsWith(Chart.TYPE)) {
+		if (line.startsWith(AtomSitemap.TYPE)) {
+			atom = AtomSitemap.parse(line);
+		} else if (line.startsWith(Chart.TYPE)) {
 			atom = Chart.parse(line);
 		} else if (line.startsWith(Colorpicker.TYPE)) {
 			atom = Colorpicker.parse(line);

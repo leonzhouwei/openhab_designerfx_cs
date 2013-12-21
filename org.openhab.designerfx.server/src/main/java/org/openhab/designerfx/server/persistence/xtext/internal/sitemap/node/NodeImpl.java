@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.openhab.designerfx.server.common.Constants;
-import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.SitemapImpl;
+import org.openhab.designerfx.server.persistence.xtext.internal.sitemap.node.atom.AtomSitemap;
 import org.openhab.designerfx.server.persistence.xtext.internal.util.Util;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Atom;
 import org.openhab.designerfx.server.persistence.xtext.sitemap.Node;
@@ -17,7 +17,7 @@ public class NodeImpl implements Node {
 	
 	private static final String SPACE = Constants.SPACE_MARK;
 	private static final String LINE_SEPARATOR = Constants.LINE_SEPARATOR;
-	private static final String TAB = SitemapImpl.DEFAULT_INDENTATION;
+	private static final String TAB = AtomSitemap.DEFAULT_INDENTATION;
 
 	private Atom atom;
 
@@ -177,8 +177,8 @@ public class NodeImpl implements Node {
 	}
 	
 	public static void format(List<String> lines, final int minIndex, final int maxIndex) {
+		Util.trim(lines, minIndex, maxIndex);
 		checkBeforeFormat(lines, minIndex, maxIndex);
-		trim(lines);
 		List<String> formatted = Lists.newArrayList();
 		for (int i = minIndex; i <= maxIndex; ++i) {
 			String line = lines.get(i).trim();
@@ -250,16 +250,4 @@ public class NodeImpl implements Node {
 		return nodeEndLine;
 	}
 	
-	private static void trim(List<String> list) {
-		List<String> lines = Lists.newArrayList();
-		for (String line : list) {
-			line = line.trim();
-			if (!line.isEmpty()) {
-				lines.add(line);
-			}
-		}
-		list.clear();
-		list.addAll(lines);
-	}
-
 }

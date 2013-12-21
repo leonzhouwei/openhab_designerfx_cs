@@ -120,6 +120,7 @@ public class PropertiesImpl implements Properties {
 			final int start = orderedIndexes.get(i) + effectiveIndexKeyPairs.get(orderedIndexes.get(i)).length();
 			final String key = effectiveIndexKeyPairs.get(orderedIndexes.get(i));
 			final String value = string.substring(start, orderedIndexes.get(i + 1));
+			System.out.println("oops: " + key + ", " + value);
 			result.put(key, value.trim());
 		}
 		// extract the last pair

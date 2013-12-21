@@ -1,13 +1,5 @@
 package org.openhab.designerfx.server.persistence.xtext.sitemap;
 
-public interface Sitemap {
-
-	public String getName();
-
-	public String getLabel();
+public interface Sitemap extends Node {
 	
-	public Node getRoot();
-
-	public String toXtext();
-
 }

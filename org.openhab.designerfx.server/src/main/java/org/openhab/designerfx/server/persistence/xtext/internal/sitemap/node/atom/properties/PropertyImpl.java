@@ -4,7 +4,7 @@ import org.openhab.designerfx.server.persistence.xtext.sitemap.Property;
 
 public class PropertyImpl implements Property {
 
-	private String name;
+	private String name; // should not be null or empty
 	private String value;
 	
 	@Override
